@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "435348813295",
+    "project_id": "samadhaan-1a946",
+    "storage_bucket": "samadhaan-1a946.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435348813295:android:67169440c6305ac29e721a",
+        "android_client_info": {
+          "package_name": "com.samadhan.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435348813295-39vd6m2i9kordgj5qlvdal0pnnq2ast1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samadhan.user",
+            "certificate_hash": "12ec2962e6067f35648a1eae460bdbeb2722d4ac"
+          }
+        },
+        {
+          "client_id": "435348813295-4aochf5h5ht6hqtqmgps4hhkvf0ln25r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAInI5vG97TJ9hf7TLaTgNVKA91elAsE8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435348813295-4aochf5h5ht6hqtqmgps4hhkvf0ln25r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
