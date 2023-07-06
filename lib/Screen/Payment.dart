@@ -30,8 +30,9 @@ import 'package:http/http.dart' as http;
 class Payment extends StatefulWidget {
   final Function update;
   final String? msg;
+  String? isEnbleUpi;
 
-  Payment(this.update, this.msg);
+  Payment(this.update, this.msg,this.isEnbleUpi);
 
   @override
   State<StatefulWidget> createState() {
@@ -632,8 +633,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                     else if (index == 2 &&
                                                         paypal)
                                                       return paymentItem(index);
-                                                    else if (index == 3 && upi)
-                                                      return paymentItem(index);
+                                                      else if (index == 3 && upi)
+                                                      return widget.isEnbleUpi == "1"  ? paymentItem(index):SizedBox.shrink();
                                                     else if (index == 4 &&
                                                         paumoney)
                                                       return paymentItem(index);

@@ -496,13 +496,14 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Container(
                               transform: Matrix4.translationValues(
                                   0.0, -mysize.height / 10, 0.0),
-                              child: getLoginContainer())
+                              child: getLoginContainer()
+                          ),
                         ],
                       ),
                     ),

@@ -145,6 +145,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
   }
 
   String upiId = '';
+  String? isEnable;
 
   Future<void> _getdateTime() async {
     _isNetworkAvail = await isNetworkAvailable();
@@ -156,7 +157,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
         Response response =
         await post(getSettingApi, body: parameter, headers: headers)
             .timeout(Duration(seconds: timeOut));
-        print("response of time ${response} and ${response.body} vff");
+        print("response of time ${getSettingApi} and ${parameter} vff");
+        print('___surendra  a a    a a a_______${parameter}_________');
         if (response.statusCode == 200) {
           var getdata = json.decode(response.body);
           print("get data ${getdata}");
@@ -179,7 +181,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
 
           upiId = data['payment_method']['upi_id'].toString();
-          print("final checking upi id here now ${upiId}");
+          isEnable = data['payment_method']['upi_enable'].toString();
+
+          print("final checking upi_enable id here now ${isEnable}");
           } else {
             // setSnackbar(msg);
           }
@@ -218,14 +222,16 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       receiverName: '',
       transactionRefId: 'TestingUpiIndiaPlugin',
       transactionNote: 'Not actual. Just an example.',
-      amount: double.parse(totalPrice.toString()),
+      amount: double.parse(totalPrice.toString(
+
+      )),
     );
   }
 
   Widget displayUpiApps() {
     if (apps == null)
       return Center(child: CircularProgressIndicator());
-    else if (apps!.length == 0)
+    else if (apps.length == 0)
       return Center(
         child: Text(
           "No apps found to handle transaction.",
@@ -2979,7 +2985,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                       context) =>
                                                                   Payment(
                                                                       updateCheckout,
-                                                                      msg)));
+                                                                      msg,isEnable)));
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
@@ -2998,7 +3004,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                       context) =>
                                                                   Payment(
                                                                       updateCheckout,
-                                                                      msg)));
+                                                                      msg,isEnable)));
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
@@ -3017,7 +3023,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                       context) =>
                                                                   Payment(
                                                                       updateCheckout,
-                                                                      msg)));
+                                                                      msg,isEnable)));
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
@@ -3070,7 +3076,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                       context) =>
                                                                   Payment(
                                                                       updateCheckout,
-                                                                      msg)));
+                                                                      msg,isEnable)));
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
@@ -3089,7 +3095,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                       context) =>
                                                                   Payment(
                                                                       updateCheckout,
-                                                                      msg)));
+                                                                      msg,isEnable)));
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
@@ -3108,7 +3114,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                       context) =>
                                                                   Payment(
                                                                       updateCheckout,
-                                                                      msg)));
+                                                                      msg,isEnable)));
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
@@ -4024,7 +4030,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      Payment(updateCheckout, msg)));
+                      Payment(updateCheckout, msg,isEnable)));
           if (mounted) checkoutState!(() {});
         },
         child: Padding(

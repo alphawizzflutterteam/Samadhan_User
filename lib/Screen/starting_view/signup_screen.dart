@@ -281,7 +281,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 children: [
                   Container(
                       width: 7.00.w,
-                      height: 6.4.h,
+                      height: 7.4.h,
                       decoration: BoxDecoration(
                         color: AppColor().colorEdit(),
                         borderRadius: BorderRadius.only(topLeft:Radius.circular(8.0),bottomLeft: Radius.circular(8.0)),
@@ -290,7 +290,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                       child: Icon(Icons.pin_drop,color: Color(0xffF4B71E),)),
                   Container(
                       width: 62.99.w,
-                      height: 6.4.h,
+                      height: 7.4.h,
                       decoration: BoxDecoration(
                         color: AppColor().colorEdit(),
                         borderRadius: BorderRadius.only(topRight: Radius.circular(8.0),bottomRight: Radius.circular(8.0)),
@@ -331,7 +331,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 },
                               );
                             } else if (snapshot.hasError) {
-                              return Icon(Icons.error_outline);
+                              return Center(child: Text("No Internet Available!!"));
                             } else {
                               return Center(child: CircularProgressIndicator());
                             }
@@ -343,7 +343,7 @@ class _SignUpScreenState extends State<SignUpScreen>
               ),
               Container(
                   width: 69.99.w,
-                  // height: 7.0.h,
+                   // height: 7.0.h,
                   decoration: BoxDecoration(
                     color: AppColor().colorEdit(),
                     borderRadius: BorderRadius.circular(8),
@@ -484,9 +484,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                           //   },
                           // );
                         } else if (snapshot.hasError) {
-                          return Icon(Icons.error_outline);
-                        } else {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(child: Text("No Internet Available!!"));
+                        }
+                        else {
+                         return Center(child: CircularProgressIndicator());
                         }
                       })),
               SizedBox(
@@ -1089,19 +1090,14 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   Future<GetZipCodeModel?> getZipCodeUser(String id) async {
-
     var request = http.MultipartRequest('POST', getZipCode);
     request.fields.addAll({
       'id': '$id' //$id
     });
-
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       final str = await response.stream.bytesToString();
-
       print("zipcode:::::" + str.toString());
       return GetZipCodeModel.fromJson(json.decode(str));
       // print(await response.stream.bytesToString());

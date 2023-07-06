@@ -18,7 +18,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
+// import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -1948,7 +1949,7 @@ class StateOrder extends State<OrderDetail>
                     label: getTranslated(context, 'VIEW')!,
                     textColor: Theme.of(context).colorScheme.fontColor,
                     onPressed: () async {
-                      final result = await OpenFile.open(filePath);
+                      final result = await OpenFilex.open(filePath);
                     }),
                 backgroundColor: Theme.of(context).colorScheme.white,
                 elevation: 1.0,
