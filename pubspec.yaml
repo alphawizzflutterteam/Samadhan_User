@@ -79,7 +79,6 @@ dependencies:
   upi_pay_x: ^0.0.8
   location: ^4.4.0
   firebase_core_platform_interface: 4.5.1
-
   upi_india: ^3.0.0
   downloads_path_provider_28:
       path: ./downloads_path_provider 

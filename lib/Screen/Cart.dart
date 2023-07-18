@@ -146,6 +146,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
   String upiId = '';
   String? isEnable;
+  String? upiName ;
 
   Future<void> _getdateTime() async {
     _isNetworkAvail = await isNetworkAvailable();
@@ -182,8 +183,10 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
           upiId = data['payment_method']['upi_id'].toString();
           isEnable = data['payment_method']['upi_enable'].toString();
+            upiName = data['payment_method']['upi_name'].toString();
 
-          print("final checking upi_enable id here now ${isEnable}");
+
+          print("final checking upi_enable id here now ${upiId}");
           } else {
             // setSnackbar(msg);
           }
@@ -3302,32 +3305,31 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       razorpayPayment();
     else if (payMethod == "UPI") {
         Navigator.pop(context);
-        UpiPayment upiPayment = new UpiPayment(totalPrice.toString(),
-          "${upiId}",
-          context, (value) {
-            if(value.status==UpiTransactionStatus.success){
-              Navigator.pop(context);
-              placeOrder('','');
-            } else if(value.status==UpiTransactionStatus.failure){
-              // setState((){
-              //   _placeOrder = true;
-              // });
-              Fluttertoast.showToast(msg: "Payment Failed");
-            }
-            else if(value.status == UpiTransactionStatus.failedToLaunch){
-              // setState((){
-              //   _placeOrder = true;
-              // });
-              Fluttertoast.showToast(msg: "Payment Failed");
-            }
-            else{
-              // setState((){
-              //   _placeOrder = true;
-              // });
-              Fluttertoast.showToast(msg: "Payment Failed");
-            }
+        UpiPayment upiPayment = new UpiPayment(amount: totalPrice.toString(), upiName: upiName,upi: upiId,context:
+          context, onResult: (value) {
+          if(value.status==UpiTransactionStatus.success){
+            Navigator.pop(context);
+            placeOrder('','');
+          } else if(value.status==UpiTransactionStatus.failure){
+            // setState((){
+            //   _placeOrder = true;
+            // });
+            Fluttertoast.showToast(msg: "Payment Failed");
+          }
+          else if(value.status == UpiTransactionStatus.failedToLaunch){
+            // setState((){
+            //   _placeOrder = true;
+            // });
+            Fluttertoast.showToast(msg: "Payment Failed");
+          }
+          else{
+            // setState((){
+            //   _placeOrder = true;
+            // });
+            Fluttertoast.showToast(msg: "Payment Failed");
+          }
 
-          },
+        },
 
 
         );

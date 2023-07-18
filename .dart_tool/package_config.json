@@ -795,7 +795,7 @@
     },
     {
       "name": "rxdart",
-      "rootUri": "file:///C:/Users/indian%205/AppData/Local/Pub/Cache/hosted/pub.dev/rxdart-0.27.7",
+      "rootUri": "file:///C:/Users/indian%205/AppData/Local/Pub/Cache/hosted/pub.dev/rxdart-0.26.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1172,7 +1172,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-07-03T08:21:04.675519Z",
+  "generated": "2023-07-18T09:35:04.577357Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }

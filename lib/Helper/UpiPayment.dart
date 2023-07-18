@@ -6,13 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:upi_pay_x/upi_pay.dart';
 
 class UpiPayment{
-  String amount;
-  String upi;
+  String? amount;
+  String? upi;
+  String? upiName;
 
-  BuildContext context;
-  ValueChanged onResult;
+  BuildContext? context;
+  ValueChanged? onResult;
   List<ApplicationMeta>? _apps;
-  UpiPayment(this.amount,this.upi, this.context, this.onResult);
+  UpiPayment({
+    this.amount,
+    this.upi,
+    this.upiName,
+    this.context,
+    this.onResult,
+  });
 
   void initPayment()async{
     _apps = await UpiPay.getInstalledUpiApplications(
@@ -20,7 +27,7 @@ class UpiPayment{
 
     showModalBottomSheet(
         isDismissible: true,
-        context: context, builder: (BuildContext context){
+        context: context!, builder: (BuildContext context){
       return Container(
         // color: Colors.red,
         padding: EdgeInsets.all(15),
@@ -80,25 +87,30 @@ class UpiPayment{
   }
   Future<void> onTap(ApplicationMeta app) async {
     print("this is upi ${upi.toString()}");
+    print("this is upi ${upiName.toString()}");
 
-    final transactionRef = Random.secure().nextInt(1 << 32).toString();
-    print("Starting transaction with id $transactionRef");
-    print("last check here and ${app.upiApplication} and ${upi}");
-    UpiTransactionResponse response = await UpiPay.initiateTransaction(
-      amount: "${amount}",
-      app: app.upiApplication,
-      receiverName: '',
-      // receiverUpiAddress: "",
-      receiverUpiAddress: upi.trim(),
-      // receiverUpiAddress: "${Upi}",
-      transactionRef: transactionRef,
-      transactionNote: 'UPI Payment',
-      // merchantCode: '7372',
-    );
-    onResult(response);
+    try {
+      final transactionRef = Random.secure().nextInt(1 << 32).toString();
+      print("Starting transaction with id $transactionRef");
+      UpiTransactionResponse response = await UpiPay.initiateTransaction(
+            amount: amount.toString(),
+            app: app.upiApplication,
+            receiverName: "${upiName}",
+            // receiverUpiAddress: "7024663830@upi".trim(),
+            receiverUpiAddress:upi!.trim(),
+            transactionRef: transactionRef,
+            transactionNote: 'UPIPayment',
+            // merchantCode: '7372',
+
+      );
+
+    onResult!(response);
     print("this is response here now" + response.status.toString());
     print(response.txnId);
     print(response.txnRef);
     print(response.approvalRefNo);
+    }catch (e){
+      print('${e}_________');
+    }
   }
 }

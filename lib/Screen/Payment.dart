@@ -588,7 +588,7 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                   : Container(),
                               showTime == false
                                   ? SizedBox.shrink()
-                                  : isPayLayShow!
+                                  : isPayLayShow
                                       ? Card(
                                           elevation: 0,
                                           child: Column(
