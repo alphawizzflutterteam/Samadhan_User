@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -659,9 +660,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   children: [
                     tabItem(context, 14, "assets/images/pro_rateus.svg",  getTranslated(context, 'RATE_US')!),
                     tabItem(context, 15, "assets/images/pro_share.svg",  getTranslated(context, 'SHARE_APP')!),
+
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 16, "assets/images/pro_logout.svg", getTranslated(context, 'LOGOUT')!),
+                        : tabItem(context, 16, "assets/images/delete .svg", getTranslated(context, 'DELETE')!),
+
+                    CUR_USERID == "" || CUR_USERID == null
+                        ? Container()
+                        :tabItem(context, 17, "assets/images/pro_logout.svg", getTranslated(context, 'LOGOUT')!),
                     boxHeight(35),
                   ],
                 ),
@@ -790,11 +796,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
               "$appName\n\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n\n ${getTranslated(context, 'IOSLBL')}\n$iosLink";
 
           Share.share(str);
+        }if (pos == 16) {
+          deleteAccountDailog();
         }
-        if (pos == 16) {
+
+        if (pos == 17) {
           logOutDailog();
         }
-        if(pos == 17){
+        if(pos == 18){
           Navigator.push(context, MaterialPageRoute(builder: (context) => RefundPolicy(title:  getTranslated(context, 'REFUND_POLICY'),)));
         }
       },
@@ -823,6 +832,73 @@ class _DrawerScreenState extends State<DrawerScreen> {
         ),
       ),
     );
+  }
+  deleteAccountDailog() async {
+    await dialogAnimate(context,
+        StatefulBuilder(builder: (BuildContext context, StateSetter setStater) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setStater) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                  content: Text(
+                    getTranslated(context, 'DELETE_ACCOUNT')!,
+                    style: Theme.of(this.context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Theme.of(context).colorScheme.fontColor),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                        child: Text(
+                          getTranslated(context, 'NO')!,
+                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                              color: Theme.of(context).colorScheme.lightBlack,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        }),
+                    TextButton(
+                        child: Text(
+                          getTranslated(context, 'YES')!,
+                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                              color: Theme.of(context).colorScheme.fontColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          deleteAccount();
+                          // SettingProvider settingProvider =
+                          // Provider.of<SettingProvider>(context, listen: false);
+                          // settingProvider.clearUserSession(context);
+                          // //favList.clear();
+                          // Navigator.of(context).pushNamedAndRemoveUntil(
+                          //     '/home', (Route<dynamic> route) => false);
+                        })
+                  ],
+                );
+              });
+        }));
+  }
+
+  deleteAccount() async {
+    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_users'));
+    request.fields.addAll({
+      'user_id': CUR_USERID.toString()
+    });
+    print('-----------${request.fields}___${Uri.parse}______');
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result  =  await response.stream.bytesToString();
+      var finalResult =  jsonDecode(result);
+      Fluttertoast.showToast(msg: "${finalResult['message']}");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
   }
   Widget getUserImage(String profileImage, VoidCallback? onBtnSelected) {
     return Stack(

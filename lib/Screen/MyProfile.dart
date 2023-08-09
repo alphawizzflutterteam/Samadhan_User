@@ -18,6 +18,7 @@ import 'package:eshop_multivendor/Screen/Login.dart';
 import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -506,6 +507,10 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         // _getDivider(),
         _getDrawerItem(getTranslated(context, 'SHARE_APP')!,
             'assets/images/pro_share.svg'),
+        CUR_USERID == "" || CUR_USERID == null
+            ? Container()
+            : _getDrawerItem(getTranslated(context, 'DELETE')!,
+            'assets/images/delete.svg'),
         // CUR_USERID == "" || CUR_USERID == null ? Container() : _getDivider(),
         CUR_USERID == "" || CUR_USERID == null
             ? Container()
@@ -656,6 +661,8 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
             openChangeThemeBottomSheet();
           } else if (title == getTranslated(context, 'LOGOUT')) {
             logOutDailog();
+          } else if (title == getTranslated(context, 'DELETE')) {
+            deleteAccountDailog();
           } else if (title == getTranslated(context, 'CHANGE_PASS_LBL')) {
             openChangePasswordBottomSheet();
           } else if (title == getTranslated(context, 'CHANGE_LANGUAGE_LBL')) {
@@ -664,6 +671,73 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         },
       ),
     );
+  }
+  deleteAccountDailog() async {
+    await dialogAnimate(context,
+        StatefulBuilder(builder: (BuildContext context, StateSetter setStater) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setStater) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                  content: Text(
+                    getTranslated(context, 'DELETE_ACCOUNT')!,
+                    style: Theme.of(this.context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Theme.of(context).colorScheme.fontColor),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                        child: Text(
+                          getTranslated(context, 'NO')!,
+                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                              color: Theme.of(context).colorScheme.lightBlack,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        }),
+                    TextButton(
+                        child: Text(
+                          getTranslated(context, 'YES')!,
+                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                              color: Theme.of(context).colorScheme.fontColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          deleteAccount();
+                          // SettingProvider settingProvider =
+                          // Provider.of<SettingProvider>(context, listen: false);
+                          // settingProvider.clearUserSession(context);
+                          // //favList.clear();
+                          // Navigator.of(context).pushNamedAndRemoveUntil(
+                          //     '/home', (Route<dynamic> route) => false);
+                        })
+                  ],
+                );
+              });
+        }));
+  }
+
+  deleteAccount() async {
+    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_users'));
+    request.fields.addAll({
+      'user_id': CUR_USERID.toString()
+    });
+    print('-----------${request.fields}___${Uri.parse}______');
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result  =  await response.stream.bytesToString();
+      var finalResult =  jsonDecode(result);
+      Fluttertoast.showToast(msg: "${finalResult['message']}");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
   }
 
   List<Widget> themeListView(BuildContext ctx) {

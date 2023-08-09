@@ -251,14 +251,14 @@ class _HomePageState extends State<HomePage>
                         );
                       }
                     }),
+                    pages4.length>0?_slider(pages4,4,_controller4):SizedBox(),
                    _section(),
                     pages2.length>0?_slider(pages2,2,_controller2):SizedBox(),
                     // Text("section"),
                     _section(),
+                    pages3.length>0?_slider(pages3,3,_controller3):SizedBox(),
                    _seller(),
                     SizedBox(height: 5,),
-                    pages3.length>0?_slider(pages3,3,_controller3):SizedBox(),
-                    pages4.length>0?_slider(pages4,4,_controller4):SizedBox(),
                     pages5.length>0?_slider(pages5,5,_controller5):SizedBox(),
                     SizedBox(height: 35,)
                   ],
