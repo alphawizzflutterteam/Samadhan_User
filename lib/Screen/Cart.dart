@@ -3957,7 +3957,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                           ],
                         ),
                         Text(
-                          addressList[selectedAddress!].address! +
+                             addressList[selectedAddress!].building! +
                               ", " +
                               addressList[selectedAddress!].area! +
                               ", " +

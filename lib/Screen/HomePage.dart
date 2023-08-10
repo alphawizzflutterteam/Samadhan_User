@@ -255,8 +255,8 @@ class _HomePageState extends State<HomePage>
                    _section(),
                     pages2.length>0?_slider(pages2,2,_controller2):SizedBox(),
                     // Text("section"),
-                    _section(),
-                    pages3.length>0?_slider(pages3,3,_controller3):SizedBox(),
+                    //_section(),
+                    //pages3.length>0?_slider(pages3,3,_controller3):SizedBox(),
                    _seller(),
                     SizedBox(height: 5,),
                     pages5.length>0?_slider(pages5,5,_controller5):SizedBox(),
@@ -1804,10 +1804,10 @@ class _HomePageState extends State<HomePage>
     apiBaseHelper.postAPICall(getSectionApi, parameter).then((getdata) {
       bool error = getdata["error"];
       String? msg = getdata["message"];
+      print('__parameter________${getSectionApi}____${parameter}_____');
       sectionList.clear();
       if (!error) {
         var data = getdata["data"];
-
         sectionList = (data as List)
             .map((data) => new SectionModel.fromJson(data))
             .toList();

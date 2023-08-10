@@ -846,7 +846,6 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                         Position position = await Geolocator.getCurrentPosition(
                             desiredAccuracy: LocationAccuracy.high);
 
-
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -881,6 +880,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                           setState(() {
                             countryC!.text = country!;
                             stateC!.text = state!;
+                            landmarkC!.text = landmark!;
                             addressC!.text = address;
                             //  pincodeC!.text = pincode!;
                             // addressC!.text = address!;
