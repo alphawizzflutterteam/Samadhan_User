@@ -190,14 +190,14 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     pages1.length>0?_slider(pages1,1,_controller1):SizedBox(),
-                    Container(
-                      height: 340,
-                      child: FeatureView(
-                        name: "Feature Product",
-                        /*  tag: false,
-                      fromSeller: false,*/
-                      ),
-                    ),
+                    // Container(
+                    //   height: 340,
+                    //   child: FeatureView(
+                    //     name: "Feature Product",
+                    //     /*  tag: false,
+                    //   fromSeller: false,*/
+                    //   ),
+                    // ),
                     /*saveButton("Feature Products", () {
                       Navigator.push(
                           context,
@@ -401,9 +401,9 @@ class _HomePageState extends State<HomePage>
                           ));
                     },
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search,color:Color(0xff60db33),),
+                        prefixIcon: Icon(Icons.search,color:colors.primary,),
                         // Theme.of(context).colorScheme.black
-                        hintStyle: TextStyle(color:Color(0xff60db33)),
+                        hintStyle: TextStyle(color:colors.primary,),
                         hintText: "Search",
                         filled: true,
                         fillColor: Theme.of(context).cardColor,
@@ -454,7 +454,7 @@ class _HomePageState extends State<HomePage>
   getLocation() async {
     LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PlacePicker(
-          "AIzaSyCqQW9tN814NYD_MdsLIb35HRY65hHomco",
+          "AIzaSyAzWKOX71IubaSG0BhDPsPermCzIuZaOHs1",
         )));
 
     setState(() {
@@ -2640,6 +2640,7 @@ setState(() {
         ZIPCODE: pin,
       };
     }
+    print('____sssssss______${getSellerApi}_____${parameter}____');
     apiBaseHelper.postAPICall(getSellerApi, parameter).then((getdata) {
       bool error = getdata["error"];
       String? msg = getdata["message"];

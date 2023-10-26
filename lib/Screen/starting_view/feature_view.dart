@@ -1105,8 +1105,9 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       String? msg = getdata["message"];
       image_url = getdata["image_url"];
 
-      print(getFeatureProductApi);
-      print(parameter);
+      print("------------------>${getFeatureProductApi}");
+      print("------------------>${parameter}");
+
       print(getdata["data"].toString());
       if (!error) {
         tempList.clear();
@@ -1232,9 +1233,11 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
           ),
           productList.length == 0
               ? getNoItem(context)
-              : ListView.builder(
+              :
+          ListView.builder(
             controller: controller,
-            itemCount: productList.length>2?2:productList.length,
+            itemCount: productList.length,
+                //>2?2:productList.length,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {

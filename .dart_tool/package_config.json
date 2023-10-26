@@ -170,6 +170,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "dropdown_button2",
+      "rootUri": "file:///C:/Users/indian%205/AppData/Local/Pub/Cache/hosted/pub.dev/dropdown_button2-1.9.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "eventify",
       "rootUri": "file:///C:/Users/indian%205/AppData/Local/Pub/Cache/hosted/pub.dev/eventify-1.0.1",
       "packageUri": "lib/",
@@ -1172,7 +1178,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-07-18T09:35:04.577357Z",
+  "generated": "2023-10-26T13:16:45.078506Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }

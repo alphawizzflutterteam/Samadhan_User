@@ -47,10 +47,12 @@ class _CustomerSupportState extends State<CustomerSupport>
   @override
   void initState() {
     super.initState();
+    getType();
     statusList = [
       Model(id: "3", title: "Resolved"),
       Model(id: "5", title: "Reopen")
     ];
+
     buttonController = new AnimationController(
         duration: new Duration(milliseconds: 2000), vsync: this);
 
@@ -78,7 +80,7 @@ class _CustomerSupportState extends State<CustomerSupport>
         }
       });
     });
-    getType();
+
     getTicket();
   }
 
@@ -193,6 +195,7 @@ class _CustomerSupportState extends State<CustomerSupport>
   Widget setType() {
     return DropdownButtonFormField(
       iconEnabledColor: Theme.of(context).colorScheme.fontColor,
+     isExpanded: true,
       isDense: true,
       hint: new Text(
         getTranslated(context, 'SELECT_TYPE')!,
@@ -201,7 +204,7 @@ class _CustomerSupportState extends State<CustomerSupport>
             fontWeight: FontWeight.normal),
       ),
       decoration: InputDecoration(
-        filled: true,
+       filled: true,
         isDense: true,
         fillColor: Theme.of(context).colorScheme.lightWhite,
         contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -225,6 +228,7 @@ class _CustomerSupportState extends State<CustomerSupport>
         if (mounted)
           setState(() {
             type = newValue;
+           print("1111111111111111${type}");
           });
       },
       items: typeList.map((Model user) {
@@ -421,12 +425,12 @@ class _CustomerSupportState extends State<CustomerSupport>
         Response response = await post(getTicketTypeApi, headers: headers)
             .timeout(Duration(seconds: timeOut));
 
+
         var getdata = json.decode(response.body);
         bool error = getdata["error"];
         String? msg = getdata["message"];
         if (!error) {
           var data = getdata["data"];
-
           typeList = (data as List)
               .map((data) => new Model.fromSupport(data))
               .toList();
@@ -760,6 +764,7 @@ class _CustomerSupportState extends State<CustomerSupport>
           if (mounted)
             setState(() {
               status = newValue;
+
             });
         },
         items: statusList.map((Model user) {

@@ -667,7 +667,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 17, "assets/images/pro_logout.svg", getTranslated(context, 'LOGOUT')!),
+                        :tabItem(context, 18, "assets/images/pro_logout.svg", getTranslated(context, 'LOGOUT')!),
                     boxHeight(35),
                   ],
                 ),
@@ -800,10 +800,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
           deleteAccountDailog();
         }
 
-        if (pos == 17) {
+        if (pos == 18) {
           logOutDailog();
         }
-        if(pos == 18){
+        if(pos == 17){
           Navigator.push(context, MaterialPageRoute(builder: (context) => RefundPolicy(title:  getTranslated(context, 'REFUND_POLICY'),)));
         }
       },
@@ -1031,6 +1031,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     saveButton(getTranslated(context, "SAVE_LBL")!, () {
                       validateAndSave(_changeUserDetailsKey);
                     }),
+                    SizedBox(height: 50,)
                   ],
                 ),
               ),
@@ -1372,7 +1373,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.fontColor,
+          color: Theme.of(context).colorScheme.white,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Padding(
@@ -1422,7 +1423,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.fontColor,
+          color: Theme.of(context).colorScheme.white,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Padding(
@@ -1456,7 +1457,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.fontColor,
+          color: Theme.of(context).colorScheme.white,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Padding(

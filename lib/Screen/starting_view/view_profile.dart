@@ -86,9 +86,11 @@ class _ViewProfileScreenState extends State<ViewProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      bottom: true,
+      top: false,
+      child: Scaffold(
+        body: SingleChildScrollView(
           child: AnimatedContainer(
             duration: Duration(milliseconds: 1000),
             curve: Curves.easeInOut,

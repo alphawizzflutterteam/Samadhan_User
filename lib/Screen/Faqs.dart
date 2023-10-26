@@ -220,7 +220,7 @@ class StateFaqs extends State<Faqs> with TickerProviderStateMixin {
             .timeout(Duration(seconds: timeOut));
         if (response.statusCode == 200) {
           var getdata = json.decode(response.body);
-
+       print('____ddddd______${getFaqsApi}_________');
           bool error = getdata["error"];
           String? msg = getdata["message"];
           if (!error) {

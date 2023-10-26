@@ -260,7 +260,7 @@ class _AllCategoryState extends State<AllCategory> {
                   ),
                   height: 15.h,
                   width: 100.w,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   imageErrorBuilder:
                       (context, error, stackTrace) =>
                       erroWidget(50),

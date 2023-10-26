@@ -1065,11 +1065,11 @@ class StateProduct extends State<FeatureProduct> with TickerProviderStateMixin {
     //_currentRangeValues.start.round().toString(),
     // _currentRangeValues.end.round().toString(),
     Map parameter = {
-      /*  SORT: sortBy,
-      ORDER: orderBy,
-      LIMIT: perPage.toString(),
-      OFFSET: offset.toString(),
-      TOP_RETAED: top,*/
+      //   SORT: sortBy,
+      // ORDER: orderBy,
+      // LIMIT: perPage.toString(),
+      // OFFSET: offset.toString(),
+      // TOP_RETAED: top,
     };
     if (selId != null && selId != "") {
       parameter[ATTRIBUTE_VALUE_ID] = selId;
@@ -1099,7 +1099,8 @@ class StateProduct extends State<FeatureProduct> with TickerProviderStateMixin {
     apiBaseHelper.postAPICall(getFeatureProductApi, parameter).then((getdata) {
       bool error = getdata["error"];
       String? msg = getdata["message"];
-      image_url = getdata["image_url"];
+     // image_url = getdata["image_url"];
+      print('____sssss______${getFeatureProductApi}____dsdddd__${parameter}___');
       if (!error) {
         tempList.clear();
 

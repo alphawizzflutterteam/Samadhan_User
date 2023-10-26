@@ -611,7 +611,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.fontColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: 13,
+                  fontSize: 12,
                 ),
               ),
             ],

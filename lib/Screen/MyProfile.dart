@@ -510,7 +510,7 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         CUR_USERID == "" || CUR_USERID == null
             ? Container()
             : _getDrawerItem(getTranslated(context, 'DELETE')!,
-            'assets/images/delete.svg'),
+            'assets/images/DELETE.png'),
         // CUR_USERID == "" || CUR_USERID == null ? Container() : _getDivider(),
         CUR_USERID == "" || CUR_USERID == null
             ? Container()
@@ -664,7 +664,7 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
           } else if (title == getTranslated(context, 'DELETE')) {
             deleteAccountDailog();
           } else if (title == getTranslated(context, 'CHANGE_PASS_LBL')) {
-            openChangePasswordBottomSheet();
+           // openChangePasswordBottomSheet();
           } else if (title == getTranslated(context, 'CHANGE_LANGUAGE_LBL')) {
             openChangeLanguageBottomSheet();
           }
@@ -831,7 +831,7 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
       themeNotifier.setThemeMode(ThemeMode.system);
       prefs.setString(APP_THEME, DEFAULT_SYSTEM);
 
-      var brightness = SchedulerBinding.instance!.window.platformBrightness;
+      var brightness = SchedulerBinding.instance.window.platformBrightness;
       if (mounted)
         setState(() {
           isDark = brightness == Brightness.dark;
@@ -1418,6 +1418,45 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         });
   }
 
+  // Widget setNameField(String userName) => Padding(
+  //   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+  //   child: Container(
+  //     padding:
+  //     EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+  //     decoration: BoxDecoration(
+  //       color: Theme.of(context).colorScheme.white,
+  //       borderRadius: BorderRadius.circular(10.0),
+  //     ),
+  //     child: Padding(
+  //       padding:
+  //       const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+  //       child: TextFormField(
+  //         //initialValue: nameController.text,
+  //         style: TextStyle(
+  //             color: Theme.of(context).colorScheme.fontColor,
+  //             fontWeight: FontWeight.bold),
+  //         controller: nameController,
+  //         decoration: InputDecoration(
+  //             label: Text(
+  //               getTranslated(
+  //                 context,
+  //                 "NAME_LBL",
+  //               )!,
+  //               style: TextStyle(
+  //                 color: Theme.of(context).colorScheme.primary,
+  //               ),
+  //             ),
+  //             fillColor: Theme.of(context).colorScheme.primary,
+  //             border: InputBorder.none),
+  //         validator: (val) => validateUserName(
+  //             val!,
+  //             getTranslated(context, 'USER_REQUIRED'),
+  //             getTranslated(context, 'USER_LENGTH')),
+  //       ),
+  //     ),
+  //   ),
+  // );
+
   Widget setCurrentPasswordField() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
@@ -1436,7 +1475,9 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
               color: Theme.of(context).colorScheme.fontColor,
             ),
             decoration: InputDecoration(
-                label: Text(getTranslated(context, "CUR_PASS_LBL")!),
+                label: Text(getTranslated(context, "CUR_PASS_LBL")!,style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),),
                 fillColor: Theme.of(context).colorScheme.white,
                 border: InputBorder.none),
             onSaved: (String? value) {

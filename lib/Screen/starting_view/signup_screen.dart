@@ -406,6 +406,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                   ),
                                   labelText: 'Search your society',
+
                                   labelStyle: TextStyle(
                                     color: AppColor().colorTextFour(),
                                     fontSize: 12.sp,
@@ -1053,11 +1054,11 @@ class _SignUpScreenState extends State<SignUpScreen>
     }
   }
 
-  //
+
   // Future<void> checkNetworkData() async {
   //   bool avail = await isNetworkAvailable();
   //   if (avail) {
-  //     if (referCode != null) getSocity();
+  //     if (referCode != null) getRegisterUser();
   //   } else {
   //     Future.delayed(Duration(seconds: 2)).then((_) async {
   //       if (mounted)
@@ -1068,7 +1069,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   //     });
   //   }
   // }
-  //
 
   Future<GetSocityMOdel?> getSocityUser() async {
 

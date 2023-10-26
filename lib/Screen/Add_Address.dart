@@ -878,12 +878,13 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                         //  address = placemark[0].name;
                         if (mounted) {
                           setState(() {
+
                             countryC!.text = country!;
                             stateC!.text = state!;
                             landmarkC!.text = landmark!;
                             addressC!.text = address;
                             //  pincodeC!.text = pincode!;
-                            // addressC!.text = address!;
+                          // addressC!.text = address!;
                           });
                         }
                       },
@@ -1209,17 +1210,17 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
 
               addressList[widget.index!].isDefault = "1";
 
-              if (!ISFLAT_DEL) {
-                if (oriPrice <
-                    double.parse(addressList[selectedAddress!].freeAmt!)) {
-                  delCharge = double.parse(
-                      addressList[selectedAddress!].deliveryCharge!);
-                } else {
-                  delCharge = 0;
-                }
-
-                totalPrice = totalPrice - delCharge;
-              }
+              // if (!ISFLAT_DEL) {
+              //   if (oriPrice <
+              //       double.parse(addressList[selectedAddress!].freeAmt.toString())) {
+              //     delCharge = double.parse(
+              //         addressList[selectedAddress!].deliveryCharge!);
+              //   } else {
+              //     delCharge = 0;
+              //   }
+              //
+              //   totalPrice = totalPrice - delCharge;
+              // }
 
               User value = new User.fromAddress(data[0]);
 
@@ -1228,16 +1229,16 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
               selectedAddress = widget.index;
               selAddress = addressList[widget.index!].id;
 
-              if (!ISFLAT_DEL) {
-                if (oriPrice <
-                    double.parse(addressList[selectedAddress!].freeAmt!)) {
-                  delCharge = double.parse(
-                      addressList[selectedAddress!].deliveryCharge!);
-                } else {
-                  delCharge = 0;
-                }
-                totalPrice = totalPrice + delCharge;
-              }
+              // if (!ISFLAT_DEL) {
+              //   if (oriPrice <
+              //       double.parse(addressList[selectedAddress!].freeAmt!)) {
+              //     delCharge = double.parse(
+              //         addressList[selectedAddress!].deliveryCharge!);
+              //   } else {
+              //     delCharge = 0;
+              //   }
+              //   totalPrice = totalPrice + delCharge;
+              // }
             }
           } else {
             User value = new User.fromAddress(data[0]);

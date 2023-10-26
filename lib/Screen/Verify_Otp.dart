@@ -456,7 +456,7 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     monoVarifyText(),
-                    otpText(),
+                    //otpText(),
                     mobText(),
                     otpLayout(),
                     verifyBtn(),
@@ -527,7 +527,7 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
                       ),
                       monoVarifyText(),
                       // Text("${}")
-                      otpText(),
+                     // otpText(),
                       mobText(),
                       otpLayout(),
                       verifyBtn(),

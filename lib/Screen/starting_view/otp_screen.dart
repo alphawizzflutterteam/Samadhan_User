@@ -436,13 +436,13 @@ class _OtpScreenState extends State<OtpScreen> {
                       SizedBox(
                         height: 1.08.h,
                       ),
-                      text(
-                        "OTP ${widget.otp}",
-
-                        textColor: Color(0xffffffff),
-                        fontSize: 22.sp,
-                        fontFamily: fontMedium,
-                      ),
+                      // text(
+                      //   "OTP ${widget.otp}",
+                      //
+                      //   textColor: Color(0xffffffff),
+                      //   fontSize: 22.sp,
+                      //   fontFamily: fontMedium,
+                      // ),
                     ],
                   ),
                 ),

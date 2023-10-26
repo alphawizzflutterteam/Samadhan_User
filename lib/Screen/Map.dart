@@ -117,9 +117,8 @@ class _MapState extends State<Map> {
                     EdgeInsetsDirectional.only(start: 15.0, top: 12.0),
               ),
             ),
-            ElevatedButton(
-              child: Text("Update Location"),
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 if (widget.from == getTranslated(context, 'ADDADDRESS')) {
                   latitude = latlong!.latitude.toString();
                   longitude = latlong!.longitude.toString();
@@ -127,7 +126,26 @@ class _MapState extends State<Map> {
 
                 Navigator.pop(context);
               },
+              child: Container(
+                height: 40,
+                width: 150,
+                decoration: BoxDecoration(
+                  color: colors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(child: Text("Update Location",style: TextStyle(
+                  color: colors.whiteTemp
+                ),)),
+              ),
             ),
+            SizedBox(height: 5,)
+            // ElevatedButton(
+            //
+            //   child:
+            //   onPressed: () {
+            //
+            //   },
+            // ),
           ],
         ),
       ),
