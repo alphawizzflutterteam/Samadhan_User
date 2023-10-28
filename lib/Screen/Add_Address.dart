@@ -326,6 +326,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
               _fieldFocusChange(context, monoFocus!, almonoFocus);
             },
             decoration: InputDecoration(
+              counterText: "",
                 label: Text(getTranslated(context, "MOBILEHINT_LBL")!),
                 fillColor: Theme.of(context).colorScheme.white,
                 isDense: true,
@@ -834,61 +835,61 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                     isDense: true,
                     hintText: getTranslated(context, 'ADDRESS_LBL'),
                     border: InputBorder.none,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.my_location,
-                        color: colors.primary,
-                      ),
-                      focusNode: locationFocus,
-                      onPressed: () async {
-                        LocationPermission permission;
-                        permission = await Geolocator.requestPermission();
-                        Position position = await Geolocator.getCurrentPosition(
-                            desiredAccuracy: LocationAccuracy.high);
-
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Map(
-                                  latitude:
-                                  latitude == null || latitude == ""
-                                      ? position.latitude
-                                      : double.parse(latitude!),
-                                  longitude:
-                                  longitude == null || longitude == ""
-                                      ? position.longitude
-                                      : double.parse(longitude!),
-                                  from:
-                                  getTranslated(context, 'ADDADDRESS'),
-                                )));
-                        if (mounted) setState(() {});
-                        List<Placemark> placemark =
-                        await placemarkFromCoordinates(
-                            double.parse(latitude!),
-                            double.parse(longitude!));
-
-                        var address;
-                        address = placemark[0].name;
-                        address = address + "," + placemark[0].subLocality;
-                        address = address + "," + placemark[0].locality;
-
-                        state = placemark[0].administrativeArea;
-                        country = placemark[0].country;
-                        // pincode = placemark[0].postalCode;
-                        //  address = placemark[0].name;
-                        if (mounted) {
-                          setState(() {
-
-                            countryC!.text = country!;
-                            stateC!.text = state!;
-                            landmarkC!.text = landmark!;
-                            addressC!.text = address;
-                            //  pincodeC!.text = pincode!;
-                          // addressC!.text = address!;
-                          });
-                        }
-                      },
-                    ),
+                    // suffixIcon: IconButton(
+                    //   icon: Icon(
+                    //     Icons.my_location,
+                    //     color: colors.primary,
+                    //   ),
+                    //   focusNode: locationFocus,
+                    //   onPressed: () async {
+                    //     LocationPermission permission;
+                    //     permission = await Geolocator.requestPermission();
+                    //     Position position = await Geolocator.getCurrentPosition(
+                    //         desiredAccuracy: LocationAccuracy.high);
+                    //
+                    //     await Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => Map(
+                    //               latitude:
+                    //               latitude == null || latitude == ""
+                    //                   ? position.latitude
+                    //                   : double.parse(latitude!),
+                    //               longitude:
+                    //               longitude == null || longitude == ""
+                    //                   ? position.longitude
+                    //                   : double.parse(longitude!),
+                    //               from:
+                    //               getTranslated(context, 'ADDADDRESS'),
+                    //             )));
+                    //     if (mounted) setState(() {});
+                    //     List<Placemark> placemark =
+                    //     await placemarkFromCoordinates(
+                    //         double.parse(latitude!),
+                    //         double.parse(longitude!));
+                    //
+                    //     var address;
+                    //     address = placemark[0].name;
+                    //     address = address + "," + placemark[0].subLocality;
+                    //     address = address + "," + placemark[0].locality;
+                    //
+                    //     state = placemark[0].administrativeArea;
+                    //     country = placemark[0].country;
+                    //     // pincode = placemark[0].postalCode;
+                    //     //  address = placemark[0].name;
+                    //     if (mounted) {
+                    //       setState(() {
+                    //
+                    //         countryC!.text = country!;
+                    //         stateC!.text = state!;
+                    //         landmarkC!.text = landmark!;
+                    //         addressC!.text = address;
+                    //         //  pincodeC!.text = pincode!;
+                    //       // addressC!.text = address!;
+                    //       });
+                    //     }
+                    //   },
+                    // ),
                   ),
                 ),
               ),
@@ -1091,7 +1092,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                 .textTheme
                 .subtitle2!
                 .copyWith(color: Theme.of(context).colorScheme.fontColor),
-            readOnly: true,
+            // readOnly: true,
             //validator: validateField,
             onChanged: (v) => setState(() {
               state = v;
@@ -1127,7 +1128,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.sentences,
             controller: countryC,
-            readOnly: true,
+            // readOnly: true,
             style: Theme.of(context)
                 .textTheme
                 .subtitle2!
@@ -1472,10 +1473,11 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                           setUserName(),
                           setMobileNo(),
                           //setAltMobileNo(),
-                          setAddress(),
+
                           // setLandmark(),
                           setCities(),
                           setArea(),
+                          setAddress(),
                           setPincode(),
                           setStateField(),
                           setCountry(),

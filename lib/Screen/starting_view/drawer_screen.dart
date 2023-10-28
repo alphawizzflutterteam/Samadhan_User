@@ -20,6 +20,7 @@ import 'package:eshop_multivendor/Screen/MyOrder.dart';
 import 'package:eshop_multivendor/Screen/MyTransactions.dart';
 import 'package:eshop_multivendor/Screen/My_Wallet.dart';
 import 'package:eshop_multivendor/Screen/Privacy_Policy.dart';
+import 'package:eshop_multivendor/Screen/ReferEarn.dart';
 import 'package:eshop_multivendor/Screen/RefundPolicy.dart';
 import 'package:eshop_multivendor/Screen/SendOtp.dart';
 import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
@@ -649,6 +650,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     tabItem(context, 13, "assets/images/pro_tc.svg",  getTranslated(context, 'TERM')!),
 
                     tabItem(context, 17, "assets/images/pro_tc.svg",  getTranslated(context, 'REFUND_POLICY')!),
+                    tabItem(context, 19, "assets/images/refer.svg",  getTranslated(context, 'REFEREARN')!),
                     boxHeight(18),
                   ],
                 ),
@@ -661,9 +663,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     tabItem(context, 14, "assets/images/pro_rateus.svg",  getTranslated(context, 'RATE_US')!),
                     tabItem(context, 15, "assets/images/pro_share.svg",  getTranslated(context, 'SHARE_APP')!),
 
+
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        : tabItem(context, 16, "assets/images/delete .svg", getTranslated(context, 'DELETE')!),
+                        : tabItem(context, 16, "assets/images/delete.svg", getTranslated(context, 'DELETE')!),
 
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
@@ -805,6 +808,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
         }
         if(pos == 17){
           Navigator.push(context, MaterialPageRoute(builder: (context) => RefundPolicy(title:  getTranslated(context, 'REFUND_POLICY'),)));
+        }
+        if(pos == 19){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ReferEarn()));
         }
       },
       child: Container(

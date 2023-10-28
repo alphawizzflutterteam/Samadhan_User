@@ -730,16 +730,17 @@ class _SignUpScreenState extends State<SignUpScreen>
               // Container(
               //   width: 69.99.w,
               //   height: 9.46.h,
-              //   child: TextFormField(
-              //     cursorColor: Colors.red,
-              //     keyboardType: TextInputType.number,
-              //     controller: pincodeController,
-              //     ////vcvcvcvcvcv
+              //   child:TextFormField(
+              //     keyboardType: TextInputType.text,
+              //     focusNode: referFocus,
+              //     controller: referController,
               //     style: TextStyle(
               //       color: AppColor().colorTextFour(),
               //       fontSize: 10.sp,
               //     ),
-              //     inputFormatters: [],
+              //     onSaved: (String? value) {
+              //       friendCode = value;
+              //     },
               //     decoration: InputDecoration(
               //       focusedBorder: UnderlineInputBorder(
               //         borderSide: BorderSide(
@@ -748,33 +749,23 @@ class _SignUpScreenState extends State<SignUpScreen>
               //             style: BorderStyle.solid),
               //         borderRadius: BorderRadius.all(Radius.circular(10.0)),
               //       ),
-              //       labelText: 'Pincode',
-              //       labelStyle: TextStyle(
-              //         color: AppColor().colorTextFour(),
-              //         fontSize: 10.sp,
+              //       prefixIcon: Icon(
+              //         Icons.card_giftcard_outlined,
+              //         color: Theme.of(context).colorScheme.fontColor,
+              //         size: 17,
               //       ),
-              //       counterText: '',
-              //       fillColor: AppColor().colorEdit(),
-              //       enabled: true,
-              //       filled: true,
-              //       prefixIcon: Padding(
-              //         padding: EdgeInsets.all(3.5.w),
-              //         child: Image.asset(
-              //           "assets/images/phone.png",
-              //           width: 2.04.w,
-              //           height: 2.04.w,
-              //           color: Color(0xffF4B71E),
-              //           fit: BoxFit.fill,
-              //         ),
-              //       ),
-              //       helperText: "",
-              //       suffixIcon: pincodeController.text.length == 6
-              //           ? Icon(
-              //               Icons.check,
-              //               color: AppColor().colorPrimary(),
-              //               size: 10.sp,
-              //             )
-              //           : SizedBox(),
+              //       hintText: getTranslated(context, 'REFER'),
+              //       hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+              //           color: Theme.of(context).colorScheme.fontColor,
+              //           fontWeight: FontWeight.normal),
+              //       // filled: true,
+              //       // fillColor: Theme.of(context).colorScheme.lightWhite,
+              //       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              //       prefixIconConstraints: BoxConstraints(minWidth: 40, maxHeight: 25),
+              //       // focusedBorder: OutlineInputBorder(
+              //       //   borderSide: BorderSide(color: Theme.of(context).colorScheme.fontColor),
+              //       //   borderRadius: BorderRadius.circular(10.0),
+              //       // ),
               //       enabledBorder: UnderlineInputBorder(
               //         borderSide: BorderSide(
               //             color: AppColor().colorEdit(), width: 5.0),
@@ -782,10 +773,119 @@ class _SignUpScreenState extends State<SignUpScreen>
               //       ),
               //     ),
               //   ),
+              //
+              //
+              //
+              //   // TextFormField(
+              //   //   cursorColor: Colors.red,
+              //   //   keyboardType: TextInputType.number,
+              //   //   controller: pincodeController,
+              //   //   ////vcvcvcvcvcv
+              //   //   style: TextStyle(
+              //   //     color: AppColor().colorTextFour(),
+              //   //     fontSize: 10.sp,
+              //   //   ),
+              //   //   inputFormatters: [],
+              //   //   decoration: InputDecoration(
+              //   //     focusedBorder: UnderlineInputBorder(
+              //   //       borderSide: BorderSide(
+              //   //           color: AppColor().colorEdit(),
+              //   //           width: 1.0,
+              //   //           style: BorderStyle.solid),
+              //   //       borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              //   //     ),
+              //   //     labelText: 'Pincode',
+              //   //     labelStyle: TextStyle(
+              //   //       color: AppColor().colorTextFour(),
+              //   //       fontSize: 10.sp,
+              //   //     ),
+              //   //     counterText: '',
+              //   //     fillColor: AppColor().colorEdit(),
+              //   //     enabled: true,
+              //   //     filled: true,
+              //   //     prefixIcon: Padding(
+              //   //       padding: EdgeInsets.all(3.5.w),
+              //   //       child: Image.asset(
+              //   //         "assets/images/phone.png",
+              //   //         width: 2.04.w,
+              //   //         height: 2.04.w,
+              //   //         color: Color(0xffF4B71E),
+              //   //         fit: BoxFit.fill,
+              //   //       ),
+              //   //     ),
+              //   //     helperText: "",
+              //   //     suffixIcon: pincodeController.text.length == 6
+              //   //         ? Icon(
+              //   //             Icons.check,
+              //   //             color: AppColor().colorPrimary(),
+              //   //             size: 10.sp,
+              //   //           )
+              //   //         : SizedBox(),
+              //   //     enabledBorder: UnderlineInputBorder(
+              //   //       borderSide: BorderSide(
+              //   //           color: AppColor().colorEdit(), width: 5.0),
+              //   //       borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              //   //     ),
+              //   //   ),
+              //   // ),
               // ),
-              SizedBox(
-                height: 0.5.h,
+
+              Container(
+                width: 69.99.w,
+                height: 9.46.h,
+                child: TextFormField(
+                  cursorColor: Colors.red,
+                  keyboardType: TextInputType.name,
+                  controller: referController,
+                  style: TextStyle(
+                    color: AppColor().colorTextFour(),
+                    fontSize: 10.sp,
+                  ),
+                  inputFormatters: [],
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColor().colorEdit(),
+                          width: 1.0,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    labelText: 'Referral Code (Optional)',
+                    labelStyle: TextStyle(
+                      color: AppColor().colorTextFour(),
+                      fontSize: 12.sp,
+                    ),
+                    counterText: '',
+                    fillColor: AppColor().colorEdit(),
+                    enabled: true,
+                    filled: true,
+                    prefixIcon: Container(
+                      padding: EdgeInsets.all(3.5.w),
+                      child: Image.asset(
+                        "assets/images/refer.png",
+                        width: 1.04.w,
+                        height: 1.04.w,
+                        color: Color(0xffF4B71E),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    suffixIcon: referController.text.length > 10
+                        ? Icon(
+                      Icons.check,
+                      color: AppColor().colorPrimary(),
+                      size: 10.sp,
+                    )
+                        : SizedBox(),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColor().colorEdit(), width: 5.0),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
+                ),
               ),
+
+              // setRefer()
               // Container(
               //   width: 69.99.w,
               //   height: 9.46.h,
@@ -908,6 +1008,8 @@ class _SignUpScreenState extends State<SignUpScreen>
           // SizedBox(
           //   height: 2.96.h,
           // ),
+
+
           Center(
             child: InkWell(
               onTap: () async {
@@ -1037,7 +1139,54 @@ class _SignUpScreenState extends State<SignUpScreen>
       ),
     );
   }
-
+  setRefer() {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(
+        top: 10.0,
+        start: 15.0,
+        end: 15.0,
+      ),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        focusNode: referFocus,
+        controller: referController,
+        style: TextStyle(
+            color: Theme.of(context).colorScheme.fontColor,
+            fontWeight: FontWeight.normal),
+        onSaved: (String? value) {
+          friendCode = value;
+        },
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: colors.primary),
+            borderRadius: BorderRadius.circular(7.0),
+          ),
+          prefixIcon: Icon(
+            Icons.card_giftcard_outlined,
+            color: Theme.of(context).colorScheme.fontColor,
+            size: 17,
+          ),
+          hintText: getTranslated(context, 'REFER'),
+          hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+              color: Theme.of(context).colorScheme.fontColor,
+              fontWeight: FontWeight.normal),
+          // filled: true,
+          // fillColor: Theme.of(context).colorScheme.lightWhite,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          prefixIconConstraints: BoxConstraints(minWidth: 40, maxHeight: 25),
+          // focusedBorder: OutlineInputBorder(
+          //   borderSide: BorderSide(color: Theme.of(context).colorScheme.fontColor),
+          //   borderRadius: BorderRadius.circular(10.0),
+          // ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide:
+            BorderSide(color: Theme.of(context).colorScheme.fontColor),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
   Future<void> checkNetwork() async {
     bool avail = await isNetworkAvailable();
     if (avail) {
@@ -1055,20 +1204,20 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
 
-  // Future<void> checkNetworkData() async {
-  //   bool avail = await isNetworkAvailable();
-  //   if (avail) {
-  //     if (referCode != null) getRegisterUser();
-  //   } else {
-  //     Future.delayed(Duration(seconds: 2)).then((_) async {
-  //       if (mounted)
-  //         setState(() {
-  //           _isNetworkAvail = false;
-  //           status = false;
-  //         });
-  //     });
-  //   }
-  // }
+  Future<void> checkNetworkData() async {
+    bool avail = await isNetworkAvailable();
+    if (avail) {
+      if (referCode != null) getRegisterUser();
+    } else {
+      Future.delayed(Duration(seconds: 2)).then((_) async {
+        if (mounted)
+          setState(() {
+            _isNetworkAvail = false;
+            status = false;
+          });
+      });
+    }
+  }
 
   Future<GetSocityMOdel?> getSocityUser() async {
 
@@ -1114,6 +1263,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         EMAIL: emailController.text,
         SOCITYID: socitynameController.text,
         PINCODE: pincodeController.text,
+        REFERCODE:referController.text,
         // PASSWORD: passwordController.text,
         COUNTRY_CODE: "91",
       };

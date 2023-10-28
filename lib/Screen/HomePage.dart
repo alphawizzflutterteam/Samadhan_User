@@ -306,32 +306,37 @@ class _HomePageState extends State<HomePage>
           child: Row(
             children: [
               InkWell(
-                onTap: (){
-                  getLocation();
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: "Delivery Location",
-                          style:
-                          TextStyle(fontSize: 12.0, color: Colors.white)),
-                      WidgetSpan(
-                          child: Container(
-                            transform: Matrix4.translationValues(0.0, 5, 0.0),
-                            child: Icon(
-                              Icons.arrow_drop_up,
-                              color: Colors.black,
-                            ),
-                          ))
-                    ])),
-                    Text(currentAddress.text.toString() ,
-                        style: TextStyle(fontSize: 12.0, color: Colors.black))
-                  ],
-                ),
-              ),
+                  onTap: (){
+                    scaffoldKey.currentState!.openDrawer();
+                  } ,
+                  child: Icon(Icons.sort,size: 32,color: Colors.white,)),
+              // InkWell(
+              //   onTap: (){
+              //     getLocation();
+              //   },
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text.rich(TextSpan(children: [
+              //         TextSpan(
+              //             text: "Delivery Location",
+              //             style:
+              //             TextStyle(fontSize: 12.0, color: Colors.white)),
+              //         WidgetSpan(
+              //             child: Container(
+              //               transform: Matrix4.translationValues(0.0, 5, 0.0),
+              //               child: Icon(
+              //                 Icons.arrow_drop_up,
+              //                 color: Colors.black,
+              //               ),
+              //             ))
+              //       ])),
+              //       Text(currentAddress.text.toString() ,
+              //           style: TextStyle(fontSize: 12.0, color: Colors.black))
+              //     ],
+              //   ),
+              // ),
               Spacer(),
               IconButton(
                 padding: EdgeInsets.all(0),
@@ -377,17 +382,17 @@ class _HomePageState extends State<HomePage>
             ],
           ),
         ),
-        boxHeight(20),
+
         Container(
-          margin: EdgeInsets.symmetric(vertical: 10.0),
+          margin: EdgeInsets.symmetric(vertical: 5.0),
           child: Row(
             children: [
-              InkWell(
-                 onTap: (){
-                   scaffoldKey.currentState!.openDrawer();
-                 } ,
-                  child: Icon(Icons.sort,size: 32,color: Colors.white,)),
-              boxWidth(10),
+              // InkWell(
+              //    onTap: (){
+              //      scaffoldKey.currentState!.openDrawer();
+              //    } ,
+              //     child: Icon(Icons.sort,size: 32,color: Colors.white,)),
+              boxWidth(2),
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
@@ -415,7 +420,7 @@ class _HomePageState extends State<HomePage>
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 30.0,
+          height: MediaQuery.of(context).size.height / 40.0,
         )
       ],
     ),
