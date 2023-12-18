@@ -373,9 +373,11 @@ class _HomePageState extends State<HomePage>
                         builder: (context) => NotificationList(),
                       ));
                 },
-                child: Image.asset(
+                child:
+
+                Image.asset(
                   'assets/icons/notification_icon.png',
-                  height: 24.0,
+                  height: 24.0,color: colors.whiteTemp,
                 ),
               )
 

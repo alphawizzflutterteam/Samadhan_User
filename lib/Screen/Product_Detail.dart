@@ -504,15 +504,10 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
       child: Align(
           alignment: Alignment.bottomLeft,
           child: indicator == "1"
-              ? SvgPicture.asset(
-                  "assets/images/vag.svg",
-                  color: colors.primary,
+              ? Image.asset("assets/icons/veg.png", color: colors.primary,
                 )
               : indicator == "2"
-                  ? SvgPicture.asset(
-                      "assets/images/nonvag.svg",
-                      color: colors.primary,
-                    )
+                  ? Image.asset("assets/icons/nonVeg.png", color: colors.primary,)
                   : Container()),
     ));
   }
@@ -904,7 +899,6 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
       child: Container(
-        width: 150,
         child: Text(
           getString(widget.model!.name!),
           maxLines: 2,
@@ -2040,11 +2034,12 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           boxHeight(20),
+                          _title(),
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _title(),
+
                                 Padding(
                                   padding: const EdgeInsetsDirectional.only(
                                       start: 5.0, top: 5, end: 10),

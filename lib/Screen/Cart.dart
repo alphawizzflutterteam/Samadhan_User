@@ -154,7 +154,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       timeSlotList.clear();
       try {
         var parameter = {TYPE: PAYMENT_METHOD, USER_ID: CUR_USERID};
+        print('_____parameter_____${parameter}_________');
         print("parameter for times ${PAYMENT_METHOD} and ${CUR_USERID}");
+
         Response response =
         await post(getSettingApi, body: parameter, headers: headers)
             .timeout(Duration(seconds: timeOut));
@@ -246,7 +248,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Wrap(
-            children: apps!.map<Widget>((UpiApp app) {
+            children: apps.map<Widget>((UpiApp app) {
               return GestureDetector(
                 onTap: () {
                   _transaction = initiateTransaction(app);
@@ -436,23 +438,27 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     for (var i = 0; i < addressList.length; i++) {
       deliveryCharges = double.parse(addressList[i].deliveryCharge.toString());
     }
-    return Scaffold(
-        appBar: widget.fromBottom
-            ? null
-            : getSimpleAppBar(getTranslated(context, 'CART')!, context),
-        body: _isNetworkAvail
-            ? Stack(
-                children: <Widget>[
-                  _showContent(context),
-                  Selector<CartProvider, bool>(
-                    builder: (context, data, child) {
-                      return showCircularProgress(data, colors.primary);
-                    },
-                    selector: (_, provider) => provider.isProgress,
-                  ),
-                ],
-              )
-            : noInternet(context));
+    return SafeArea(
+      top: false,
+      bottom: true,
+      child: Scaffold(
+          appBar: widget.fromBottom
+              ? null
+              : getSimpleAppBar(getTranslated(context, 'CART')!, context),
+          body: _isNetworkAvail
+              ? Stack(
+                  children: <Widget>[
+                    _showContent(context),
+                    Selector<CartProvider, bool>(
+                      builder: (context, data, child) {
+                        return showCircularProgress(data, colors.primary);
+                      },
+                      selector: (_, provider) => provider.isProgress,
+                    ),
+                  ],
+                )
+              : noInternet(context)),
+    );
   }
 
   Widget listItem(int index, List<SectionModel> cartList) {
@@ -3305,7 +3311,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       razorpayPayment();
     else if (payMethod == "UPI") {
         Navigator.pop(context);
-        UpiPayment upiPayment = new UpiPayment(amount: totalPrice.toString(), upiName: upiName,upi: upiId,context:
+        UpiPayment upiPayment = new UpiPayment(amount: finalResult.toString(), upiName: upiName,upi: upiId,context:
           context, onResult: (value) {
           if(value.status==UpiTransactionStatus.success){
             Navigator.pop(context);
@@ -4137,7 +4143,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                   )
                 ],
               ),
-              isPromoValid!
+              isPromoValid
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -4155,7 +4161,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                       ],
                     )
                   : Container(),
-              isUseWallet!
+              isUseWallet
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

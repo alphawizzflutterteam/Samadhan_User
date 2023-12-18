@@ -24,7 +24,7 @@ class _AllCategoryState extends State<AllCategory> {
   @override
   void initState() {
     super.initState();
-    //getCat();
+   // getCat();
   }
 
   Future<void> getCat() async {

@@ -117,7 +117,7 @@ getAppBar(
     ),
     title: Text(
       title,
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal,fontSize: 15),
     ),
     actions: <Widget>[
       IconButton(

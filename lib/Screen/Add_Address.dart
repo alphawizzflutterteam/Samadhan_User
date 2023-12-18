@@ -149,10 +149,14 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: getSimpleAppBar(getTranslated(context, "ADDRESS_LBL")!, context),
-      body: _isNetworkAvail ? _showContent() : noInternet(context),
+    return SafeArea(
+      top: false,
+      bottom: true,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: getSimpleAppBar(getTranslated(context, "ADDRESS_LBL")!, context),
+        body: _isNetworkAvail ? _showContent() : noInternet(context),
+      ),
     );
   }
 
@@ -217,8 +221,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
         setSnackbar(getTranslated(context, 'cityWarning')!);
       } else if (area == null || area!.isEmpty) {
         setSnackbar(getTranslated(context, 'areaWarning')!);
-      } else if (latitude == null || longitude == null) {
-        setSnackbar(getTranslated(context, 'locationWarning')!);
+      // } else if (latitude == null || longitude == null) {
+      //   setSnackbar(getTranslated(context, 'locationWarning')!);
       } else {
         return true;
       }
@@ -1174,8 +1178,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
         COUNTRY: country,
         TYPE: type,
         ISDEFAULT: checkedDefault.toString() == "true" ? "1" : "0",
-        LATITUDE: latitude,
-        LONGITUDE: longitude
+        LATITUDE: "",
+        LONGITUDE: ""
       };
       if (widget.update!) data[ID] = addressList[widget.index!].id;
 

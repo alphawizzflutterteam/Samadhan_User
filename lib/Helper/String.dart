@@ -14,8 +14,7 @@ final Uri getFeatureOrderApi = Uri.parse(baseUrl + 'get_booking_order');
 final Uri getUpdatePreApi = Uri.parse(baseUrl + 'upload_prescription');
 final Uri getSectionApi = Uri.parse(baseUrl + 'get_sections');
 final Uri getSettingApi = Uri.parse(baseUrl + 'get_settings');
-final Uri getSubcatApi =
-    Uri.parse(baseUrl + 'get_subcategories_by_category_id');
+final Uri getSubcatApi = Uri.parse(baseUrl + 'get_subcategories_by_category_id');
 final Uri getProductApi = Uri.parse(baseUrl + 'get_products');
 final Uri manageCartApi = Uri.parse(baseUrl + 'manage_cart');
 final Uri getUserLoginApi = Uri.parse(baseUrl + 'login');

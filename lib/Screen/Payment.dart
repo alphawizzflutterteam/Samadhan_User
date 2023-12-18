@@ -890,17 +890,14 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
 
                     // String orderTime = getTime(timeSlotList[i].lastTime!);
                     if (cur.isBefore(last)) {
-                      int.parse(currentTime!.split(":")[0].toString()) <=
-                              int.parse(timeSlotList[i]
-                                  .name!
-                                  .split(":")[0]
-                                  .toString())
-                          ? timeModel.add(new RadioModel(
-                              isSelected: i == selectedTime ? true : false,
-                              name: timeSlotList[i].name,
-                              limit: timeSlotList[i].limit.toString(),
-                              img: ''))
-                          : SizedBox.shrink();
+                      // int.parse(currentTime!.split(":")[0].toString()) <=
+                      //         int.parse(timeSlotList[i].name!.split(":")[0].toString())
+                      //     ? timeModel.add(new RadioModel(
+                      //         isSelected: i == selectedTime ? true : false,
+                      //         name: timeSlotList[i].name,
+                      //         limit: timeSlotList[i].limit.toString(),
+                      //         img: ''))
+                      //     : SizedBox.shrink();
                     }
                   } else {
                     timeModel.add(new RadioModel(
