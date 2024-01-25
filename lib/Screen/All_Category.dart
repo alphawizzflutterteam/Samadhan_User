@@ -243,7 +243,7 @@ class _AllCategoryState extends State<AllCategory> {
   subCatItem(List<Product> subList, int index, BuildContext context) {
     return GestureDetector(
       child: Container(
-        decoration: BoxDecoration(color:  Colors.grey,borderRadius: BorderRadius.circular(15.0)),
+        decoration: BoxDecoration(color:  Colors.white,borderRadius: BorderRadius.circular(15.0)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -276,7 +276,7 @@ class _AllCategoryState extends State<AllCategory> {
                     .caption!
                     .copyWith(
                     color: Theme.of(context)
-                        .colorScheme.white,
+                        .colorScheme.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 14),
                 overflow: TextOverflow.ellipsis,

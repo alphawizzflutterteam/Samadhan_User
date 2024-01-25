@@ -95,6 +95,7 @@ class _OtpScreenState extends State<OtpScreen> {
     bool avail = await isNetworkAvailable();
     if (avail) {
       if (_isClickable) {
+        print('____Som______ferfff_______');
         // _onVerifyCode();
         _onFormSubmitted();
       } else {
@@ -338,7 +339,6 @@ class _OtpScreenState extends State<OtpScreen> {
           SettingProvider settingProvider = context.read<SettingProvider>();
           settingProvider.saveUserDetail(id!, name, email, mobile, city, area,
               address, pincode, latitude, longitude, "", context);
-
           Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
         } else if (widget.title ==
             getTranslated(context, 'FORGOT_PASS_TITLE')) {
@@ -622,6 +622,11 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
           ),
         ),
+        // InkWell(
+        //   onTap: (){
+        //     _onFormSubmitted();
+        //   },
+        //     child: Text("ddd")),
         SizedBox(
           height: 1.46.h,
         ),

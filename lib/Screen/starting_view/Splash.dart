@@ -71,7 +71,10 @@ class _SplashScreen extends State<Splash> {
   }
 
   startTime() async {
-    var _duration = Duration(seconds: 4);
+    print("++++++++++++++++++++++++++");
+
+
+    var _duration = Duration(milliseconds: 4);
     return Timer(_duration, navigationPage);
   }
 
@@ -80,9 +83,12 @@ class _SplashScreen extends State<Splash> {
         Provider.of<SettingProvider>(this.context, listen: false);
 
     bool isFirstTime = await settingsProvider.getPrefrenceBool(ISFIRSTTIME);
+    print('____Som______${isFirstTime}_________');
     if (isFirstTime) {
+      print('++++++++++++home++++++++++++++');
       Navigator.pushReplacementNamed(context, "/home");
     } else {
+      print("++++++++++++Splash++++++++++++++");
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

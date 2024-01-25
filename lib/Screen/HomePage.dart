@@ -44,11 +44,13 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:version/version.dart';
 
+import '../Model/GetFetatureProductModel.dart';
 import 'ProductList.dart';
 import 'Product_Detail.dart';
 import 'SectionList.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
+import 'package:http/http.dart'as http;
 class HomePage extends StatefulWidget {
   ValueChanged onResult;
   HomePage(this.onResult);
@@ -101,8 +103,9 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    getCurrentLoc();
-    callApi();
+  // getCurrentLoc();
+   callApi();
+   getProductFeature();
     buttonController = new AnimationController(
         duration: new Duration(milliseconds: 2000), vsync: this);
 
@@ -128,7 +131,29 @@ class _HomePageState extends State<HomePage>
       _animateSlider(_controller5);
     });
   }
+  GetFetatureProductModel? getFetatureProductModel;
+  getProductFeature() async {
+    var headers = {
+      'Cookie': 'ci_session=40de91cc9c18ef1298fe19d7ff05574176633a26'
+    };
+    var request = http.Request('GET', Uri.parse('https://samadhaan.online/app/v1/api/get_features_product'));
 
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+     var result  = await response.stream.bytesToString();
+     var finalResult  =  GetFetatureProductModel.fromJson(json.decode(result));
+     setState(() {
+       getFetatureProductModel = finalResult;
+     });
+    }
+    else {
+    print(response.reasonPhrase);
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     var mysize = MediaQuery.of(context).size;
@@ -210,47 +235,102 @@ class _HomePageState extends State<HomePage>
                           ));
                     }),*/
 
-                    saveButton("Feature Products", () {
-                      if(CUR_USERID != null){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const FeatureProduct(
-                                name: "Feature Product",
-                                /*  tag: false,
-                    fromSeller: false,*/
-                              ),
-                            ));
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            // title: const Text("Alert Dialog Box"),
-                            content: const Text("Please Login first to Use This Features."),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Login(),
-                                      ));
-                                },
-                                child: Container(
-                                  color: Colors.green,
-                                  padding: const EdgeInsets.all(10),
-                                  child: const Text("okay",
-                                    style: TextStyle(
-                                        color: Colors.white
+                    // saveButton("Feature Products", () {
+                    //   if(CUR_USERID != null){
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //           builder: (context) => const FeatureProduct(
+                    //             name: "Feature Product",
+                    //             /*  tag: false,
+                    // fromSeller: false,*/
+                    //           ),
+                    //         ));
+                    //   } else {
+                    //     showDialog(
+                    //       context: context,
+                    //       builder: (ctx) => AlertDialog(
+                    //         // title: const Text("Alert Dialog Box"),
+                    //         content: const Text("Please Login first to Use This Features."),
+                    //         actions: <Widget>[
+                    //           TextButton(
+                    //             onPressed: () {
+                    //               Navigator.pushReplacement(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                     builder: (context) => Login(),
+                    //                   ));
+                    //             },
+                    //             child: Container(
+                    //               color: Colors.green,
+                    //               padding: const EdgeInsets.all(10),
+                    //               child: const Text("okay",
+                    //                 style: TextStyle(
+                    //                     color: Colors.white
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }
+                    // }),
+                   Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Text("Upcoming  Product",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                   ),
+
+                    Card(
+
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: getFetatureProductModel?.data?.length ?? 0,
+                          itemBuilder: (context,i){
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Card(
+                              elevation: 2,
+                              child: Container(
+                                height: 120,
+                                width: 100,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        height: 120,
+                                        width: 100,
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.network("${getFetatureProductModel?.data?[i].productImage}",scale:4.0,fit: BoxFit.fill,)),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(width: 20,),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5,left: 5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text("${getFetatureProductModel?.data?[i].productName}",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey,fontSize: 16),),
+                                          Text("${getFetatureProductModel?.data?[i].description}"),
+                                          Text("${getFetatureProductModel?.data?[i].daysLeft} Days"),
+                                          Text("₹ ${getFetatureProductModel?.data?[i].price}"),
+                                        ],
+                                      ),
+                                    )
+
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      }
-                    }),
+                            ),
+                          );
+                      }),
+                    ),
                     pages4.length>0?_slider(pages4,4,_controller4):SizedBox(),
                    _section(),
                     pages2.length>0?_slider(pages2,2,_controller2):SizedBox(),
@@ -1606,7 +1686,7 @@ class _HomePageState extends State<HomePage>
                     highlightColor: Theme.of(context).colorScheme.simmerHigh,
                     child: catLoading()))
             : Container(
-                height: 150,
+                height: 140,
                 padding: const EdgeInsets.only(top: 10, left: 10),
                 child: ListView.builder(
                   itemCount: catList.length < 10 ? catList.length : 10,
@@ -1646,7 +1726,8 @@ class _HomePageState extends State<HomePage>
                             }
                           },
                           child: Container(
-                            decoration: BoxDecoration(color:  Colors.grey,borderRadius: BorderRadius.circular(8.0),
+                            decoration: BoxDecoration(color:  Colors.white,borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: colors.darkIcon)
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -1662,9 +1743,9 @@ class _HomePageState extends State<HomePage>
                                       image: CachedNetworkImageProvider(
                                         catList[index].image!,
                                       ),
-                                      height: 110,
-                                      width: 13.h,
-                                      fit: BoxFit.cover,
+                                      height: 90,
+                                      width: 14.h,
+                                      fit: BoxFit.fill,
                                       imageErrorBuilder:
                                           (context, error, stackTrace) =>
                                           erroWidget(50),
@@ -1679,7 +1760,7 @@ class _HomePageState extends State<HomePage>
                                         .textTheme
                                         .caption!
                                         .copyWith(
-                                        color: Colors.white,
+                                        color: Colors.black54,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 10),
                                     overflow: TextOverflow.ellipsis,
@@ -1727,6 +1808,7 @@ class _HomePageState extends State<HomePage>
       getSeller();
       getSection();
       getOfferImages();
+      getProductFeature();
     } else {
       if (mounted)
         setState(() {

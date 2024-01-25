@@ -151,110 +151,108 @@ class _SignUpScreenState extends State<SignUpScreen>
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 1000),
-            curve: Curves.easeInOut,
-            width: 100.w,
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                center: Alignment(0.0, -0.5),
-                colors: [
-                  AppColor().colorBg1(),
-                  AppColor().colorBg2(),
-                ],
-                radius: 0.8,
-              ),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 1000),
+          curve: Curves.easeInOut,
+          width: 100.w,
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment(0.0, -0.5),
+              colors: [
+                AppColor().colorBg1(),
+                AppColor().colorBg2(),
+              ],
+              radius: 0.8,
             ),
-            padding: MediaQuery.of(context).viewInsets,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
-                  height: 22.65.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage("assets/images/login_option_bg.png"),
-                    fit: BoxFit.fill,
-                  )),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Container(
-                            width: 100.w,
-                            height: 4.0.h,
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(left: 5.w, top: 1.h),
-                            child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Image.asset(
-                                  "assets/images/drawer/back.png",
-                                  height: 4.0.h,
-                                  width: 8.w,
-                                ))),
-                        SizedBox(
-                          height: 2.08.h,
-                        ),
-                        text(
-                          "Sign Up",
-                          textColor: Color(0xffffffff),
-                          fontSize: 27.sp,
-                          fontFamily: fontMedium,
+          ),
+          padding: MediaQuery.of(context).viewInsets,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                height: 22.65.h,
+                width: 100.w,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage("assets/images/login_option_bg.png"),
+                  fit: BoxFit.fill,
+                )),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                          width: 100.w,
+                          height: 4.0.h,
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 5.w, top: 1.h),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Image.asset(
+                                "assets/images/drawer/back.png",
+                                height: 4.0.h,
+                                width: 8.w,
+                              ))),
+                      SizedBox(
+                        height: 2.08.h,
+                      ),
+                      text(
+                        "Sign Up",
+                        textColor: Color(0xffffffff),
+                        fontSize: 27.sp,
+                        fontFamily: fontMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                margin: EdgeInsets.only(top: 16.h),
+                width: 83.33.w,
+                height: 74.14.h,
+                decoration:
+                    boxDecoration(radius: 20.0, bgColor: Color(0xffffffff)),
+                child: firstSign(context),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 98.35.h, bottom: 8.h),
+                child: InkWell(
+                  onTap: () async {
+                    setState(() {
+                      edit = true;
+                    });
+                    await Future.delayed(Duration(milliseconds: 200));
+                    setState(() {
+                      edit = false;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: RichText(
+                    text: new TextSpan(
+                      text: "Already have an account? ",
+                      style: TextStyle(
+                        color: Color(0xff171717),
+                        fontSize: 10.sp,
+                        fontFamily: fontBold,
+                      ),
+                      children: <TextSpan>[
+                        new TextSpan(
+                          text: 'Login',
+                          style: TextStyle(
+                            color: AppColor().colorPrimary(),
+                            fontSize: 10.sp,
+                            fontFamily: fontBold,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                  margin: EdgeInsets.only(top: 16.h),
-                  width: 83.33.w,
-                  height: 74.14.h,
-                  decoration:
-                      boxDecoration(radius: 20.0, bgColor: Color(0xffffffff)),
-                  child: firstSign(context),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 98.35.h, bottom: 8.h),
-                  child: InkWell(
-                    onTap: () async {
-                      setState(() {
-                        edit = true;
-                      });
-                      await Future.delayed(Duration(milliseconds: 200));
-                      setState(() {
-                        edit = false;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: RichText(
-                      text: new TextSpan(
-                        text: "Already have an account? ",
-                        style: TextStyle(
-                          color: Color(0xff171717),
-                          fontSize: 10.sp,
-                          fontFamily: fontBold,
-                        ),
-                        children: <TextSpan>[
-                          new TextSpan(
-                            text: 'Login',
-                            style: TextStyle(
-                              color: AppColor().colorPrimary(),
-                              fontSize: 10.sp,
-                              fontFamily: fontBold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

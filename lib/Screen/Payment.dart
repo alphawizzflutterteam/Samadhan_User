@@ -301,389 +301,393 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: getSimpleAppBar(
-          getTranslated(context, 'PAYMENT_METHOD_LBL')!, context),
-      // getAppBar(getTranslated(context, 'PAYMENT_METHOD_LBL')!, context),
-      body: _isNetworkAvail
-          ? _isLoading
-              ? getProgress()
-              : Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Consumer<UserProvider>(
-                                  builder: (context, userProvider, _) {
-                                return Card(
-                                  elevation: 0,
-                                  child: userProvider.curBalance != "0" &&
-                                          // userProvider.curBalance.isNotEmpty &&
-                                          userProvider.curBalance != "" &&
-                                          userProvider.curBalance != null
-                                      ? Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8.0),
-                                          child: CheckboxListTile(
-                                            dense: true,
-                                            contentPadding: EdgeInsets.all(0),
-                                            value: isUseWallet,
-                                            onChanged: (bool? value) {
-                                              if (mounted)
-                                                setState(() {
-                                                  isUseWallet = value!;
-                                                  if (value) {
-                                                    if (totalPrice <=
-                                                        double.parse(
-                                                            userProvider
-                                                                .curBalance)) {
-                                                      remWalBal = (double.parse(
+    return SafeArea(
+      top: false,
+      bottom: true,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: getSimpleAppBar(
+            getTranslated(context, 'PAYMENT_METHOD_LBL')!, context),
+        // getAppBar(getTranslated(context, 'PAYMENT_METHOD_LBL')!, context),
+        body: _isNetworkAvail
+            ? _isLoading
+                ? getProgress()
+                : Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Consumer<UserProvider>(
+                                    builder: (context, userProvider, _) {
+                                  return Card(
+                                    elevation: 0,
+                                    child: userProvider.curBalance != "0" &&
+                                            // userProvider.curBalance.isNotEmpty &&
+                                            userProvider.curBalance != "" &&
+                                            userProvider.curBalance != null
+                                        ? Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: CheckboxListTile(
+                                              dense: true,
+                                              contentPadding: EdgeInsets.all(0),
+                                              value: isUseWallet,
+                                              onChanged: (bool? value) {
+                                                if (mounted)
+                                                  setState(() {
+                                                    isUseWallet = value!;
+                                                    if (value) {
+                                                      if (totalPrice <=
+                                                          double.parse(
                                                               userProvider
-                                                                  .curBalance) -
-                                                          totalPrice);
-                                                      usedBal = totalPrice;
-                                                      payMethod = "Wallet";
+                                                                  .curBalance)) {
+                                                        remWalBal = (double.parse(
+                                                                userProvider
+                                                                    .curBalance) -
+                                                            totalPrice);
+                                                        usedBal = totalPrice;
+                                                        payMethod = "Wallet";
 
-                                                      isPayLayShow = false;
+                                                        isPayLayShow = false;
+                                                      } else {
+                                                        remWalBal = 0;
+                                                        usedBal = double.parse(
+                                                            userProvider
+                                                                .curBalance);
+                                                        isPayLayShow = true;
+                                                      }
+                                                      totalPrice =
+                                                          totalPrice - usedBal;
                                                     } else {
-                                                      remWalBal = 0;
-                                                      usedBal = double.parse(
+                                                      totalPrice =
+                                                          totalPrice + usedBal;
+                                                      remWalBal = double.parse(
                                                           userProvider
                                                               .curBalance);
+                                                      payMethod = null;
+                                                      selectedMethod = null;
+                                                      usedBal = 0;
                                                       isPayLayShow = true;
                                                     }
-                                                    totalPrice =
-                                                        totalPrice - usedBal;
-                                                  } else {
-                                                    totalPrice =
-                                                        totalPrice + usedBal;
-                                                    remWalBal = double.parse(
-                                                        userProvider
-                                                            .curBalance);
-                                                    payMethod = null;
-                                                    selectedMethod = null;
-                                                    usedBal = 0;
-                                                    isPayLayShow = true;
-                                                  }
 
-                                                  widget.update();
-                                                });
-                                            },
-                                            title: Text(
-                                              getTranslated(
-                                                  context, 'USE_WALLET')!,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle1,
-                                            ),
-                                            subtitle: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 8.0),
-                                              child: Text(
-                                                isUseWallet!
-                                                    ? getTranslated(context,
-                                                            'REMAIN_BAL')! +
-                                                        " : " +
-                                                        CUR_CURRENCY! +
-                                                        " " +
-                                                        remWalBal
-                                                            .toStringAsFixed(2)
-                                                    : getTranslated(context,
-                                                            'TOTAL_BAL')! +
-                                                        " : " +
-                                                        CUR_CURRENCY! +
-                                                        " " +
-                                                        double.parse(
-                                                                userProvider
-                                                                    .curBalance)
-                                                            .toStringAsFixed(2),
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .black),
+                                                    widget.update();
+                                                  });
+                                              },
+                                              title: Text(
+                                                getTranslated(
+                                                    context, 'USE_WALLET')!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1,
                                               ),
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                );
-                              }),
-                              isTimeSlot!
-                                  ? Card(
-                                      elevation: 0,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              getTranslated(
-                                                  context, 'PREFERED_TIME')!,
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .fontColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                          Divider(),
-                                          Container(
-                                            height: 90,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: ListView.builder(
-                                                shrinkWrap: true,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: int.parse(allowDay!),
-                                                itemBuilder: (context, index) {
-                                                  return dateCell(index);
-                                                }),
-                                          ),
-                                          Divider(),
-                                          showTime
-                                              ? ListView.builder(
-                                                  shrinkWrap: true,
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  itemCount: timesList.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    // print("checking limit here  ${timesList[index].limit} and ${timesList[index].totalOrder} and ${timesList[index].id}");
-                                                    // print("TOITLAQ===" + int.parse(timesList[0].totalOrder.toString()).toString());
-                                                    return int.parse(timesList[
-                                                                    index]
-                                                                .totalOrder
-                                                                .toString()) >=
-                                                            int.parse(
-                                                                timesList[index]
-                                                                    .limit
-                                                                    .toString())
-                                                        ? SizedBox.shrink()
-                                                        : Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    bottom: 8,
-                                                                    left: 5),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  selectedindex =
-                                                                      timesList[
-                                                                              index]
-                                                                          .id;
-                                                                  print(
-                                                                      "selected id here ${selectedindex}");
-                                                                  selTime =
-                                                                      timesList[
-                                                                              index]
-                                                                          .title;
-                                                                });
-                                                              },
-                                                              child: Row(
-                                                                children: [
-                                                                  selectedindex ==
-                                                                          timesList[index]
-                                                                              .id
-                                                                      ? Container(
-                                                                          height:
-                                                                              20,
-                                                                          width:
-                                                                              20,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Colors.green,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(100),
-                                                                            border:
-                                                                                Border.all(color: Colors.grey),
-                                                                          ),
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.check,
-                                                                            color:
-                                                                                Colors.white,
-                                                                            size:
-                                                                                15,
-                                                                          ),
-                                                                        )
-                                                                      : Container(
-                                                                          height:
-                                                                              20,
-                                                                          width:
-                                                                              20,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            // color: Colors.green,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(100),
-                                                                            border:
-                                                                                Border.all(color: Colors.grey),
-                                                                          ),
-                                                                          // child: Icon(Icons.check,color: Colors.white,size: 15,),
-                                                                        ),
-                                                                  SizedBox(
-                                                                    width: 20,
-                                                                  ),
-                                                                  Text(
-                                                                      "${timesList[index].title}")
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                    // return timeSlotItem(index,timeModel[index].name);
-                                                  })
-                                              : Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      2,
-                                                  alignment: Alignment.center,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "Holiday",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 25,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .fontColor),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        "Please select other date",
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                    ],
-                                                  ))
-                                        ],
-                                      ),
-                                    )
-                                  : Container(),
-                              showTime == false
-                                  ? SizedBox.shrink()
-                                  : isPayLayShow
-                                      ? Card(
-                                          elevation: 0,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Padding(
+                                              subtitle: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8.0),
                                                 child: Text(
-                                                  getTranslated(context,
-                                                      'SELECT_PAYMENT')!,
+                                                  isUseWallet!
+                                                      ? getTranslated(context,
+                                                              'REMAIN_BAL')! +
+                                                          " : " +
+                                                          CUR_CURRENCY! +
+                                                          " " +
+                                                          remWalBal
+                                                              .toStringAsFixed(2)
+                                                      : getTranslated(context,
+                                                              'TOTAL_BAL')! +
+                                                          " : " +
+                                                          CUR_CURRENCY! +
+                                                          " " +
+                                                          double.parse(
+                                                                  userProvider
+                                                                      .curBalance)
+                                                              .toStringAsFixed(2),
                                                   style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .fontColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 16,
-                                                  ),
+                                                      fontSize: 15,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .black),
                                                 ),
                                               ),
-                                              Divider(),
-                                              // Padding(
-                                              //   padding:  EdgeInsets.only(left: 10),
-                                              //   child: InkWell(
-                                              //       onTap: (){
-                                              //         initPlatformState();
-                                              //       },
-                                              //       child: Text("Pay online",style: TextStyle(color: Colors.white),)),
-                                              // ),
-                                              ListView.builder(
+                                            ),
+                                          )
+                                        : Container(),
+                                  );
+                                }),
+                                isTimeSlot!
+                                    ? Card(
+                                        elevation: 0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                getTranslated(
+                                                    context, 'PREFERED_TIME')!,
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .fontColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            Divider(),
+                                            Container(
+                                              height: 90,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: ListView.builder(
                                                   shrinkWrap: true,
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  itemCount:
-                                                      paymentMethodList.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    if (index == 1 && cod)
-                                                      return paymentItem(index);
-                                                    else if (index == 2 &&
-                                                        paypal)
-                                                      return paymentItem(index);
-                                                      else if (index == 3 && upi)
-                                                      return widget.isEnbleUpi == "1"  ? paymentItem(index):SizedBox.shrink();
-                                                    else if (index == 4 &&
-                                                        paumoney)
-                                                      return paymentItem(index);
-                                                    else if (index == 5 &&
-                                                        razorpay)
-                                                      return paymentItem(index);
-                                                    else if (index == 6 &&
-                                                        paystack)
-                                                      return paymentItem(index);
-                                                    else if (index == 7 &&
-                                                        flutterwave)
-                                                      return paymentItem(index);
-                                                    else if (index == 8 &&
-                                                        stripe)
-                                                      return paymentItem(index);
-                                                    else if (index == 9 &&
-                                                        paytm)
-                                                      return paymentItem(index);
-                                                    else if (index == 0 && gpay)
-                                                      return paymentItem(index);
-                                                    else if (index == 10 &&
-                                                        bankTransfer)
-                                                      return paymentItem(index);
-                                                    else
-                                                      return Container();
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: int.parse(allowDay!),
+                                                  itemBuilder: (context, index) {
+                                                    return dateCell(index);
                                                   }),
-                                            ],
-                                          ),
-                                        )
-                                      : Container()
-                            ],
+                                            ),
+                                            Divider(),
+                                            showTime
+                                                ? ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemCount: timesList.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      // print("checking limit here  ${timesList[index].limit} and ${timesList[index].totalOrder} and ${timesList[index].id}");
+                                                      // print("TOITLAQ===" + int.parse(timesList[0].totalOrder.toString()).toString());
+                                                      return int.parse(timesList[
+                                                                      index]
+                                                                  .totalOrder
+                                                                  .toString()) >=
+                                                              int.parse(
+                                                                  timesList[index]
+                                                                      .limit
+                                                                      .toString())
+                                                          ? SizedBox.shrink()
+                                                          : Padding(
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      bottom: 8,
+                                                                      left: 5),
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    selectedindex =
+                                                                        timesList[
+                                                                                index]
+                                                                            .id;
+                                                                    print(
+                                                                        "selected id here ${selectedindex}");
+                                                                    selTime =
+                                                                        timesList[
+                                                                                index]
+                                                                            .title;
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  children: [
+                                                                    selectedindex ==
+                                                                            timesList[index]
+                                                                                .id
+                                                                        ? Container(
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                20,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color:
+                                                                                  Colors.green,
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(100),
+                                                                              border:
+                                                                                  Border.all(color: Colors.grey),
+                                                                            ),
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.check,
+                                                                              color:
+                                                                                  Colors.white,
+                                                                              size:
+                                                                                  15,
+                                                                            ),
+                                                                          )
+                                                                        : Container(
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                20,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              // color: Colors.green,
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(100),
+                                                                              border:
+                                                                                  Border.all(color: Colors.grey),
+                                                                            ),
+                                                                            // child: Icon(Icons.check,color: Colors.white,size: 15,),
+                                                                          ),
+                                                                    SizedBox(
+                                                                      width: 20,
+                                                                    ),
+                                                                    Text(
+                                                                        "${timesList[index].title}")
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            );
+                                                      // return timeSlotItem(index,timeModel[index].name);
+                                                    })
+                                                : Container(
+                                                    height: MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        2,
+                                                    alignment: Alignment.center,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          "Holiday",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 25,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .fontColor),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Text(
+                                                          "Please select other date",
+                                                          style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ],
+                                                    ))
+                                          ],
+                                        ),
+                                      )
+                                    : Container(),
+                                showTime == false
+                                    ? SizedBox.shrink()
+                                    : isPayLayShow
+                                        ? Card(
+                                            elevation: 0,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    getTranslated(context,
+                                                        'SELECT_PAYMENT')!,
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .fontColor,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Divider(),
+                                                // Padding(
+                                                //   padding:  EdgeInsets.only(left: 10),
+                                                //   child: InkWell(
+                                                //       onTap: (){
+                                                //         initPlatformState();
+                                                //       },
+                                                //       child: Text("Pay online",style: TextStyle(color: Colors.white),)),
+                                                // ),
+                                                ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemCount:
+                                                        paymentMethodList.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      if (index == 1 && cod)
+                                                        return paymentItem(index);
+                                                      else if (index == 2 &&
+                                                          paypal)
+                                                        return paymentItem(index);
+                                                        else if (index == 3 && upi)
+                                                        return widget.isEnbleUpi == "1"  ? paymentItem(index):SizedBox.shrink();
+                                                      else if (index == 4 &&
+                                                          paumoney)
+                                                        return paymentItem(index);
+                                                      else if (index == 5 &&
+                                                          razorpay)
+                                                        return paymentItem(index);
+                                                      else if (index == 6 &&
+                                                          paystack)
+                                                        return paymentItem(index);
+                                                      else if (index == 7 &&
+                                                          flutterwave)
+                                                        return paymentItem(index);
+                                                      else if (index == 8 &&
+                                                          stripe)
+                                                        return paymentItem(index);
+                                                      else if (index == 9 &&
+                                                          paytm)
+                                                        return paymentItem(index);
+                                                      else if (index == 0 && gpay)
+                                                        return paymentItem(index);
+                                                      else if (index == 10 &&
+                                                          bankTransfer)
+                                                        return paymentItem(index);
+                                                      else
+                                                        return Container();
+                                                    }),
+                                              ],
+                                            ),
+                                          )
+                                        : Container()
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      showTime == false
-                          ? SizedBox.shrink()
-                          : SimBtn(
-                              size: 0.8,
-                              title: getTranslated(context, 'DONE'),
-                              onBtnSelected: () {
-                                selectedDate = -1;
-                                // payMethod = "0";
-                                Navigator.pop(context);
-                              },
-                            ),
-                    ],
-                  ),
-                )
-          : noInternet(context),
+                        showTime == false
+                            ? SizedBox.shrink()
+                            : SimBtn(
+                                size: 0.8,
+                                title: getTranslated(context, 'DONE'),
+                                onBtnSelected: () {
+                                  selectedDate = -1;
+                                  // payMethod = "0";
+                                  Navigator.pop(context);
+                                },
+                              ),
+                      ],
+                    ),
+                  )
+            : noInternet(context),
+      ),
     );
   }
 

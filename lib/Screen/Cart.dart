@@ -1794,7 +1794,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                     setSnackbar(
                                         getTranslated(context, 'ADD_PROMO')!,
                                         _checkscaffoldKey);
-                                  else if (!isPromoValid!) {
+                                  else if (!isPromoValid) {
                                     validatePromo(false);
                                     Navigator.pop(context);
                                   }
@@ -2410,10 +2410,11 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             USER_ID: CUR_USERID,
             QTY: qty.toString()
           };
-
+     print('____Som______${parameter}_________');
           Response response =
               await post(manageCartApi, body: parameter, headers: headers)
                   .timeout(Duration(seconds: timeOut));
+          print('____Som______${manageCartApi}_________');
 
           var getdata = json.decode(response.body);
           print(getdata);
@@ -2729,45 +2730,46 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                             print("ori length ${oriPrice}");
                             if (oriPrice > 0) {
                               FocusScope.of(context).unfocus();
-                              print("sdss ${isAvailable} and ");
-                              if (isAvailable) {
-                                if (addressList.isNotEmpty) {
-                                  String? areaids =
-                                      addressList[selectedAddress!].areaId!;
-                                  print(
-                                      "area hre ${areaids} and ${CUR_USERID} and ${deliveryChargeByWeightApi}");
-                                  Response response = await post(
-                                          deliveryChargeByWeightApi,
-                                          body: {
-                                            "user_id": "${CUR_USERID}",
-                                            "address_id": "${areaids}"
-                                          },
-                                          headers: headers)
-                                      .timeout(Duration(seconds: timeOut));
-                                  String? data = DeliveryModel.fromJson(
-                                          json.decode(response.body))
-                                      .deliveryCharge
-                                      .toString();
-                                  if (data != null) {
-                                    checkout(cartList, data);
-                                  }
-                                  // setState(() {
-                                  //   deliveryWeight = data;
-                                  // });
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ManageAddress(
-                                                home: false,
-                                              )));
+                              if (addressList.isNotEmpty) {
+                                String? areaids =
+                                addressList[selectedAddress!].areaId!;
+                                print(
+                                    "area hre ${areaids} and ${CUR_USERID} and ${deliveryChargeByWeightApi}");
+                                Response response = await post(
+                                    deliveryChargeByWeightApi,
+                                    body: {
+                                      "user_id": "${CUR_USERID}",
+                                      "address_id": "${areaids}"
+                                    },
+                                    headers: headers)
+                                    .timeout(Duration(seconds: timeOut));
+                                String? data = DeliveryModel.fromJson(
+                                    json.decode(response.body))
+                                    .deliveryCharge
+                                    .toString();
+                                if (data != null) {
+                                  checkout(cartList, data);
                                 }
+                                // setState(() {
+                                //   deliveryWeight = data;
+                                // });
                               } else {
-                                setSnackbar(
-                                    getTranslated(
-                                        context, 'CART_OUT_OF_STOCK_MSG')!,
-                                    _scaffoldKey);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ManageAddress(
+                                          home: false,
+                                        )));
                               }
+                              // if (isAvailable) {
+                              //
+                              // }
+                              // else {
+                              //   setSnackbar(
+                              //       getTranslated(
+                              //           context, 'CART_OUT_OF_STOCK_MSG')!,
+                              //       _scaffoldKey);
+                              // }
                               if (mounted) setState(() {});
                             } else
                               setSnackbar(getTranslated(context, 'ADD_ITEM')!,
@@ -2881,272 +2883,276 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             return Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height * 0.8),
-                child: Scaffold(
-                  resizeToAvoidBottomInset: false,
-                  key: _checkscaffoldKey,
-                  body: _isNetworkAvail
-                      ? cartList.length == 0
-                          ? cartEmpty()
-                          : _isLoading
-                              ? shimmer(context)
-                              : Column(
-                                  children: [
-                                    Expanded(
-                                      child: Stack(
-                                        children: <Widget>[
-                                          SingleChildScrollView(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  // getNow(),
-                                                  address(),
-                                                  payment(),
-                                                  cartItems(cartList),
-                                                  // promo(),
-                                                  orderSummary(
-                                                      cartList, delivery),
-                                                ],
+                child: SafeArea(
+                  top: false,
+                  bottom: true,
+                  child: Scaffold(
+                    resizeToAvoidBottomInset: false,
+                    key: _checkscaffoldKey,
+                    body: _isNetworkAvail
+                        ? cartList.length == 0
+                            ? cartEmpty()
+                            : _isLoading
+                                ? shimmer(context)
+                                : Column(
+                                    children: [
+                                      Expanded(
+                                        child: Stack(
+                                          children: <Widget>[
+                                            SingleChildScrollView(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    // getNow(),
+                                                    address(),
+                                                    payment(),
+                                                    cartItems(cartList),
+                                                    // promo(),
+                                                    orderSummary(
+                                                        cartList, delivery),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Selector<CartProvider, bool>(
-                                            builder: (context, data, child) {
-                                              return showCircularProgress(
-                                                  data, colors.primary);
-                                            },
-                                            selector: (_, provider) =>
-                                                provider.isProgress,
-                                          ),
-                                          /*   showCircularProgress(
-                                              _isProgress, colors.primary),*/
-                                        ],
+                                            Selector<CartProvider, bool>(
+                                              builder: (context, data, child) {
+                                                return showCircularProgress(
+                                                    data, colors.primary);
+                                              },
+                                              selector: (_, provider) =>
+                                                  provider.isProgress,
+                                            ),
+                                            /*   showCircularProgress(
+                                                _isProgress, colors.primary),*/
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      color:
-                                          Theme.of(context).colorScheme.white,
-                                      child: Row(children: <Widget>[
-                                        Padding(
-                                            padding: EdgeInsetsDirectional.only(
-                                                start: 15.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  CUR_CURRENCY! +
-                                                      // " ${totalPrice.toStringAsFixed(2)}",
-                                                      "${finalResult.toStringAsFixed(2)}",
-                                                  style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .fontColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                    cartList.length.toString() +
-                                                        " Items"),
-                                              ],
-                                            )),
-                                        Spacer(),
+                                      Container(
+                                        color:
+                                            Theme.of(context).colorScheme.white,
+                                        child: Row(children: <Widget>[
+                                          Padding(
+                                              padding: EdgeInsetsDirectional.only(
+                                                  start: 15.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    CUR_CURRENCY! +
+                                                        // " ${totalPrice.toStringAsFixed(2)}",
+                                                        "${finalResult.toStringAsFixed(2)}",
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .fontColor,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                      cartList.length.toString() +
+                                                          " Items"),
+                                                ],
+                                              )),
+                                          Spacer(),
 
-                                        SimBtn(
-                                            size: 0.4,
-                                            title: getTranslated(
-                                                context, 'PLACE_ORDER'),
-                                            onBtnSelected: _placeOrder
-                                                ? () {
-                                                    checkoutState!(() {
-                                                      _placeOrder = false;
-                                                    });
+                                          SimBtn(
+                                              size: 0.4,
+                                              title: getTranslated(
+                                                  context, 'PLACE_ORDER'),
+                                              onBtnSelected: _placeOrder
+                                                  ? () {
+                                                      checkoutState!(() {
+                                                        _placeOrder = false;
+                                                      });
 
-                                                    if (selAddress == null ||
-                                                        selAddress!.isEmpty) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'addressWarning');
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                ManageAddress(
-                                                              home: false,
-                                                            ),
-                                                          ));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    } else if (payMethod ==
-                                                            null ||
-                                                        payMethod!.isEmpty) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'payWarning');
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
+                                                      if (selAddress == null ||
+                                                          selAddress!.isEmpty) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'addressWarning');
+                                                        Navigator.pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
                                                               builder: (BuildContext
                                                                       context) =>
-                                                                  Payment(
-                                                                      updateCheckout,
-                                                                      msg,isEnable)));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    } else if (isTimeSlot &&
-                                                        int.parse(allowDay!) >
-                                                            0 &&
-                                                        (selDate == null ||
-                                                            selDate!.isEmpty)) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'dateWarning');
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  Payment(
-                                                                      updateCheckout,
-                                                                      msg,isEnable)));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    } else if (isTimeSlot! &&
-                                                        timeSlotList.length >
-                                                            0 &&
-                                                        (selTime == null ||
-                                                            selTime!.isEmpty)) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'timeWarning');
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  Payment(
-                                                                      updateCheckout,
-                                                                      msg,isEnable)));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
+                                                                  ManageAddress(
+                                                                home: false,
+                                                              ),
+                                                            ));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      } else if (payMethod ==
+                                                              null ||
+                                                          payMethod!.isEmpty) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'payWarning');
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Payment(
+                                                                        updateCheckout,
+                                                                        msg,isEnable)));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      } else if (isTimeSlot &&
+                                                          int.parse(allowDay!) >
+                                                              0 &&
+                                                          (selDate == null ||
+                                                              selDate!.isEmpty)) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'dateWarning');
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Payment(
+                                                                        updateCheckout,
+                                                                        msg,isEnable)));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      } else if (isTimeSlot! &&
+                                                          timeSlotList.length >
+                                                              0 &&
+                                                          (selTime == null ||
+                                                              selTime!.isEmpty)) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'timeWarning');
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Payment(
+                                                                        updateCheckout,
+                                                                        msg,isEnable)));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      }
+                                                      //  else if (double.parse(
+                                                      //         MIN_ALLOW_CART_AMT!) >
+                                                      //     oriPrice) {
+                                                      //   setSnackbar(
+                                                      //       getTranslated(context,
+                                                      //           'MIN_CART_AMT')!,
+                                                      //       _checkscaffoldKey);
+                                                      // }
+                                                      else if (!deliverable) {
+                                                        checkDeliverable();
+                                                      } else
+                                                        confirmDialog();
                                                     }
-                                                    //  else if (double.parse(
-                                                    //         MIN_ALLOW_CART_AMT!) >
-                                                    //     oriPrice) {
-                                                    //   setSnackbar(
-                                                    //       getTranslated(context,
-                                                    //           'MIN_CART_AMT')!,
-                                                    //       _checkscaffoldKey);
-                                                    // }
-                                                    else if (!deliverable) {
-                                                      checkDeliverable();
-                                                    } else
-                                                      confirmDialog();
-                                                  }
-                                                : () {
-                                                    checkoutState!(() {
-                                                      _placeOrder = false;
-                                                    });
+                                                  : () {
+                                                      checkoutState!(() {
+                                                        _placeOrder = false;
+                                                      });
 
-                                                    if (selAddress == null ||
-                                                        selAddress!.isEmpty) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'addressWarning');
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                ManageAddress(
-                                                              home: false,
-                                                            ),
-                                                          ));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    } else if (payMethod ==
-                                                            null ||
-                                                        payMethod!.isEmpty) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'payWarning');
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
+                                                      if (selAddress == null ||
+                                                          selAddress!.isEmpty) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'addressWarning');
+                                                        Navigator.pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
                                                               builder: (BuildContext
                                                                       context) =>
-                                                                  Payment(
-                                                                      updateCheckout,
-                                                                      msg,isEnable)));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    } else if (isTimeSlot &&
-                                                        int.parse(allowDay!) >
-                                                            0 &&
-                                                        (selDate == null ||
-                                                            selDate!.isEmpty)) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'dateWarning');
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  Payment(
-                                                                      updateCheckout,
-                                                                      msg,isEnable)));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    } else if (isTimeSlot! &&
-                                                        timeSlotList.length >
-                                                            0 &&
-                                                        (selTime == null ||
-                                                            selTime!.isEmpty)) {
-                                                      msg = getTranslated(
-                                                          context,
-                                                          'timeWarning');
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  Payment(
-                                                                      updateCheckout,
-                                                                      msg,isEnable)));
-                                                      checkoutState!(() {
-                                                        _placeOrder = true;
-                                                      });
-                                                    }
-                                                    //  else if (double.parse(
-                                                    //         MIN_ALLOW_CART_AMT!) >
-                                                    //     oriPrice) {
-                                                    //   setSnackbar(
-                                                    //       getTranslated(context,
-                                                    //           'MIN_CART_AMT')!,
-                                                    //       _checkscaffoldKey);
-                                                    // }
-                                                    else if (!deliverable) {
-                                                      checkDeliverable();
-                                                    } else
-                                                      confirmDialog();
-                                                  })
-                                        //}),
-                                      ]),
-                                    ),
-                                  ],
-                                )
-                      : noInternet(context),
+                                                                  ManageAddress(
+                                                                home: false,
+                                                              ),
+                                                            ));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      } else if (payMethod ==
+                                                              null ||
+                                                          payMethod!.isEmpty) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'payWarning');
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Payment(
+                                                                        updateCheckout,
+                                                                        msg,isEnable)));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      } else if (isTimeSlot &&
+                                                          int.parse(allowDay!) >
+                                                              0 &&
+                                                          (selDate == null ||
+                                                              selDate!.isEmpty)) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'dateWarning');
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Payment(
+                                                                        updateCheckout,
+                                                                        msg,isEnable)));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      } else if (isTimeSlot! &&
+                                                          timeSlotList.length >
+                                                              0 &&
+                                                          (selTime == null ||
+                                                              selTime!.isEmpty)) {
+                                                        msg = getTranslated(
+                                                            context,
+                                                            'timeWarning');
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Payment(
+                                                                        updateCheckout,
+                                                                        msg,isEnable)));
+                                                        checkoutState!(() {
+                                                          _placeOrder = true;
+                                                        });
+                                                      }
+                                                      //  else if (double.parse(
+                                                      //         MIN_ALLOW_CART_AMT!) >
+                                                      //     oriPrice) {
+                                                      //   setSnackbar(
+                                                      //       getTranslated(context,
+                                                      //           'MIN_CART_AMT')!,
+                                                      //       _checkscaffoldKey);
+                                                      // }
+                                                      else if (!deliverable) {
+                                                        checkDeliverable();
+                                                      } else
+                                                        confirmDialog();
+                                                    })
+                                          //}),
+                                        ]),
+                                      ),
+                                    ],
+                                  )
+                        : noInternet(context),
+                  ),
                 ));
           });
         });

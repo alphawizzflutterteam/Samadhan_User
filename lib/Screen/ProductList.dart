@@ -259,7 +259,9 @@ String? oldPrice;
                 elevation: 0,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(4),
-                  child: Stack(children: <Widget>[
+                  child: Stack(
+                      children: <Widget>[
+
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -268,6 +270,7 @@ String? oldPrice;
                             tag: "ProList$index${model.id}",
                             child: Stack(
                               children: [
+
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 8, right: 5, bottom: 5, top: 12),
@@ -289,26 +292,36 @@ String? oldPrice;
                                   ),
                                 ),
                                 model.availability == "0"
-                                    ? Container(
-                                        height: 55,
-                                        color: Colors.white70,
-                                        // width: double.maxFinite,
-                                        padding: EdgeInsets.all(2),
-                                        child: Center(
-                                          child: Text(
-                                            getTranslated(
-                                                context, 'OUT_OF_STOCK_LBL')!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption!
-                                                .copyWith(
-                                                  color: Colors.red,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                    ? Positioned(
+                                  top: 95,
+                                      left: 25,
+                                      child: Container(
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: colors.whiteTemp.withOpacity(0.4),
+                                        border: Border.all(color: Colors.red)
+                                      // color: Colors.white70,
+                                  ),
+
+                                  // width: double.maxFinite,
+                                  padding: EdgeInsets.all(2),
+                                  child: Center(
+                                      child: Text(
+                                        getTranslated(
+                                            context, 'OUT_OF_STOCK_LBL')!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption!
+                                            .copyWith(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      )
+                                        textAlign: TextAlign.center,
+                                      ),
+                                  ),
+                                ),
+                                    )
                                     : Container(),
 
                                 // Container(
@@ -352,6 +365,7 @@ String? oldPrice;
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+
                               // model.prVarientList![model.selVarient!]
                               //                 .attr_name !=
                               //             null &&

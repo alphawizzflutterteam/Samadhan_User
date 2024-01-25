@@ -2355,7 +2355,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
                                     child: Text(
-                                      "\u{20B9} ${variationOff} \noff",
+                                      "\u{20B9} ${variationOff.toStringAsFixed(2)} \noff",
                                       style: Theme.of(context)
                                           .textTheme
                                           .overline!
