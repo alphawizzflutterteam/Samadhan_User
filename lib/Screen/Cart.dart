@@ -126,7 +126,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     _getSaveLater("1");
     // _getAddress();
 
-    Future.delayed(Duration(milliseconds: 200),(){
+    Future.delayed(Duration(milliseconds: 200), () {
       return _getdateTime();
     });
 
@@ -146,7 +146,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
   String upiId = '';
   String? isEnable;
-  String? upiName ;
+  String? upiName;
 
   Future<void> _getdateTime() async {
     _isNetworkAvail = await isNetworkAvailable();
@@ -158,8 +158,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
         print("parameter for times ${PAYMENT_METHOD} and ${CUR_USERID}");
 
         Response response =
-        await post(getSettingApi, body: parameter, headers: headers)
-            .timeout(Duration(seconds: timeOut));
+            await post(getSettingApi, body: parameter, headers: headers)
+                .timeout(Duration(seconds: timeOut));
         print("response of time ${getSettingApi} and ${parameter} vff");
         print('___surendra  a a    a a a_______${parameter}_________');
         if (response.statusCode == 200) {
@@ -172,7 +172,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             var time_slot = data["time_slot_config"];
             allowDay = time_slot["allowed_days"];
             isTimeSlot =
-            time_slot["is_time_slots_enabled"] == "1" ? true : false;
+                time_slot["is_time_slots_enabled"] == "1" ? true : false;
             // startingDate = time_slot["starting_date"];
             // codAllowed = data["is_cod_allowed"] == 1 ? true : false;
             // var timeSlots = data["time_slots"];
@@ -182,13 +182,11 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             //     .toList();
             // print("okss ${timeSlots.length}");
 
-
-          upiId = data['payment_method']['upi_id'].toString();
-          isEnable = data['payment_method']['upi_enable'].toString();
+            upiId = data['payment_method']['upi_id'].toString();
+            isEnable = data['payment_method']['upi_enable'].toString();
             upiName = data['payment_method']['upi_name'].toString();
 
-
-          print("final checking upi_enable id here now ${upiId}");
+            print("final checking upi_enable id here now ${upiId}");
           } else {
             // setSnackbar(msg);
           }
@@ -227,9 +225,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       receiverName: '',
       transactionRefId: 'TestingUpiIndiaPlugin',
       transactionNote: 'Not actual. Just an example.',
-      amount: double.parse(totalPrice.toString(
-
-      )),
+      amount: double.parse(totalPrice.toString()),
     );
   }
 
@@ -754,10 +750,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                         ? "MRP " +
                                             CUR_CURRENCY! +
                                             "" +
-                                            "${double.parse(cartList[index]
-                                                .productList![0]
-                                                .prVarientList![selectedPos]
-                                                .price.toString()).toStringAsFixed(2)}"
+                                            "${double.parse(cartList[index].productList![0].prVarientList![selectedPos].price.toString()).toStringAsFixed(2)}"
                                         : "",
                                     style: Theme.of(context)
                                         .textTheme
@@ -1168,10 +1161,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                             " " +
                                             CUR_CURRENCY! +
                                             "" +
-                                            "${double.parse(cartList[index]
-                                                .productList![0]
-                                                .prVarientList![selectedPos]
-                                                .price.toString()).toStringAsFixed(2)}"
+                                            "${double.parse(cartList[index].productList![0].prVarientList![selectedPos].price.toString()).toStringAsFixed(2)}"
                                         : "",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -1985,7 +1975,6 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                 // else
                 //   // delCharge = 0;
                 //     deliveryCharges = 0.0;
-
               }
             }
           } else {
@@ -2410,7 +2399,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             USER_ID: CUR_USERID,
             QTY: qty.toString()
           };
-     print('____Som______${parameter}_________');
+          print('____Som______${parameter}_________');
           Response response =
               await post(manageCartApi, body: parameter, headers: headers)
                   .timeout(Duration(seconds: timeOut));
@@ -2732,19 +2721,19 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                               FocusScope.of(context).unfocus();
                               if (addressList.isNotEmpty) {
                                 String? areaids =
-                                addressList[selectedAddress!].areaId!;
+                                    addressList[selectedAddress!].areaId!;
                                 print(
                                     "area hre ${areaids} and ${CUR_USERID} and ${deliveryChargeByWeightApi}");
                                 Response response = await post(
-                                    deliveryChargeByWeightApi,
-                                    body: {
-                                      "user_id": "${CUR_USERID}",
-                                      "address_id": "${areaids}"
-                                    },
-                                    headers: headers)
+                                        deliveryChargeByWeightApi,
+                                        body: {
+                                          "user_id": "${CUR_USERID}",
+                                          "address_id": "${areaids}"
+                                        },
+                                        headers: headers)
                                     .timeout(Duration(seconds: timeOut));
                                 String? data = DeliveryModel.fromJson(
-                                    json.decode(response.body))
+                                        json.decode(response.body))
                                     .deliveryCharge
                                     .toString();
                                 if (data != null) {
@@ -2758,8 +2747,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ManageAddress(
-                                          home: false,
-                                        )));
+                                              home: false,
+                                            )));
                               }
                               // if (isAvailable) {
                               //
@@ -2904,7 +2893,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                 padding:
                                                     const EdgeInsets.all(10.0),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     // getNow(),
                                                     address(),
@@ -2935,8 +2925,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                             Theme.of(context).colorScheme.white,
                                         child: Row(children: <Widget>[
                                           Padding(
-                                              padding: EdgeInsetsDirectional.only(
-                                                  start: 15.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.only(
+                                                      start: 15.0),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -2952,9 +2943,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
-                                                  Text(
-                                                      cartList.length.toString() +
-                                                          " Items"),
+                                                  Text(cartList.length
+                                                          .toString() +
+                                                      " Items"),
                                                 ],
                                               )),
                                           Spacer(),
@@ -2986,8 +2977,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
-                                                      } else if (payMethod ==
-                                                              null ||
+                                                      } else if (payMethod == null ||
                                                           payMethod!.isEmpty) {
                                                         msg = getTranslated(
                                                             context,
@@ -2999,7 +2989,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                         context) =>
                                                                     Payment(
                                                                         updateCheckout,
-                                                                        msg,isEnable)));
+                                                                        msg,
+                                                                        isEnable)));
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
@@ -3007,7 +2998,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                           int.parse(allowDay!) >
                                                               0 &&
                                                           (selDate == null ||
-                                                              selDate!.isEmpty)) {
+                                                              selDate!
+                                                                  .isEmpty)) {
                                                         msg = getTranslated(
                                                             context,
                                                             'dateWarning');
@@ -3018,7 +3010,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                         context) =>
                                                                     Payment(
                                                                         updateCheckout,
-                                                                        msg,isEnable)));
+                                                                        msg,
+                                                                        isEnable)));
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
@@ -3026,7 +3019,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                           timeSlotList.length >
                                                               0 &&
                                                           (selTime == null ||
-                                                              selTime!.isEmpty)) {
+                                                              selTime!
+                                                                  .isEmpty)) {
                                                         msg = getTranslated(
                                                             context,
                                                             'timeWarning');
@@ -3037,7 +3031,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                         context) =>
                                                                     Payment(
                                                                         updateCheckout,
-                                                                        msg,isEnable)));
+                                                                        msg,
+                                                                        isEnable)));
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
@@ -3077,8 +3072,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
-                                                      } else if (payMethod ==
-                                                              null ||
+                                                      } else if (payMethod == null ||
                                                           payMethod!.isEmpty) {
                                                         msg = getTranslated(
                                                             context,
@@ -3090,7 +3084,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                         context) =>
                                                                     Payment(
                                                                         updateCheckout,
-                                                                        msg,isEnable)));
+                                                                        msg,
+                                                                        isEnable)));
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
@@ -3098,7 +3093,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                           int.parse(allowDay!) >
                                                               0 &&
                                                           (selDate == null ||
-                                                              selDate!.isEmpty)) {
+                                                              selDate!
+                                                                  .isEmpty)) {
                                                         msg = getTranslated(
                                                             context,
                                                             'dateWarning');
@@ -3109,7 +3105,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                         context) =>
                                                                     Payment(
                                                                         updateCheckout,
-                                                                        msg,isEnable)));
+                                                                        msg,
+                                                                        isEnable)));
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
@@ -3117,7 +3114,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                           timeSlotList.length >
                                                               0 &&
                                                           (selTime == null ||
-                                                              selTime!.isEmpty)) {
+                                                              selTime!
+                                                                  .isEmpty)) {
                                                         msg = getTranslated(
                                                             context,
                                                             'timeWarning');
@@ -3128,7 +3126,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                                         context) =>
                                                                     Payment(
                                                                         updateCheckout,
-                                                                        msg,isEnable)));
+                                                                        msg,
+                                                                        isEnable)));
                                                         checkoutState!(() {
                                                           _placeOrder = true;
                                                         });
@@ -3316,40 +3315,40 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
       razorpayPayment();
     else if (payMethod == "UPI") {
-        Navigator.pop(context);
-        UpiPayment upiPayment = new UpiPayment(amount: finalResult.toString(), upiName: upiName,upi: upiId,context:
-          context, onResult: (value) {
-          if(value.status==UpiTransactionStatus.success){
+      Navigator.pop(context);
+      UpiPayment upiPayment = new UpiPayment(
+        amount: finalResult.toString(),
+        upiName: upiName,
+        upi: upiId,
+        context: context,
+        onResult: (value) {
+          if (value.status == UpiTransactionStatus.success) {
             Navigator.pop(context);
-            placeOrder('','');
-          } else if(value.status==UpiTransactionStatus.failure){
+            placeOrder('', '');
+          } else if (value.status == UpiTransactionStatus.failure) {
+            // setState((){
+            //   _placeOrder = true;
+            // });
+            Fluttertoast.showToast(msg: "Payment Failed");
+          } else if (value.status == UpiTransactionStatus.failedToLaunch) {
+            // setState((){
+            //   _placeOrder = true;
+            // });
+            Fluttertoast.showToast(msg: "Payment Failed");
+          } else {
             // setState((){
             //   _placeOrder = true;
             // });
             Fluttertoast.showToast(msg: "Payment Failed");
           }
-          else if(value.status == UpiTransactionStatus.failedToLaunch){
-            // setState((){
-            //   _placeOrder = true;
-            // });
-            Fluttertoast.showToast(msg: "Payment Failed");
-          }
-          else{
-            // setState((){
-            //   _placeOrder = true;
-            // });
-            Fluttertoast.showToast(msg: "Payment Failed");
-          }
-
         },
-
-
-        );
-        print("final upi payment check ${upiPayment.toString()}  and ${upiPayment.amount}");
-        upiPayment.initPayment();
-        print(upiPayment.toString());
-      }
-     // return upiPayment();
+      );
+      print(
+          "final upi payment check ${upiPayment.toString()}  and ${upiPayment.amount}");
+      upiPayment.initPayment();
+      print(upiPayment.toString());
+    }
+    // return upiPayment();
 
     else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
       paystackPayment(context);
@@ -3969,7 +3968,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                           ],
                         ),
                         Text(
-                             addressList[selectedAddress!].building! +
+                          addressList[selectedAddress!].building! +
                               ", " +
                               addressList[selectedAddress!].area! +
                               ", " +
@@ -4044,7 +4043,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      Payment(updateCheckout, msg,isEnable)));
+                      Payment(updateCheckout, msg, isEnable)));
           if (mounted) checkoutState!(() {});
         },
         child: Padding(
@@ -4244,17 +4243,23 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             selectedMethod = null;
             context.read<CartProvider>().setProgress(false);
             if (mounted && check) checkoutState!(() {});
-            setState(() {});
+            setState(() {
+              _isLoading = false;
+            });
           } else {
             if (mounted && check) checkoutState!(() {});
-            setState(() {});
+            setState(() {
+              _isLoading = false;
+            });
             context.read<CartProvider>().setProgress(false);
           }
         }
       } on TimeoutException catch (_) {
         context.read<CartProvider>().setProgress(false);
         if (mounted && check) checkoutState!(() {});
-        setState(() {});
+        setState(() {
+          _isLoading = false;
+        });
         setSnackbar(getTranslated(context, 'somethingMSg')!, _checkscaffoldKey);
       }
     } else {

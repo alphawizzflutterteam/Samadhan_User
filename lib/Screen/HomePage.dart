@@ -50,7 +50,8 @@ import 'Product_Detail.dart';
 import 'SectionList.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
+
 class HomePage extends StatefulWidget {
   ValueChanged onResult;
   HomePage(this.onResult);
@@ -75,6 +76,7 @@ List<Widget> pages4 = [];
 List<Widget> pages5 = [];
 var latitudeHome;
 var longitudeHome;
+
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage>, TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -103,9 +105,9 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-  // getCurrentLoc();
-   callApi();
-   getProductFeature();
+    // getCurrentLoc();
+    callApi();
+    getProductFeature();
     buttonController = new AnimationController(
         duration: new Duration(milliseconds: 2000), vsync: this);
 
@@ -115,7 +117,7 @@ class _HomePageState extends State<HomePage>
     ).animate(
       new CurvedAnimation(
         parent: buttonController,
-        curve:  Interval(
+        curve: Interval(
           0.0,
           0.150,
         ),
@@ -131,29 +133,30 @@ class _HomePageState extends State<HomePage>
       _animateSlider(_controller5);
     });
   }
+
   GetFetatureProductModel? getFetatureProductModel;
   getProductFeature() async {
     var headers = {
       'Cookie': 'ci_session=40de91cc9c18ef1298fe19d7ff05574176633a26'
     };
-    var request = http.Request('GET', Uri.parse('https://samadhaan.online/app/v1/api/get_features_product'));
+    var request = http.Request('GET',
+        Uri.parse('https://samadhaan.online/app/v1/api/get_features_product'));
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-     var result  = await response.stream.bytesToString();
-     var finalResult  =  GetFetatureProductModel.fromJson(json.decode(result));
-     setState(() {
-       getFetatureProductModel = finalResult;
-     });
+      var result = await response.stream.bytesToString();
+      var finalResult = GetFetatureProductModel.fromJson(json.decode(result));
+      setState(() {
+        getFetatureProductModel = finalResult;
+      });
+    } else {
+      print(response.reasonPhrase);
     }
-    else {
-    print(response.reasonPhrase);
-    }
-
   }
+
   @override
   Widget build(BuildContext context) {
     var mysize = MediaQuery.of(context).size;
@@ -182,9 +185,15 @@ class _HomePageState extends State<HomePage>
                           borderRadius: BorderRadius.circular(10.0)),
                       child: Column(
                         children: [
-                          SizedBox(height: 20,),
-                          pages.length>0?_slider(pages,0,_controller):SizedBox(),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          pages.length > 0
+                              ? _slider(pages, 0, _controller)
+                              : SizedBox(),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: 10.0, vertical: 5),
@@ -196,7 +205,7 @@ class _HomePageState extends State<HomePage>
                                 ),
                                 Spacer(),
                                 InkWell(
-                                  onTap: (){
+                                  onTap: () {
                                     widget.onResult("yes");
                                   },
                                   child: Text(
@@ -210,11 +219,15 @@ class _HomePageState extends State<HomePage>
                             ),
                           ),
                           _catList(),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
                     ),
-                    pages1.length>0?_slider(pages1,1,_controller1):SizedBox(),
+                    pages1.length > 0
+                        ? _slider(pages1, 1, _controller1)
+                        : SizedBox(),
                     // Container(
                     //   height: 340,
                     //   child: FeatureView(
@@ -229,8 +242,8 @@ class _HomePageState extends State<HomePage>
                           MaterialPageRoute(
                             builder: (context) => FeatureProduct(
                               name: "Feature Product",
-                              *//*  tag: false,
-                    fromSeller: false,*//*
+                              */ /*  tag: false,
+                    fromSeller: false,*/ /*
                             ),
                           ));
                     }),*/
@@ -276,71 +289,104 @@ class _HomePageState extends State<HomePage>
                     //     );
                     //   }
                     // }),
-                   Padding(
-                     padding: const EdgeInsets.all(8.0),
-                     child: Text("Upcoming  Product",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                   ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Upcoming  Product",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
 
                     Card(
-
                       child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: getFetatureProductModel?.data?.length ?? 0,
-                          itemBuilder: (context,i){
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Card(
-                              elevation: 2,
-                              child: Container(
-                                height: 120,
-                                width: 100,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 100,
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child: Image.network("${getFetatureProductModel?.data?[i].productImage}",scale:4.0,fit: BoxFit.fill,)),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: getFetatureProductModel?.data?.length ?? 0,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Card(
+                                elevation: 2,
+                                child: Container(
+                                  height: 120,
+                                  width: 100,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SizedBox(
+                                          height: 120,
+                                          width: 100,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                "${getFetatureProductModel?.data?[i].productImage}",
+                                                scale: 4.0,
+                                                fit: BoxFit.fill,
+                                              )),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: 20,),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 5,left: 5),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text("${getFetatureProductModel?.data?[i].productName}",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey,fontSize: 16),),
-                                          Text("${getFetatureProductModel?.data?[i].description}"),
-                                          Text("${getFetatureProductModel?.data?[i].daysLeft} Days"),
-                                          Text("₹ ${getFetatureProductModel?.data?[i].price}"),
-                                        ],
+                                      SizedBox(
+                                        width: 20,
                                       ),
-                                    )
-
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5, left: 5),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "${getFetatureProductModel?.data?[i].productName}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey,
+                                                  fontSize: 16),
+                                            ),
+                                            Text(
+                                                "${getFetatureProductModel?.data?[i].description}"),
+                                            Text(
+                                                "${getFetatureProductModel?.data?[i].daysLeft} Days"),
+                                            Text(
+                                                "₹ ${getFetatureProductModel?.data?[i].price}"),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                      }),
+                            );
+                          }),
                     ),
-                    pages4.length>0?_slider(pages4,4,_controller4):SizedBox(),
-                   _section(),
-                    pages2.length>0?_slider(pages2,2,_controller2):SizedBox(),
+                    pages4.length > 0
+                        ? _slider(pages4, 4, _controller4)
+                        : SizedBox(),
+                    _section(),
+                    pages2.length > 0
+                        ? _slider(pages2, 2, _controller2)
+                        : SizedBox(),
                     // Text("section"),
                     //_section(),
                     //pages3.length>0?_slider(pages3,3,_controller3):SizedBox(),
-                   _seller(),
-                    SizedBox(height: 5,),
-                    pages5.length>0?_slider(pages5,5,_controller5):SizedBox(),
-                    SizedBox(height: 35,)
+                    _seller(),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    pages5.length > 0
+                        ? _slider(pages5, 5, _controller5)
+                        : SizedBox(),
+                    SizedBox(
+                      height: 35,
+                    )
                   ],
                 ),
               ),
@@ -348,13 +394,14 @@ class _HomePageState extends State<HomePage>
           : noInternet(context),
     );
   }
+
   Widget saveButton(String title, VoidCallback? onBtnSelected) {
     return Row(
       children: [
         Expanded(
           child: Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
             child: MaterialButton(
               height: 45.0,
               textColor: Theme.of(context).colorScheme.white,
@@ -376,141 +423,150 @@ class _HomePageState extends State<HomePage>
       ],
     );
   }
+
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   Container _homeAppbar() => Container(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      children: [
-        boxHeight(20),
-        Container(
-          child: Row(
-            children: [
-              InkWell(
-                  onTap: (){
-                    scaffoldKey.currentState!.openDrawer();
-                  } ,
-                  child: Icon(Icons.sort,size: 32,color: Colors.white,)),
-              // InkWell(
-              //   onTap: (){
-              //     getLocation();
-              //   },
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text.rich(TextSpan(children: [
-              //         TextSpan(
-              //             text: "Delivery Location",
-              //             style:
-              //             TextStyle(fontSize: 12.0, color: Colors.white)),
-              //         WidgetSpan(
-              //             child: Container(
-              //               transform: Matrix4.translationValues(0.0, 5, 0.0),
-              //               child: Icon(
-              //                 Icons.arrow_drop_up,
-              //                 color: Colors.black,
-              //               ),
-              //             ))
-              //       ])),
-              //       Text(currentAddress.text.toString() ,
-              //           style: TextStyle(fontSize: 12.0, color: Colors.black))
-              //     ],
-              //   ),
-              // ),
-              Spacer(),
-              IconButton(
-                padding: EdgeInsets.all(0),
-                icon: SvgPicture.asset(
-                  imagePath + "desel_fav.svg",
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  CUR_USERID != null
-                      ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Favorite(),
-                      ))
-                      : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Login(),
-                      ));
-                },
-              ),
-              SizedBox(width: 10,),
-              // Text(
-              //   'Delivery Location',
-              //   style: TextStyle(color: Colors.white),
-              // ),
-              //new
-              InkWell(
-                onTap: (){
-                  print("clicknoti");
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NotificationList(),
-                      ));
-                },
-                child:
-
-                Image.asset(
-                  'assets/icons/notification_icon.png',
-                  height: 24.0,color: colors.whiteTemp,
-                ),
-              )
-
-            ],
-          ),
-        ),
-
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 5.0),
-          child: Row(
-            children: [
-              // InkWell(
-              //    onTap: (){
-              //      scaffoldKey.currentState!.openDrawer();
-              //    } ,
-              //     child: Icon(Icons.sort,size: 32,color: Colors.white,)),
-              boxWidth(2),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: TextFormField(
-                    readOnly: true,
-                    onTap: (){
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            boxHeight(20),
+            Container(
+              child: Row(
+                children: [
+                  InkWell(
+                      onTap: () {
+                        scaffoldKey.currentState!.openDrawer();
+                      },
+                      child: Icon(
+                        Icons.sort,
+                        size: 32,
+                        color: Colors.white,
+                      )),
+                  // InkWell(
+                  //   onTap: (){
+                  //     getLocation();
+                  //   },
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text.rich(TextSpan(children: [
+                  //         TextSpan(
+                  //             text: "Delivery Location",
+                  //             style:
+                  //             TextStyle(fontSize: 12.0, color: Colors.white)),
+                  //         WidgetSpan(
+                  //             child: Container(
+                  //               transform: Matrix4.translationValues(0.0, 5, 0.0),
+                  //               child: Icon(
+                  //                 Icons.arrow_drop_up,
+                  //                 color: Colors.black,
+                  //               ),
+                  //             ))
+                  //       ])),
+                  //       Text(currentAddress.text.toString() ,
+                  //           style: TextStyle(fontSize: 12.0, color: Colors.black))
+                  //     ],
+                  //   ),
+                  // ),
+                  Spacer(),
+                  IconButton(
+                    padding: EdgeInsets.all(0),
+                    icon: SvgPicture.asset(
+                      imagePath + "desel_fav.svg",
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      CUR_USERID != null
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Favorite(),
+                              ))
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Login(),
+                              ));
+                    },
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  // Text(
+                  //   'Delivery Location',
+                  //   style: TextStyle(color: Colors.white),
+                  // ),
+                  //new
+                  InkWell(
+                    onTap: () {
+                      print("clicknoti");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Search(),
+                            builder: (context) => NotificationList(),
                           ));
                     },
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search,color:colors.primary,),
-                        // Theme.of(context).colorScheme.black
-                        hintStyle: TextStyle(color:colors.primary,),
-                        hintText: "Search",
-                        filled: true,
-                        fillColor: Theme.of(context).cardColor,
-                        border: InputBorder.none),
-                  ),
-                ),
+                    child: Image.asset(
+                      'assets/icons/notification_icon.png',
+                      height: 24.0,
+                      color: colors.whiteTemp,
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 5.0),
+              child: Row(
+                children: [
+                  // InkWell(
+                  //    onTap: (){
+                  //      scaffoldKey.currentState!.openDrawer();
+                  //    } ,
+                  //     child: Icon(Icons.sort,size: 32,color: Colors.white,)),
+                  boxWidth(2),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Search(),
+                              ));
+                        },
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: colors.primary,
+                            ),
+                            // Theme.of(context).colorScheme.black
+                            hintStyle: TextStyle(
+                              color: colors.primary,
+                            ),
+                            hintText: "Search",
+                            filled: true,
+                            fillColor: Theme.of(context).cardColor,
+                            border: InputBorder.none),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 40.0,
+            )
+          ],
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 40.0,
-        )
-      ],
-    ),
-    decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/new_img/login_option.png'),
-            fit: BoxFit.cover)),
-  );
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/new_img/login_option.png'),
+                fit: BoxFit.cover)),
+      );
   var currentAddress = TextEditingController();
   var pinController = TextEditingController();
 
@@ -529,7 +585,7 @@ class _HomePageState extends State<HomePage>
       setState(() {
         pinController.text = placemark[0].postalCode!;
         currentAddress.text =
-        "${placemark[0].subLocality} , ${placemark[0].locality}";
+            "${placemark[0].subLocality} , ${placemark[0].locality}";
         latitudeHome = position.latitude.toString();
         longitudeHome = position.longitude.toString();
         /*     loc.lng = position.longitudeHome.toString();
@@ -538,26 +594,35 @@ class _HomePageState extends State<HomePage>
       });
     }
   }
+
   getLocation() async {
     LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PlacePicker(
-          "AIzaSyAzWKOX71IubaSG0BhDPsPermCzIuZaOHs1",
-        )));
+              "AIzaSyAzWKOX71IubaSG0BhDPsPermCzIuZaOHs1",
+            )));
 
     setState(() {
-      currentAddress.text =  "${result.subLocalityLevel1!.name} , ${result.city!.name}";
+      currentAddress.text =
+          "${result.subLocalityLevel1!.name} , ${result.city!.name}";
       latitudeHome = result.latLng!.latitude.toString();
       longitudeHome = result.latLng!.longitude.toString();
     });
   }
+
   Future<Null> _refresh() {
     context.read<HomeProvider>().setCatLoading(true);
     context.read<HomeProvider>().setSecLoading(true);
     context.read<HomeProvider>().setSliderLoading(true);
     return callApi();
   }
-  int current = 0,current1=0,current2=0,current3=0,current4=0,current5=0;
-  Widget _slider(pages,data,_controller) {
+
+  int current = 0,
+      current1 = 0,
+      current2 = 0,
+      current3 = 0,
+      current4 = 0,
+      current5 = 0;
+  Widget _slider(pages, data, _controller) {
     double height = deviceWidth! / 2.2;
     return Stack(
       children: [
@@ -571,34 +636,34 @@ class _HomePageState extends State<HomePage>
             // controller: _controller,
             physics: AlwaysScrollableScrollPhysics(),
             onPageChanged: (index) {
-              if(data ==0){
+              if (data == 0) {
                 setState(() {
-                  current =index;
+                  current = index;
                 });
               }
-              if(data ==1){
+              if (data == 1) {
                 setState(() {
-                  current1 =index;
+                  current1 = index;
                 });
               }
-              if(data ==2){
+              if (data == 2) {
                 setState(() {
-                  current2 =index;
+                  current2 = index;
                 });
               }
-              if(data ==3){
+              if (data == 3) {
                 setState(() {
-                  current3 =index;
+                  current3 = index;
                 });
               }
-              if(data ==4){
+              if (data == 4) {
                 setState(() {
-                  current4 =index;
+                  current4 = index;
                 });
               }
-              if(data ==5){
+              if (data == 5) {
                 setState(() {
-                  current5 =index;
+                  current5 = index;
                 });
               }
             },
@@ -607,168 +672,174 @@ class _HomePageState extends State<HomePage>
             },
           ),
         ),
-        data==0?Positioned(
-          bottom: 0,
-          height: 40,
-          left: 0,
-          width: deviceWidth,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(
-              pages,
-                  (index, url) {
-                return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current ==
-                          index
-                          ? Theme.of(context).colorScheme.fontColor
-                          : Theme.of(context).colorScheme.primary,
-                    ));
-              },
-            ),
-          ),
-        ):SizedBox(),
-        data==1?Positioned(
-          bottom: 0,
-          height: 40,
-          left: 0,
-          width: deviceWidth,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(
-              pages,
-                  (index, url) {
-                return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current1 ==
-                          index
-                          ? Theme.of(context).colorScheme.fontColor
-                          : Theme.of(context).colorScheme.primary,
-                    ));
-              },
-            ),
-          ),
-        ):SizedBox(),
-        data==2?Positioned(
-          bottom: 0,
-          height: 40,
-          left: 0,
-          width: deviceWidth,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(
-              pages,
-                  (index, url) {
-                return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current2 ==
-                          index
-                          ? Theme.of(context).colorScheme.fontColor
-                          : Theme.of(context).colorScheme.primary,
-                    ));
-              },
-            ),
-          ),
-        ):SizedBox(),
-        data==3?Positioned(
-          bottom: 0,
-          height: 40,
-          left: 0,
-          width: deviceWidth,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(
-              pages,
-                  (index, url) {
-                return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current3 ==
-                          index
-                          ? Theme.of(context).colorScheme.fontColor
-                          : Theme.of(context).colorScheme.primary,
-                    ));
-              },
-            ),
-          ),
-        ):SizedBox(),
-        data==4?Positioned(
-          bottom: 0,
-          height: 40,
-          left: 0,
-          width: deviceWidth,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(
-              pages,
-                  (index, url) {
-                return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current4 ==
-                          index
-                          ? Theme.of(context).colorScheme.fontColor
-                          : Theme.of(context).colorScheme.primary,
-                    ));
-              },
-            ),
-          ),
-        ):SizedBox(),
-        data==5?Positioned(
-          bottom: 0,
-          height: 40,
-          left: 0,
-          width: deviceWidth,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(
-              pages,
-                  (index, url) {
-                return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current5 ==
-                          index
-                          ? Theme.of(context).colorScheme.fontColor
-                          : Theme.of(context).colorScheme.primary,
-                    ));
-              },
-            ),
-          ),
-        ):SizedBox(),
+        data == 0
+            ? Positioned(
+                bottom: 0,
+                height: 40,
+                left: 0,
+                width: deviceWidth,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    pages,
+                    (index, url) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: current == index
+                                ? Theme.of(context).colorScheme.fontColor
+                                : Theme.of(context).colorScheme.primary,
+                          ));
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
+        data == 1
+            ? Positioned(
+                bottom: 0,
+                height: 40,
+                left: 0,
+                width: deviceWidth,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    pages,
+                    (index, url) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: current1 == index
+                                ? Theme.of(context).colorScheme.fontColor
+                                : Theme.of(context).colorScheme.primary,
+                          ));
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
+        data == 2
+            ? Positioned(
+                bottom: 0,
+                height: 40,
+                left: 0,
+                width: deviceWidth,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    pages,
+                    (index, url) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: current2 == index
+                                ? Theme.of(context).colorScheme.fontColor
+                                : Theme.of(context).colorScheme.primary,
+                          ));
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
+        data == 3
+            ? Positioned(
+                bottom: 0,
+                height: 40,
+                left: 0,
+                width: deviceWidth,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    pages,
+                    (index, url) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: current3 == index
+                                ? Theme.of(context).colorScheme.fontColor
+                                : Theme.of(context).colorScheme.primary,
+                          ));
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
+        data == 4
+            ? Positioned(
+                bottom: 0,
+                height: 40,
+                left: 0,
+                width: deviceWidth,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    pages,
+                    (index, url) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: current4 == index
+                                ? Theme.of(context).colorScheme.fontColor
+                                : Theme.of(context).colorScheme.primary,
+                          ));
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
+        data == 5
+            ? Positioned(
+                bottom: 0,
+                height: 40,
+                left: 0,
+                width: deviceWidth,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    pages,
+                    (index, url) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: current5 == index
+                                ? Theme.of(context).colorScheme.fontColor
+                                : Theme.of(context).colorScheme.primary,
+                          ));
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
       ],
     );
   }
@@ -793,6 +864,7 @@ class _HomePageState extends State<HomePage>
       },
     );
   }
+
   _singleSection(int index) {
     Color back;
     int pos = index % 5;
@@ -806,7 +878,7 @@ class _HomePageState extends State<HomePage>
       back = Theme.of(context).colorScheme.back4;
     else
       back = Theme.of(context).colorScheme.back5;
-      print("section product length ${offerImages.length}");
+    print("section product length ${offerImages.length}");
     return sectionList[index].productList!.length > 0
         ? Column(
             mainAxisSize: MainAxisSize.min,
@@ -818,12 +890,16 @@ class _HomePageState extends State<HomePage>
                   children: <Widget>[
                     _getHeading(sectionList[index].title ?? "", index),
                     ListView.builder(
-                      itemCount: sectionList[index].productList!.length>4?4:sectionList[index].productList!.length,
+                      itemCount: sectionList[index].productList!.length > 4
+                          ? 4
+                          : sectionList[index].productList!.length,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index1) {
-                        print("product data here is ${sectionList[index].productList!.length}");
-                        return productItem(index, index1, index1 % 2 == 0 ? true : false);
+                        print(
+                            "product data here is ${sectionList[index].productList!.length}");
+                        return productItem(
+                            index, index1, index1 % 2 == 0 ? true : false);
                       },
                     )
                     //_getSection(index),
@@ -835,6 +911,7 @@ class _HomePageState extends State<HomePage>
           )
         : Container();
   }
+
   _getHeading(String title, int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1173,6 +1250,7 @@ class _HomePageState extends State<HomePage>
                                   },
                                 )));
   }
+
   Widget productItem(int secPos, int index, bool pad) {
     if (sectionList[secPos].productList!.length > index) {
       Product model = sectionList[secPos].productList![index];
@@ -1184,15 +1262,15 @@ class _HomePageState extends State<HomePage>
             sectionList[secPos].productList![index].prVarientList![0].price!);
       } else {
         double off = double.parse(sectionList[secPos]
-            .productList![index]
-            .prVarientList![0]
-            .price!) -
-            price;
-        offPer = ((off * 100) /
-            double.parse(sectionList[secPos]
                 .productList![index]
                 .prVarientList![0]
-                .price!))
+                .price!) -
+            price;
+        offPer = ((off * 100) /
+                double.parse(sectionList[secPos]
+                    .productList![index]
+                    .prVarientList![0]
+                    .price!))
             .toStringAsFixed(2);
       }
 
@@ -1215,20 +1293,22 @@ class _HomePageState extends State<HomePage>
                           child: Stack(
                             children: [
                               Padding(
-                                padding:  EdgeInsets.only(top:10,bottom: 10,left: 8,right: 8),
+                                padding: EdgeInsets.only(
+                                    top: 10, bottom: 10, left: 8, right: 8),
                                 child: Container(
                                   height: 120.0,
                                   width: 120.0,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: FadeInImage(
-                                      image: CachedNetworkImageProvider(model.image!),
+                                      image: CachedNetworkImageProvider(
+                                          model.image!),
                                       // height: 125.0,
                                       // width: 135.0,
                                       fit: BoxFit.cover,
                                       imageErrorBuilder:
                                           (context, error, stackTrace) =>
-                                          erroWidget(125),
+                                              erroWidget(125),
                                       placeholder: placeHolder(125),
                                     ),
                                   ),
@@ -1250,9 +1330,9 @@ class _HomePageState extends State<HomePage>
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .lightBlack),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -1268,7 +1348,9 @@ class _HomePageState extends State<HomePage>
                               //   maxLines: 1,
                               //   overflow: TextOverflow.ellipsis,
                               // ),
-                               SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               // Text(
                               //   "Samadhan Price" + " " + CUR_CURRENCY! + " " + price.toString(),
                               //   style: TextStyle(
@@ -1276,120 +1358,125 @@ class _HomePageState extends State<HomePage>
                               //     fontWeight: FontWeight.bold,
                               //   ),
                               // ),
-                              RichText(text: TextSpan(
-                                text: "Samadhaan Price",
-                                style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,),
-                                children: [
-                                  TextSpan(
-                                    text: " "
-                                  ),
-                                  TextSpan(
-                                    text: "${CUR_CURRENCY}",
+                              RichText(
+                                  text: TextSpan(
+                                      text: "Samadhaan Price",
                                       style: TextStyle(
-                                        color: Theme.of(context).colorScheme.fontColor,
+                                        color: Colors.green,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                  ),
-                                  TextSpan(
-                                    text: " "
-                                  ),
-                                  TextSpan(
-                                    text: "${price.toStringAsFixed(2)}",
+                                      children: [
+                                    TextSpan(text: " "),
+                                    TextSpan(
+                                      text: "${CUR_CURRENCY}",
                                       style: TextStyle(
-                                        color: Theme.of(context).colorScheme.fontColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .fontColor,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                  )
-                                ]
-                              )),
+                                    ),
+                                    TextSpan(text: " "),
+                                    TextSpan(
+                                      text: "${price.toStringAsFixed(2)}",
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .fontColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ])),
                               Padding(
                                 padding: const EdgeInsetsDirectional.only(
                                     start: 5.0, bottom: 5, top: 3),
                                 child: double.parse(sectionList[secPos]
-                                    .productList![index]
-                                    .prVarientList![0]
-                                    .disPrice!) !=
-                                    0
+                                            .productList![index]
+                                            .prVarientList![0]
+                                            .disPrice!) !=
+                                        0
                                     ? Row(
-                                  children: <Widget>[
-                                    Text(
-                                      double.parse(sectionList[secPos]
-                                          .productList![index]
-                                          .prVarientList![0]
-                                          .disPrice!) !=
-                                          0
-                                          ? "MRP" + " " + CUR_CURRENCY! +
-                                          "" +
-                                          "${double.parse(sectionList[secPos]
-                                              .productList![index]
-                                              .prVarientList![0]
-                                              .price.toString()).toStringAsFixed(2)}"
-                                          : "",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .overline!
-                                          .copyWith(
-                                          decoration: TextDecoration.lineThrough,
-                                          letterSpacing: 0),
-                                    ),
-                                    Flexible(
-                                      child: Text(" | " + "-$offPer%",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .overline!
-                                              .copyWith(
-                                              color: colors.primary,
-                                              letterSpacing: 0)),
-                                    ),
-                                  ],
-                                )
+                                        children: <Widget>[
+                                          Text(
+                                            double.parse(sectionList[secPos]
+                                                        .productList![index]
+                                                        .prVarientList![0]
+                                                        .disPrice!) !=
+                                                    0
+                                                ? "MRP" +
+                                                    " " +
+                                                    CUR_CURRENCY! +
+                                                    "" +
+                                                    "${double.parse(sectionList[secPos].productList![index].prVarientList![0].price.toString()).toStringAsFixed(2)}"
+                                                : "",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .overline!
+                                                .copyWith(
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                    letterSpacing: 0),
+                                          ),
+                                          Flexible(
+                                            child: Text(" | " + "-$offPer%",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .overline!
+                                                    .copyWith(
+                                                        color: colors.primary,
+                                                        letterSpacing: 0)),
+                                          ),
+                                        ],
+                                      )
                                     : Container(
-                                  height: 5,
-                                ),
+                                        height: 5,
+                                      ),
                               ),
                               InkWell(
                                 onTap: () {
-                                  if(CUR_USERID == null){
+                                  if (CUR_USERID == null) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Login(),
                                       ),
                                     );
-                                  }else{
-                                    Product model = sectionList[secPos].productList![index];
+                                  } else {
+                                    Product model =
+                                        sectionList[secPos].productList![index];
                                     Navigator.push(
                                       context,
                                       PageRouteBuilder(
                                         // transitionDuration: Duration(milliseconds: 150),
                                         pageBuilder: (_, __, ___) => ProductDetail(
-                                            model: model, secPos: secPos, index: index, list: false
-                                          //  title: sectionList[secPos].title,
-                                        ),
+                                            model: model,
+                                            secPos: secPos,
+                                            index: index,
+                                            list: false
+                                            //  title: sectionList[secPos].title,
+                                            ),
                                       ),
                                     );
                                   }
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
-                                  width: MediaQuery.of(context).size.width/2.5,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
-                                    color: colors.primary,
-                                    borderRadius: BorderRadius.circular(6)
-                                  ),
+                                      color: colors.primary,
+                                      borderRadius: BorderRadius.circular(6)),
                                   child: Text(
                                     "Add",
-
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
                                         .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .white),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .white),
                                     textAlign: TextAlign.center,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -1410,9 +1497,12 @@ class _HomePageState extends State<HomePage>
                     PageRouteBuilder(
                       // transitionDuration: Duration(milliseconds: 150),
                       pageBuilder: (_, __, ___) => ProductDetail(
-                          model: model, secPos: secPos, index: index, list: false
-                        //  title: sectionList[secPos].title,
-                      ),
+                          model: model,
+                          secPos: secPos,
+                          index: index,
+                          list: false
+                          //  title: sectionList[secPos].title,
+                          ),
                     ),
                   );
                 },
@@ -1476,6 +1566,7 @@ class _HomePageState extends State<HomePage>
     } else
       return Container();
   }
+
   Widget productItem1(int secPos, int index, bool pad) {
     if (sectionList[secPos].productList!.length > index) {
       String? offPer;
@@ -1511,7 +1602,7 @@ class _HomePageState extends State<HomePage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                   /*    child: ClipRRect(
+                /*    child: ClipRRect(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5)),
@@ -1726,20 +1817,22 @@ class _HomePageState extends State<HomePage>
                             }
                           },
                           child: Container(
-                            decoration: BoxDecoration(color:  Colors.white,borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: colors.darkIcon)
-                            ),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: colors.darkIcon)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsetsDirectional.only(
-                                      bottom:10.0),
+                                      bottom: 10.0),
                                   child: new ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: new FadeInImage(
-                                      fadeInDuration: Duration(milliseconds: 150),
+                                      fadeInDuration:
+                                          Duration(milliseconds: 150),
                                       image: CachedNetworkImageProvider(
                                         catList[index].image!,
                                       ),
@@ -1748,7 +1841,7 @@ class _HomePageState extends State<HomePage>
                                       fit: BoxFit.fill,
                                       imageErrorBuilder:
                                           (context, error, stackTrace) =>
-                                          erroWidget(50),
+                                              erroWidget(50),
                                       placeholder: placeHolder(50),
                                     ),
                                   ),
@@ -1760,9 +1853,9 @@ class _HomePageState extends State<HomePage>
                                         .textTheme
                                         .caption!
                                         .copyWith(
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 10),
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 10),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                   ),
@@ -1794,7 +1887,7 @@ class _HomePageState extends State<HomePage>
     UserProvider user = Provider.of<UserProvider>(context, listen: false);
     SettingProvider setting =
         Provider.of<SettingProvider>(context, listen: false);
-        user.setUserId(setting.userId);
+    user.setUserId(setting.userId);
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       getSetting();
@@ -2172,7 +2265,8 @@ class _HomePageState extends State<HomePage>
                     height: height,
                     color: colors.primary,
                   ),
-              placeholderErrorBuilder: (context, error, stackTrace) => Image.asset(
+              placeholderErrorBuilder: (context, error, stackTrace) =>
+                  Image.asset(
                     MyAssets.slider_loding,
                     fit: BoxFit.contain,
                     height: height,
@@ -2488,6 +2582,7 @@ class _HomePageState extends State<HomePage>
       context.read<HomeProvider>().setSliderLoading(false);
     });
   }
+
   void getSlider1() {
     Map map = Map();
     apiBaseHelper.postAPICall(getSecondSliderApi, map).then((getdata) {
@@ -2514,6 +2609,7 @@ class _HomePageState extends State<HomePage>
       context.read<HomeProvider>().setSliderLoading(false);
     });
   }
+
   void getSlider2() {
     Map map = Map();
 
@@ -2541,6 +2637,7 @@ class _HomePageState extends State<HomePage>
       context.read<HomeProvider>().setSliderLoading(false);
     });
   }
+
   void getSlider3() {
     Map map = Map();
 
@@ -2568,6 +2665,7 @@ class _HomePageState extends State<HomePage>
       context.read<HomeProvider>().setSliderLoading(false);
     });
   }
+
   void getSlider4() {
     Map map = Map();
 
@@ -2595,6 +2693,7 @@ class _HomePageState extends State<HomePage>
       context.read<HomeProvider>().setSliderLoading(false);
     });
   }
+
   void getSlider5() {
     Map map = Map();
 
@@ -2606,12 +2705,11 @@ class _HomePageState extends State<HomePage>
 
         homeSliderList =
             (data as List).map((data) => new Model.fromSlider(data)).toList();
-setState(() {
-  pages5 = homeSliderList.map((slider) {
-    return _buildImagePageItem(slider);
-  }).toList();
-});
-
+        setState(() {
+          pages5 = homeSliderList.map((slider) {
+            return _buildImagePageItem(slider);
+          }).toList();
+        });
       } else {
         setSnackbar(msg!, context);
       }
@@ -2622,6 +2720,7 @@ setState(() {
       context.read<HomeProvider>().setSliderLoading(false);
     });
   }
+
   void getCat() {
     Map parameter = {
       CAT_FILTER: "false",
@@ -2657,6 +2756,7 @@ setState(() {
       context.read<HomeProvider>().setCatLoading(false);
     });
   }
+
   sectionLoading() {
     return Column(
         children: [0, 1, 2, 3, 4]
@@ -2721,6 +2821,7 @@ setState(() {
                 ))
             .toList());
   }
+
   void getSeller() {
     String pin = context.read<UserProvider>().curPincode;
     Map parameter = {};
@@ -2731,6 +2832,7 @@ setState(() {
     }
     print('____sssssss______${getSellerApi}_____${parameter}____');
     apiBaseHelper.postAPICall(getSellerApi, parameter).then((getdata) {
+      sellerList.clear();
       bool error = getdata["error"];
       String? msg = getdata["message"];
       if (!error) {
@@ -2748,18 +2850,17 @@ setState(() {
       context.read<HomeProvider>().setSellerLoading(false);
     });
   }
+
   _seller() {
     return Selector<HomeProvider, bool>(
       builder: (context, data, child) {
         return data
             ? Container(
                 width: double.infinity,
-
                 child: Shimmer.fromColors(
                     baseColor: Theme.of(context).colorScheme.simmerBase,
                     highlightColor: Theme.of(context).colorScheme.simmerHigh,
-                    child: catLoading())
-        )
+                    child: catLoading()))
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -2797,144 +2898,155 @@ setState(() {
                         return Padding(
                           padding: const EdgeInsetsDirectional.only(end: 10),
                           child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SellerProfile(
-                                            sellerStoreName:
-                                                sellerList[index].store_name ??
-                                                    "",
-                                            sellerRating: sellerList[index]
-                                                    .seller_rating ??
-                                                "",
-                                            sellerImage: sellerList[index]
-                                                    .seller_profile ??
-                                                "",
-                                            sellerName:
-                                                sellerList[index].seller_name ??
-                                                    "",
-                                            sellerID:
-                                                sellerList[index].seller_id,
-                                            storeDesc: sellerList[index]
-                                                .store_description,
-                                          )));
-                            },
-                            child: Stack(
-                              children: [
-                                Container(
-                                   // padding: EdgeInsets.all(8.0),
-                                alignment: Alignment.bottomRight,
-                                width: 150,
-                                // height: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      color: Colors.lightGreen,
-                                      image: DecorationImage(
-                                          image: NetworkImage(sellerList[index].seller_profile!,
-                                          // scale: 5,
-                                          ),
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.topCenter,
-                                      )
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.only(bottom: 5,),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(20.0),
-                                        bottomRight: Radius.circular(20.0),
-                                      ),
-                                      color: Colors.lightGreen.shade300,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween ,
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              sellerList[index].seller_name!,
-                                              maxLines: 2,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .caption!
-                                                  .copyWith(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15),
-                                              overflow: TextOverflow.ellipsis,
-                                              // textAlign: TextAlign.center,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SellerProfile(
+                                              sellerStoreName: sellerList[index]
+                                                      .store_name ??
+                                                  "",
+                                              sellerRating: sellerList[index]
+                                                      .seller_rating ??
+                                                  "",
+                                              sellerImage: sellerList[index]
+                                                      .seller_profile ??
+                                                  "",
+                                              sellerName: sellerList[index]
+                                                      .seller_name ??
+                                                  "",
+                                              sellerID:
+                                                  sellerList[index].seller_id,
+                                              storeDesc: sellerList[index]
+                                                  .store_description,
+                                            )));
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                      // padding: EdgeInsets.all(8.0),
+                                      alignment: Alignment.bottomRight,
+                                      width: 150,
+                                      // height: 200,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          color: Colors.lightGreen,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              sellerList[index].seller_profile!,
+                                              // scale: 5,
                                             ),
-                                          ),
+                                            fit: BoxFit.cover,
+                                            alignment: Alignment.topCenter,
+                                          )),
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                          bottom: 5,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(right: 10),
-                                          child: Text(sellerList[index].seller_rating!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption!
-                                                .copyWith(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15),
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ),
-                              ],
-                            )
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(20.0),
+                                            bottomRight: Radius.circular(20.0),
+                                          ),
+                                          color: Colors.lightGreen.shade300,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Text(
+                                                  sellerList[index]
+                                                      .seller_name!,
+                                                  maxLines: 2,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption!
+                                                      .copyWith(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 15),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  // textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10),
+                                              child: Text(
+                                                sellerList[index]
+                                                    .seller_rating!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption!
+                                                    .copyWith(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 15),
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                ],
+                              )
 
-                            // Column(
-                            //   mainAxisAlignment: MainAxisAlignment.start,
-                            //   mainAxisSize: MainAxisSize.min,
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: <Widget>[g
-                            //     new ClipRRect(
-                            //       borderRadius: BorderRadius.circular(10),
-                            //       child: new FadeInImage(
-                            //         fadeInDuration:
-                            //             Duration(milliseconds: 150),
-                            //         image: CachedNetworkImageProvider(
-                            //           sellerList[index].seller_profile!,
-                            //         ),
-                            //         height: 250.0,
-                            //         width: 200.0,
-                            //         fit: BoxFit.contain,
-                            //         imageErrorBuilder:
-                            //             (context, error, stackTrace) =>
-                            //                 erroWidget(50),
-                            //         placeholder: placeHolder(50),
-                            //       ),
-                            //
-                            //     ),
-                            //     Container(
-                            //       child: Text(
-                            //         sellerList[index].seller_name!,
-                            //         style: Theme.of(context)
-                            //             .textTheme
-                            //             .caption!
-                            //             .copyWith(
-                            //                 color: Theme.of(context)
-                            //                     .colorScheme
-                            //                     .fontColor,
-                            //                 fontWeight: FontWeight.w600,
-                            //                 fontSize: 10),
-                            //         overflow: TextOverflow.ellipsis,
-                            //         textAlign: TextAlign.center,
-                            //       ),
-                            //       width: 50,
-                            //     ),
-                            ),
-
-                        );},
+                              // Column(
+                              //   mainAxisAlignment: MainAxisAlignment.start,
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: <Widget>[g
+                              //     new ClipRRect(
+                              //       borderRadius: BorderRadius.circular(10),
+                              //       child: new FadeInImage(
+                              //         fadeInDuration:
+                              //             Duration(milliseconds: 150),
+                              //         image: CachedNetworkImageProvider(
+                              //           sellerList[index].seller_profile!,
+                              //         ),
+                              //         height: 250.0,
+                              //         width: 200.0,
+                              //         fit: BoxFit.contain,
+                              //         imageErrorBuilder:
+                              //             (context, error, stackTrace) =>
+                              //                 erroWidget(50),
+                              //         placeholder: placeHolder(50),
+                              //       ),
+                              //
+                              //     ),
+                              //     Container(
+                              //       child: Text(
+                              //         sellerList[index].seller_name!,
+                              //         style: Theme.of(context)
+                              //             .textTheme
+                              //             .caption!
+                              //             .copyWith(
+                              //                 color: Theme.of(context)
+                              //                     .colorScheme
+                              //                     .fontColor,
+                              //                 fontWeight: FontWeight.w600,
+                              //                 fontSize: 10),
+                              //         overflow: TextOverflow.ellipsis,
+                              //         textAlign: TextAlign.center,
+                              //       ),
+                              //       width: 50,
+                              //     ),
+                              ),
+                        );
+                      },
                     ),
                   ),
-
                 ],
               );
       },

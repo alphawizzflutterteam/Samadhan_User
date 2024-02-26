@@ -261,6 +261,7 @@ class _OtpScreenState extends State<OtpScreen> {
     otpValue = getdata['otp'].toString();
     bool error = getdata["error"];
     String? msg = getdata["message"];
+    print(otpValue);
     setState(() {
       status = false;
     });
@@ -489,7 +490,7 @@ class _OtpScreenState extends State<OtpScreen> {
           textColor: AppColor().colorTextPrimary(),
           fontSize: 14.sp,
           fontFamily: fontBold,
-        ), 
+        ),
         SizedBox(
           height: 3.02.h,
         ),

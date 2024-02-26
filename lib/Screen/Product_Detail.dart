@@ -504,10 +504,15 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
       child: Align(
           alignment: Alignment.bottomLeft,
           child: indicator == "1"
-              ? Image.asset("assets/icons/veg.png", color: colors.primary,
+              ? Image.asset(
+                  "assets/icons/veg.png",
+                  color: colors.primary,
                 )
               : indicator == "2"
-                  ? Image.asset("assets/icons/nonVeg.png", color: colors.primary,)
+                  ? Image.asset(
+                      "assets/icons/nonVeg.png",
+                      color: colors.primary,
+                    )
                   : Container()),
     ));
   }
@@ -596,12 +601,15 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                 "MRP " +
                     CUR_CURRENCY! +
                     " " +
-                    "${double.parse(widget.model!.prVarientList![pos].price.toString()).toStringAsFixed(2)}",
+                    "${double.parse(widget.model!.prVarientList![pos].price.toString())}",
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     decoration: TextDecoration.lineThrough, letterSpacing: 0),
               ),
               Text(
-                "Samadhaan Price " + CUR_CURRENCY! + " " + price!.toStringAsFixed(2),
+                "Samadhaan Price " +
+                    CUR_CURRENCY! +
+                    " " +
+                    price!.toStringAsFixed(2),
                 //style: Theme.of(context).textTheme.headline6,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.fontColor,
@@ -2039,7 +2047,6 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-
                                 Padding(
                                   padding: const EdgeInsetsDirectional.only(
                                       start: 5.0, top: 5, end: 10),
@@ -2133,6 +2140,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {
+                          getProduct();
                           if (scrollInfo.metrics.pixels ==
                               scrollInfo.metrics.maxScrollExtent) {
                             getProduct();
@@ -2355,7 +2363,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
                                     child: Text(
-                                      "\u{20B9} ${variationOff.toStringAsFixed(2)} \noff",
+                                      "${productList[index].minMaxOff!.discountInPercentage}% off",
                                       style: Theme.of(context)
                                           .textTheme
                                           .overline!
@@ -2544,7 +2552,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
               onTap: () {
                 Product model = productList[index];
                 notificationoffset = 0;
-
+                print("Name: ${model.name}");
                 Navigator.push(
                   context,
                   PageRouteBuilder(
@@ -2884,19 +2892,15 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                 const EdgeInsetsDirectional.only(end: 10, bottom: 5.0, top: 5),
             child: InkWell(
               onTap: () {
+                print("object");
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => ProductPreview(
-                        pos: index,
-                        secPos: widget.secPos,
-                        index: widget.index,
-                        id: '$index${reviewList[i].id}',
-                        imgList: reviewList[i].imgList,
-                        list: true,
-                        from: false,
-                      ),
-                    ));
+                        pageBuilder: (_, __, ___) => ReviewPreview(
+                              index: index,
+                              model: widget.model,
+                            )));
+                
               },
               child: Hero(
                 tag: "$index${reviewList[i].id}",

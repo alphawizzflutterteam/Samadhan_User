@@ -63,15 +63,14 @@ class SectionModel {
         .map((data) => new Product.fromJson(data))
         .toList();
 
-
     return SectionModel(
-        id: parsedJson[ID],
-        varientId: parsedJson[PRODUCT_VARIENT_ID],
-        qty: parsedJson[QTY],
-        perItemTotal: "0",
-        perItemPrice: "0",
-        productList: productList,
-      );
+      id: parsedJson[ID],
+      varientId: parsedJson[PRODUCT_VARIENT_ID],
+      qty: parsedJson[QTY],
+      perItemTotal: "0",
+      perItemPrice: "0",
+      productList: productList,
+    );
   }
 
   factory SectionModel.fromFav(Map<String, dynamic> parsedJson) {
@@ -87,6 +86,7 @@ class SectionModel {
 }
 
 class Product {
+  MinMaxOff? minMaxOff;
   String? id,
       name,
       desc,
@@ -133,17 +133,18 @@ class Product {
   List<Product>? subList;
   List<Filter>? filterList;
   bool? history = false;
-String?  store_description,
-    seller_rating,
-    seller_profile,
-    seller_name,
-    seller_id,
-    store_name;
+  String? store_description,
+      seller_rating,
+      seller_profile,
+      seller_name,
+      seller_id,
+      store_name;
 
   // String historyList;
 
   Product(
       {this.id,
+      this.minMaxOff,
       this.name,
       this.desc,
       this.image,
@@ -191,14 +192,12 @@ String?  store_description,
       this.maxPrice,
       //  this.historyList,
       this.gurantee,
-        this.store_description,
-        this.seller_rating,
-        this.seller_profile,
-        this.seller_name,
-        this.seller_id,
-        this.store_name
-
-      });
+      this.store_description,
+      this.seller_rating,
+      this.seller_profile,
+      this.seller_name,
+      this.seller_id,
+      this.store_name});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     List<Product_Varient> varientList = (json[PRODUCT_VARIENT] as List)
@@ -275,6 +274,7 @@ String?  store_description,
         gurantee: json[GAURANTEE],
         reviewList: reviewList,
         history: false,
+        minMaxOff: MinMaxOff.fromJson(json['min_max_price']),
         minPrice: json[MINPRICE],
         maxPrice: json[MAXPRICE],
         seller_name: json[SELLER_NAME],
@@ -297,7 +297,6 @@ String?  store_description,
     return new Product(name: history, history: true);
   }
 
-
   factory Product.fromSeller(Map<String, dynamic> json) {
     return new Product(
         seller_name: json[SELLER_NAME],
@@ -305,13 +304,8 @@ String?  store_description,
         seller_rating: json[SELLER_RATING],
         store_description: json[STORE_DESC],
         store_name: json[STORE_NAME],
-        seller_id: json[SELLER_ID]
-
-
-
-    );
+        seller_id: json[SELLER_ID]);
   }
-
 
   factory Product.fromCat(Map<String, dynamic> parsedJson) {
     return new Product(
@@ -445,5 +439,31 @@ class Promo {
         msg: json[MESSAGE],
         image: json[IMAGE],
         day: json[REMAIN_DAY]);
+  }
+}
+
+class MinMaxOff {
+  MinMaxOff({
+    required this.minPrice,
+    required this.maxPrice,
+    required this.specialPrice,
+    required this.maxSpecialPrice,
+    required this.discountInPercentage,
+  });
+
+  final dynamic? minPrice;
+  final dynamic? maxPrice;
+  final dynamic? specialPrice;
+  final dynamic? maxSpecialPrice;
+  final dynamic? discountInPercentage;
+
+  factory MinMaxOff.fromJson(Map<String, dynamic> json) {
+    return MinMaxOff(
+      minPrice: json["min_price"],
+      maxPrice: json["max_price"],
+      specialPrice: json["special_price"],
+      maxSpecialPrice: json["max_special_price"],
+      discountInPercentage: json["discount_in_percentage"],
+    );
   }
 }

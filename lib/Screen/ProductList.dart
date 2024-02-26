@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop_multivendor/Helper/AppBtn.dart';
@@ -121,7 +122,6 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
     } on TickerCanceled {}
   }
 
-
   @override
   Widget build(BuildContext context) {
     // userProvider = Provider.of<UserProvider>(context);
@@ -139,7 +139,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                   )
             : noInternet(context));
   }
-String? oldPrice;
+
+  String? oldPrice;
 
   Widget noInternet(BuildContext context) {
     return Center(
@@ -203,23 +204,21 @@ String? oldPrice;
         )));
   }
 
-  percentOff(double offValue){
-    double  finalOff = (double.parse( oldPrice
-        .toString(),) * offValue)/ 100;
-
+  percentOff(double offValue) {
+    double finalOff = (double.parse(
+              oldPrice.toString(),
+            ) *
+            offValue) /
+        100;
 
     return finalOff.toStringAsFixed(2);
   }
-
 
   Widget listItem(int index) {
     if (index < productList.length) {
       Product model = productList[index];
       totalProduct = model.total;
-     oldPrice =  model
-          .prVarientList![
-      model.selVarient!]
-          .price;
+      oldPrice = model.prVarientList![model.selVarient!].price;
       if (_controller.length < index + 1)
         _controller.add(new TextEditingController());
 
@@ -259,9 +258,7 @@ String? oldPrice;
                 elevation: 0,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(4),
-                  child: Stack(
-                      children: <Widget>[
-
+                  child: Stack(children: <Widget>[
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -270,7 +267,6 @@ String? oldPrice;
                             tag: "ProList$index${model.id}",
                             child: Stack(
                               children: [
-
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 8, right: 5, bottom: 5, top: 12),
@@ -293,35 +289,38 @@ String? oldPrice;
                                 ),
                                 model.availability == "0"
                                     ? Positioned(
-                                  top: 95,
-                                      left: 25,
-                                      child: Container(
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: colors.whiteTemp.withOpacity(0.4),
-                                        border: Border.all(color: Colors.red)
-                                      // color: Colors.white70,
-                                  ),
+                                        top: 95,
+                                        left: 25,
+                                        child: Container(
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: colors.whiteTemp
+                                                  .withOpacity(0.4),
+                                              border:
+                                                  Border.all(color: Colors.red)
+                                              // color: Colors.white70,
+                                              ),
 
-                                  // width: double.maxFinite,
-                                  padding: EdgeInsets.all(2),
-                                  child: Center(
-                                      child: Text(
-                                        getTranslated(
-                                            context, 'OUT_OF_STOCK_LBL')!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .caption!
-                                            .copyWith(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
+                                          // width: double.maxFinite,
+                                          padding: EdgeInsets.all(2),
+                                          child: Center(
+                                            child: Text(
+                                              getTranslated(
+                                                  context, 'OUT_OF_STOCK_LBL')!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .caption!
+                                                  .copyWith(
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
                                         ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                  ),
-                                ),
-                                    )
+                                      )
                                     : Container(),
 
                                 // Container(
@@ -344,14 +343,14 @@ String? oldPrice;
                               ],
                             )),
                         Padding(
-                          padding: EdgeInsets.only(top: 5,right: 5,left: 5),
+                          padding: EdgeInsets.only(top: 5, right: 5, left: 5),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             //mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                width:MediaQuery.of(context).size.width/1.8,
+                                width: MediaQuery.of(context).size.width / 1.8,
                                 child: Text(
                                   model.name!,
                                   style: Theme.of(context)
@@ -472,10 +471,7 @@ String? oldPrice;
                                         "MRP " +
                                             CUR_CURRENCY! +
                                             " " +
-                                           "${double.parse( model
-                                               .prVarientList![
-                                           model.selVarient!]
-                                               .price.toString()).toStringAsFixed(2)}",
+                                            "${double.parse(model.prVarientList![model.selVarient!].price.toString()).toStringAsFixed(2)}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2!
@@ -484,7 +480,9 @@ String? oldPrice;
                                                     TextDecoration.lineThrough,
                                                 letterSpacing: 0,
                                                 fontSize: 12,
-                                                color: Theme.of(context).colorScheme.lightBlack),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .lightBlack),
                                       ),
                                       (off != 0 || off != 0.0 || off != 0.00)
                                           ? Container(
@@ -497,7 +495,7 @@ String? oldPrice;
                                                 padding:
                                                     const EdgeInsets.all(5.0),
                                                 child: Text(
-                                              "\u{20B9} " + percentOff(off),
+                                                  "\u{20B9} " + percentOff(off),
                                                   // off.toStringAsFixed(2) + "%",
                                                   style: TextStyle(
                                                       color: colors.whiteTemp,
@@ -605,7 +603,10 @@ String? oldPrice;
                                   Text(
                                     "Incl.of all taxes",
                                     style: TextStyle(
-                                        color: Theme.of(context).colorScheme.lightBlack, fontSize: 10),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack,
+                                        fontSize: 10),
                                   )
                                 ],
                               ),
@@ -877,28 +878,28 @@ String? oldPrice;
                 children: [
                   _controller[index].text == "0"
                       ? InkWell(
-                        onTap: () {
-                          if (_isProgress == false)
-                            addToCart(
-                                index,
-                                (int.parse(_controller[index].text) +
-                                        int.parse(model.qtyStepSize!))
-                                    .toString());
-                        },
-                        child: Card(
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.shopping_cart_outlined,
-                              size: 20,
+                          onTap: () {
+                            if (_isProgress == false)
+                              addToCart(
+                                  index,
+                                  (int.parse(_controller[index].text) +
+                                          int.parse(model.qtyStepSize!))
+                                      .toString());
+                          },
+                          child: Card(
+                            elevation: 1,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.shopping_cart_outlined,
+                                size: 20,
+                              ),
                             ),
                           ),
-                        ),
-                      )
+                        )
                       : Container(),
                   Card(
                       elevation: 1,
@@ -1226,7 +1227,7 @@ String? oldPrice;
         _currentRangeValues!.end.round().toString() != "0") {
       parameter[MAXPRICE] = _currentRangeValues!.end.round().toString();
     }
-
+    log(parameter.toString());
     apiBaseHelper.postAPICall(getProductApi, parameter).then((getdata) {
       bool error = getdata["error"];
       String? msg = getdata["message"];
@@ -1882,30 +1883,28 @@ String? oldPrice;
                               .prVarientList![model.selVarient!].disPrice!) !=
                           0
                       ? Row(
-                        children: <Widget>[
-                          Text(
-                            double.parse(model
-                                        .prVarientList![model.selVarient!]
-                                        .disPrice!) !=
-                                    0
-                                ? CUR_CURRENCY! +
-                                    "" +
-                                    model
-                                        .prVarientList![model.selVarient!]
-                                        .price!
-                                : "",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .overline!
-                                .copyWith(
-                                    decoration:
-                                        TextDecoration.lineThrough,
-                                    letterSpacing: 0),
-                          ),
-                        ],
-                      )
+                          children: <Widget>[
+                            Text(
+                              double.parse(model
+                                          .prVarientList![model.selVarient!]
+                                          .disPrice!) !=
+                                      0
+                                  ? CUR_CURRENCY! +
+                                      "" +
+                                      model.prVarientList![model.selVarient!]
+                                          .price!
+                                  : "",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .overline!
+                                  .copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                      letterSpacing: 0),
+                            ),
+                          ],
+                        )
                       : Container()
                 ],
               ),
@@ -1913,9 +1912,7 @@ String? oldPrice;
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(
                   children: [
-                    model.prVarientList![model.selVarient!]
-                                    .attr_name !=
-                                null &&
+                    model.prVarientList![model.selVarient!].attr_name != null &&
                             model.prVarientList![model.selVarient!].attr_name!
                                 .isNotEmpty
                         ? ListView.builder(
@@ -1924,8 +1921,7 @@ String? oldPrice;
                             shrinkWrap: true,
                             itemCount: att.length >= 2 ? 2 : att.length,
                             itemBuilder: (context, index) {
-                              return Row(
-                                  children: [
+                              return Row(children: [
                                 Text(
                                   att[index].trim() + ":",
                                   maxLines: 1,
@@ -1939,8 +1935,8 @@ String? oldPrice;
                                               .lightBlack),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.only(
-                                      start: 5.0),
+                                  padding:
+                                      EdgeInsetsDirectional.only(start: 5.0),
                                   child: Text(
                                     val[index],
                                     maxLines: 1,

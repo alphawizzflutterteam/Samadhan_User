@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
+import 'dart:developer' as dev;
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/PaypalWebviewActivity.dart';
@@ -173,13 +173,13 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
           STATUS: "Success",
           PAYMENT_METHOD: payMethod.toLowerCase()
         };
-
+        dev.log(parameter.toString());
         Response response =
             await post(addTransactionApi, body: parameter, headers: headers)
                 .timeout(Duration(seconds: timeOut));
 
         var getdata = json.decode(response.body);
-
+        dev.log(getdata.toString());
         bool error = getdata["error"];
         String msg = getdata["message"];
 
@@ -503,8 +503,13 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
         txnToken = getdata["txn_token"];
       });
 
-     var paytmResponse = Paytm.payWithPaytm(callBackUrl:callBackUrl ,mId: paytmMerId!,orderId:  orderId, txnToken: txnToken!,
-    txnAmount: price.toString(),staging:  payTesting);
+      var paytmResponse = Paytm.payWithPaytm(
+          callBackUrl: callBackUrl,
+          mId: paytmMerId!,
+          orderId: orderId,
+          txnToken: txnToken!,
+          txnAmount: price.toString(),
+          staging: payTesting);
       paytmResponse.then((value) {
         setState(() {
           _isProgress = false;
@@ -592,6 +597,7 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     //placeOrder(response.paymentId);
+    print("Transaction id: ${response.paymentId}");
     sendRequest(response.paymentId, "RazorPay");
   }
 
@@ -920,7 +926,7 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
                 .timeout(Duration(seconds: timeOut));
         if (response.statusCode == 200) {
           var getdata = json.decode(response.body);
-
+          dev.log(getdata.toString());
           bool error = getdata["error"];
 
           if (!error) {
@@ -985,7 +991,7 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
 
   showContent() {
     return RefreshIndicator(
-       color: colors.primary,
+        color: colors.primary,
         key: _refreshIndicatorKey,
         onRefresh: _refresh,
         child: SingleChildScrollView(

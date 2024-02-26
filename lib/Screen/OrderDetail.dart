@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
@@ -77,7 +78,7 @@ class StateOrder extends State<OrderDetail>
   double curRating = 0.0;
   String? userid;
   String? quantity;
-  bool saveLater = false,addCart = false;
+  bool saveLater = false, addCart = false;
   // switchChange(bool ans){
   //   print("user id ${userid}");
   //   if(isSwitched == false){
@@ -93,7 +94,8 @@ class StateOrder extends State<OrderDetail>
   //   }
   // }
 
-  Future<void> addToCart(String qty, bool intent,String userid, String variant) async {
+  Future<void> addToCart(
+      String qty, bool intent, String userid, String variant) async {
     print("user id ${widget.model!.userid} and variantion ${variantId}");
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
@@ -116,8 +118,8 @@ class StateOrder extends State<OrderDetail>
           };
           print("parameters are here ${parameter}");
           Response response =
-          await post(manageCartApi, body: parameter, headers: headers)
-              .timeout(Duration(seconds: timeOut));
+              await post(manageCartApi, body: parameter, headers: headers)
+                  .timeout(Duration(seconds: timeOut));
           print("reorder response are here ${response.body}");
           var getdata = json.decode(response.body);
           print("get data here ${getdata}");
@@ -168,6 +170,7 @@ class StateOrder extends State<OrderDetail>
         });
     }
   }
+
   List<TextEditingController> _controller = [];
   List<SectionModel> saveLaterList = [];
   // Future<Null> _getSaveLater(String save) async {
@@ -212,11 +215,12 @@ class StateOrder extends State<OrderDetail>
   //
   //   return null;
   // }
-  String? vid,uid,qtty;
+  String? vid, uid, qtty;
 
   List sectionList = [];
 
   String? pDate, prDate, sDate, dDate, cDate, rDate, aDate;
+
   /// save for later section here
   // saveForLater(String save,double price,
   //     SectionModel curItem, bool fromSave) async {
@@ -330,11 +334,10 @@ class StateOrder extends State<OrderDetail>
   Future<void> _getCart(String save) async {
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
-
       var parameter = {USER_ID: CUR_USERID, SAVE_LATER: save};
       Response response =
-      await post(getCartApi, body: parameter, headers: headers)
-          .timeout(Duration(seconds: timeOut));
+          await post(getCartApi, body: parameter, headers: headers)
+              .timeout(Duration(seconds: timeOut));
       var getdata = json.decode(response.body);
       bool error = getdata["error"];
       String? msg = getdata["message"];
@@ -356,6 +359,7 @@ class StateOrder extends State<OrderDetail>
       }
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -383,12 +387,14 @@ class StateOrder extends State<OrderDetail>
       });
     });
   }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     buttonController!.dispose();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -754,7 +760,7 @@ class StateOrder extends State<OrderDetail>
             ])));
   }
 
-  deliveryProgess(OrderItem orderItem, OrderModel model){
+  deliveryProgess(OrderItem orderItem, OrderModel model) {
     String? pDate, prDate, sDate, dDate, cDate, rDate, aDate;
     if (orderItem.listStatus!.contains(WAITING)) {
       aDate = orderItem.listDate![orderItem.listStatus!.indexOf(WAITING)];
@@ -778,8 +784,8 @@ class StateOrder extends State<OrderDetail>
       rDate = orderItem.listDate![orderItem.listStatus!.indexOf(RETURNED)];
     }
     return Card(
-      elevation: 0,
-      child: Column(
+        elevation: 0,
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -790,8 +796,7 @@ class StateOrder extends State<OrderDetail>
             getCanceled(cDate),
             getReturned(orderItem, rDate, model),
           ],
-        )
-    );
+        ));
   }
 
   shippingDetails() {
@@ -828,17 +833,21 @@ class StateOrder extends State<OrderDetail>
                       ))),
             ])));
   }
-  reOrder(){
-    print("checking variantion id here now ${variantId} and now ${variationIdList.length} ");
+
+  reOrder() {
+    print(
+        "checking variantion id here now ${variantId} and now ${variationIdList.length} ");
     return MaterialButton(
         color: colors.primary,
-        onPressed: ()async{
+        onPressed: () async {
           print("final test here ${widget.model!.otp} and ${CUR_USERID}");
-          var response = await http.post(Uri.parse('https://samadhaan.online/app/v1/api/remanage'),body: {"order_id": widget.model!.id,"user_id":"${CUR_USERID}" });
+          var response = await http.post(
+              Uri.parse('https://samadhaan.online/app/v1/api/remanage'),
+              body: {"order_id": widget.model!.id, "user_id": "${CUR_USERID}"});
           print("response here ${response.body}");
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> Cart(fromBottom: false)));
-          setState(() {
-          });
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Cart(fromBottom: false)));
+          setState(() {});
           // print("checking quantity here ${quantity}");
           //  await _getCart("0");
           //   print("after get cart");
@@ -846,8 +855,11 @@ class StateOrder extends State<OrderDetail>
           //     print("ok now ${variationIdList.length}");
           //       addToCart(quantity!, true,widget.model!.userid!,variationIdList[i]);
           // }
-
-        }, child: Text("Reorder now",style: TextStyle(color: Colors.white),));
+        },
+        child: Text(
+          "Reorder now",
+          style: TextStyle(color: Colors.white),
+        ));
     //   Card(
     //   child: Padding(
     //     padding: EdgeInsets.only(left: 10),
@@ -869,9 +881,9 @@ class StateOrder extends State<OrderDetail>
     // );
   }
 
-    OrderItem? orDetail;
+  OrderItem? orDetail;
 
-  productItem(OrderItem orderItem, OrderModel model,int index) {
+  productItem(OrderItem orderItem, OrderModel model, int index) {
     String? pDate, prDate, sDate, dDate, cDate, rDate, aDate;
     if (orderItem.listStatus!.contains(WAITING)) {
       aDate = orderItem.listDate![orderItem.listStatus!.indexOf(WAITING)];
@@ -899,13 +911,14 @@ class StateOrder extends State<OrderDetail>
       att = orderItem.attr_name!.split(',');
       val = orderItem.varient_values!.split(',');
     }
-    print("here is data now $orderItem $pDate, $prDate, $sDate, $dDate, $cDate, $rDate, $aDate");
+    print(
+        "here is data now $orderItem $pDate, $prDate, $sDate, $dDate, $cDate, $rDate, $aDate");
     deliveryStatus = orderItem.status;
     variationIdList.clear();
     print("checking variantids ${orderItem.variantids}");
-     variationIdList.add(orderItem.variantids!.toString());
-     print("list here ${variationIdList}");
-   quantity =   orderItem.qty;
+    variationIdList.add(orderItem.variantids!.toString());
+    print("list here ${variationIdList}");
+    quantity = orderItem.qty;
     orDetail = orderItem;
     return Card(
         elevation: 0,
@@ -1016,7 +1029,11 @@ class StateOrder extends State<OrderDetail>
                               )
                             ]),
                             Text(
-                             "Samadhaan Price" + " "+ CUR_CURRENCY! + " " + orderItem.price!,
+                              "Samadhaan Price" +
+                                  " " +
+                                  CUR_CURRENCY! +
+                                  " " +
+                                  orderItem.price!,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1!
@@ -1421,22 +1438,25 @@ class StateOrder extends State<OrderDetail>
                           : Container(),
                   ],
                 ),
-                index+1 == model.itemList!.length ?
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      pDate != null ? getPlaced(pDate) : getPlaced(aDate!),
-                      getProcessed(prDate, cDate),
-                      getShipped(sDate, cDate),
-                      getDelivered(dDate, cDate),
-                      getCanceled(cDate),
-                      getReturned(orderItem, rDate, model),
-                    ],
-                  ),
-                ) : SizedBox.shrink(),
+                index + 1 == model.itemList!.length
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            pDate != null
+                                ? getPlaced(pDate)
+                                : getPlaced(aDate!),
+                            getProcessed(prDate, cDate),
+                            getShipped(sDate, cDate),
+                            getDelivered(dDate, cDate),
+                            getCanceled(cDate),
+                            getReturned(orderItem, rDate, model),
+                          ],
+                        ),
+                      )
+                    : SizedBox.shrink(),
               ],
             )));
   }
@@ -1922,6 +1942,7 @@ class StateOrder extends State<OrderDetail>
 
               var targetFileName = "Invoice_${widget.model!.id}";
               var generatedPdfFile, filePath;
+              log(widget!.model!.invoice.toString());
               try {
                 generatedPdfFile =
                     await FlutterHtmlToPdf.convertFromHtmlContent(
@@ -1929,7 +1950,8 @@ class StateOrder extends State<OrderDetail>
                 filePath = generatedPdfFile.path;
               } on Exception {
                 //  filePath = targetPath + "/" + targetFileName + ".html";
-                generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
+                generatedPdfFile =
+                    await FlutterHtmlToPdf.convertFromHtmlContent(
                         widget.model!.invoice!, targetPath, targetFileName);
                 filePath = generatedPdfFile.path;
               }
@@ -2035,12 +2057,12 @@ class StateOrder extends State<OrderDetail>
 
     String? checkStatus;
     OrderItem? orderItem;
-      for(var i=0;i<model.itemList!.length;i++) {
-        print("order status ${model.itemList![i].listDate![0]} ");
-        orderStatus = model.itemList![i].status;
-        orderItem = model.itemList![i];
-      }
-      print("now check here ${orderItem!.listStatus!.indexOf(WAITING)}");
+    for (var i = 0; i < model.itemList!.length; i++) {
+      print("order status ${model.itemList![i].listDate![0]} ");
+      orderStatus = model.itemList![i].status;
+      orderItem = model.itemList![i];
+    }
+    print("now check here ${orderItem!.listStatus!.indexOf(WAITING)}");
     if (orderItem!.listStatus!.contains(WAITING)) {
       aDate = orderItem.listDate![orderItem.listStatus!.indexOf(WAITING)];
       print("go here ${aDate}");
@@ -2064,11 +2086,12 @@ class StateOrder extends State<OrderDetail>
       rDate = orderItem.listDate![orderItem.listStatus!.indexOf(RETURNED)];
     }
 
-    print(" ok now here ${pDate} and ${prDate} and ${sDate} and ${dDate} and ${cDate} and ${rDate} and ${aDate}");
+    print(
+        " ok now here ${pDate} and ${prDate} and ${sDate} and ${dDate} and ${cDate} and ${rDate} and ${aDate}");
     List att = [], val = [];
 
-
-    print("checking variation id here and quantity ${quantity} ${variationIdList}");
+    print(
+        "checking variation id here and quantity ${quantity} ${variationIdList}");
 
     return SingleChildScrollView(
       controller: controller,
@@ -2111,12 +2134,17 @@ class StateOrder extends State<OrderDetail>
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Column(
-                        crossAxisAlignment:CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "${getTranslated(context, 'PREFER_DATE_TIME')!}: ${model.delDate!} - ${model.delTime!}",
-                            style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                color: Theme.of(context).colorScheme.lightBlack2),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2!
+                                .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .lightBlack2),
                           ),
                           // Padding(
                           //   padding: const EdgeInsets.all(8.0),
@@ -2144,7 +2172,7 @@ class StateOrder extends State<OrderDetail>
             downloadInvoice(),
             shippingDetails(),
             priceDetails(),
-            orderStatus == "delivered" ?  reOrder(): SizedBox.shrink(),
+            orderStatus == "delivered" ? reOrder() : SizedBox.shrink(),
           ],
         ),
       ),
@@ -2261,36 +2289,35 @@ class StateOrder extends State<OrderDetail>
       itemBuilder: (context, i) {
         var orderItem = model.itemList![i];
         proId = orderItem.id;
-        print("checking values here ${i+1} and ${model.itemList!.length}");
+        print("checking values here ${i + 1} and ${model.itemList!.length}");
+        if (activeStatus != '') {
+          if (orderItem.status == activeStatus) {
+            return productItem(orderItem, model, i);
+          }
+          if ((orderItem.status == SHIPED || orderItem.status == PLACED) &&
+              activeStatus == PROCESSED) {
+            return productItem(orderItem, model, i);
+          }
+        } else {
+          return productItem(orderItem, model, i);
+        }
+
+        if (i + 1 == model.itemList!.length) {
+          print("Active ${activeStatus}");
           if (activeStatus != '') {
             if (orderItem.status == activeStatus) {
-              return productItem(orderItem, model,i);
+              return deliveryProgess(orderItem, model);
             }
             if ((orderItem.status == SHIPED || orderItem.status == PLACED) &&
                 activeStatus == PROCESSED) {
-              return productItem(orderItem, model,i);
+              return deliveryProgess(orderItem, model);
             }
           } else {
-            return productItem(orderItem, model,i);
+            return deliveryProgess(orderItem, model);
           }
-
-          if(i+1 == model.itemList!.length) {
-            print("Active ${activeStatus}");
-            if (activeStatus != '') {
-              if (orderItem.status == activeStatus) {
-                return deliveryProgess(orderItem,model);
-              }
-              if ((orderItem.status == SHIPED || orderItem.status == PLACED) &&
-                  activeStatus == PROCESSED) {
-                return deliveryProgess(orderItem,model);
-              }
-            } else {
-              return deliveryProgess(orderItem,model);
-            }
-          }else{
-            return Container();
-          }
-
+        } else {
+          return Container();
+        }
 
         count++;
         if (count == model.itemList!.length) {
