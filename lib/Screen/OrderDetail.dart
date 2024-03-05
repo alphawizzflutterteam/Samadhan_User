@@ -1922,60 +1922,66 @@ class StateOrder extends State<OrderDetail>
             ),
           ),
           onTap: () async {
-            final status = await Permission.storage.request();
-            if (status == PermissionStatus.granted) {
-              if (mounted) {
-                setState(() {
-                  _isProgress = true;
-                });
-              }
-              var targetPath;
+            try {
+              final status = await Permission.storage.request();
+              if (status == PermissionStatus.granted) {
+                if (mounted) {
+                  setState(() {
+                    _isProgress = true;
+                  });
+                }
+                var targetPath;
 
-              if (Platform.isIOS) {
-                var target = await getApplicationDocumentsDirectory();
-                targetPath = target.path.toString();
-              } else {
-                var downloadsDirectory =
-                    await DownloadsPathProvider.downloadsDirectory;
-                targetPath = downloadsDirectory!.path.toString();
-              }
+                if (Platform.isIOS) {
+                  var target = await getApplicationDocumentsDirectory();
+                  targetPath = target.path.toString();
+                } else {
+                  var downloadsDirectory =
+                      await DownloadsPathProvider.downloadsDirectory;
+                  targetPath = downloadsDirectory!.path.toString();
+                }
 
-              var targetFileName = "Invoice_${widget.model!.id}";
-              var generatedPdfFile, filePath;
-              log(widget!.model!.invoice.toString());
-              try {
-                generatedPdfFile =
-                    await FlutterHtmlToPdf.convertFromHtmlContent(
-                        widget.model!.invoice!, targetPath, targetFileName);
-                filePath = generatedPdfFile.path;
-              } on Exception {
-                //  filePath = targetPath + "/" + targetFileName + ".html";
-                generatedPdfFile =
-                    await FlutterHtmlToPdf.convertFromHtmlContent(
-                        widget.model!.invoice!, targetPath, targetFileName);
-                filePath = generatedPdfFile.path;
-              }
+                var targetFileName = "Invoice_${widget.model!.id}";
+                var generatedPdfFile, filePath;
 
-              if (mounted) {
-                setState(() {
-                  _isProgress = false;
-                });
+                try {
+                  generatedPdfFile =
+                      await FlutterHtmlToPdf.convertFromHtmlContent(
+                          widget.model!.invoice!, targetPath, targetFileName);
+                  filePath = generatedPdfFile.path;
+                } on Exception {
+                  //  filePath = targetPath + "/" + targetFileName + ".html";
+                  generatedPdfFile =
+                      await FlutterHtmlToPdf.convertFromHtmlContent(
+                          widget.model!.invoice!, targetPath, targetFileName);
+                  filePath = generatedPdfFile.path;
+                }
+
+                if (mounted) {
+                  setState(() {
+                    _isProgress = false;
+                  });
+                }
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    "${getTranslated(context, 'INVOICE_PATH')} $targetFileName",
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.black),
+                  ),
+                  action: SnackBarAction(
+                      label: getTranslated(context, 'VIEW')!,
+                      textColor: Theme.of(context).colorScheme.fontColor,
+                      onPressed: () async {
+                        final result = await OpenFilex.open(filePath);
+                      }),
+                  backgroundColor: Theme.of(context).colorScheme.white,
+                  elevation: 1.0,
+                ));
               }
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  "${getTranslated(context, 'INVOICE_PATH')} $targetFileName",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Theme.of(context).colorScheme.black),
-                ),
-                action: SnackBarAction(
-                    label: getTranslated(context, 'VIEW')!,
-                    textColor: Theme.of(context).colorScheme.fontColor,
-                    onPressed: () async {
-                      final result = await OpenFilex.open(filePath);
-                    }),
-                backgroundColor: Theme.of(context).colorScheme.white,
-                elevation: 1.0,
-              ));
+            } catch (e, stackTrace) {
+              print(stackTrace);
+              throw Exception(e);
             }
           }),
     );
@@ -2654,13 +2660,23 @@ class StateOrder extends State<OrderDetail>
                 )
               ],
             ),
-            model.otp != null && model.otp!.isNotEmpty && model.otp != "0"
-                ? Text(
-                    "${getTranslated(context, "OTP")!} - ${model.otp}",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.lightBlack2),
-                  )
-                : Container(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                model.otp != null && model.otp!.isNotEmpty && model.otp != "0"
+                    ? Text(
+                        "${getTranslated(context, "OTP")!} - ${model.otp}",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.lightBlack2),
+                      )
+                    : Container(),
+                Text(
+                  model.payMethod.toString(),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.lightBlack2),
+                )
+              ],
+            ),
           ],
         ),
       ),

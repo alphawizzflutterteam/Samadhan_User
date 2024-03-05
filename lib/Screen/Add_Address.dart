@@ -37,7 +37,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
       city,
       area,
       address,
-  building,
+      building,
       pincode,
       landmark,
       altMob,
@@ -113,7 +113,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
     stateC = new TextEditingController();
     countryC = new TextEditingController();
     landmarkC = new TextEditingController();
-
+    stateC!.text = "Maharastra";
+    countryC!.text = "India";
     if (widget.update!) {
       User item = addressList[widget.index!];
 
@@ -154,7 +155,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
       bottom: true,
       child: Scaffold(
         key: _scaffoldKey,
-        appBar: getSimpleAppBar(getTranslated(context, "ADDRESS_LBL")!, context),
+        appBar:
+            getSimpleAppBar(getTranslated(context, "ADDRESS_LBL")!, context),
         body: _isNetworkAvail ? _showContent() : noInternet(context),
       ),
     );
@@ -221,8 +223,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
         setSnackbar(getTranslated(context, 'cityWarning')!);
       } else if (area == null || area!.isEmpty) {
         setSnackbar(getTranslated(context, 'areaWarning')!);
-      // } else if (latitude == null || longitude == null) {
-      //   setSnackbar(getTranslated(context, 'locationWarning')!);
+        // } else if (latitude == null || longitude == null) {
+        //   setSnackbar(getTranslated(context, 'locationWarning')!);
       } else {
         return true;
       }
@@ -330,7 +332,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
               _fieldFocusChange(context, monoFocus!, almonoFocus);
             },
             decoration: InputDecoration(
-              counterText: "",
+                counterText: "",
                 label: Text(getTranslated(context, "MOBILEHINT_LBL")!),
                 fillColor: Theme.of(context).colorScheme.white,
                 isDense: true,
@@ -1154,9 +1156,6 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
     );
   }
 
-
-
-
   Future<void> addNewAddress() async {
     if (mounted) {
       setState(() {
@@ -1173,7 +1172,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
         CITY_ID: city,
         AREA_ID: area,
         ADDRESS: address,
-        'building':address,
+        'building': address,
         STATE: state,
         COUNTRY: country,
         TYPE: type,
@@ -1273,8 +1272,9 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
               selAddress = addressList[widget.index!].id;
 
               if (!ISFLAT_DEL) {
-                if(addressList.length > 0 && addressList[selectedAddress!].freeAmt != null
-                    && addressList[selectedAddress!].deliveryCharge != null){
+                if (addressList.length > 0 &&
+                    addressList[selectedAddress!].freeAmt != null &&
+                    addressList[selectedAddress!].deliveryCharge != null) {
                   if (totalPrice <
                       double.parse(addressList[selectedAddress!].freeAmt!)) {
                     delCharge = double.parse(
@@ -1548,7 +1548,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
         countryC!.text = country!;
         stateC!.text = state!;
         // pincodeC!.text = pincode!;
-         //addressC!.text = address!;
+        //addressC!.text = address!;
       });
     }
   }

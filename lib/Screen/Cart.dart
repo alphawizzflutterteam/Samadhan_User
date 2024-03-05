@@ -1325,11 +1325,6 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                       color: Theme.of(context).colorScheme.lightBlack2),
                 ),
                 Text(
-                  CUR_CURRENCY! + " " + price.toString(),
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.lightBlack2),
-                ),
-                Text(
                   CUR_CURRENCY! + " " + cartList[index].perItemTotal!,
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.lightBlack2),
@@ -1346,6 +1341,23 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                 ),
                 Text(
                   cartList[index].productList![0].tax! + "%",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.lightBlack2),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Tax Type',
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.lightBlack2),
+                ),
+                Text(
+                  cartList[index].productList![0].taxType == '1'
+                      ? 'Inclusive'
+                      : 'Exclusive',
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.lightBlack2),
                 ),
@@ -1850,8 +1862,19 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                   size: 0.3,
                                   title: getTranslated(context, "APPLY"),
                                   onBtnSelected: () {
+                                    if (promoAmt != 0 && isPromoValid!) {
+                                      if (mounted)
+                                        setState(() {
+                                          totalPrice = totalPrice + promoAmt;
+                                          promoC.text = '';
+                                          isPromoValid = false;
+                                          promoAmt = 0;
+                                          promocode = '';
+                                        });
+                                    }
                                     promoC.text = promoList[index].promoCode!;
                                     if (!isPromoValid!) validatePromo(false);
+
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -2172,6 +2195,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             });
             oriPrice = oriPrice + price;
             print("ori price here ${oriPrice.toString()}");
+            context.read<CartProvider>().setProgress(false);
           }
 
           totalPrice = 0.0;

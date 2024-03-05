@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cc_avenue/cc_avenue.dart';
@@ -32,7 +33,7 @@ class Payment extends StatefulWidget {
   final String? msg;
   String? isEnbleUpi;
 
-  Payment(this.update, this.msg,this.isEnbleUpi);
+  Payment(this.update, this.msg, this.isEnbleUpi);
 
   @override
   State<StatefulWidget> createState() {
@@ -106,7 +107,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
           'Authorization': 'Bearer $token',
         },
         body: {
-          "date": date.toString()
+          "date": date.toString(),
+          'user_id': CUR_USERID.toString()
         });
     print("checking response of getTime ${response.body}");
     var result = NewDateModel.fromJson(json.decode(response.body)).data;
@@ -133,11 +135,10 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         },
-
         body: {
-            "date": "${selDate}"
+          "date": "${selDate}"
         });
-    print("checking date response ${response.body}");
+    log("checking date response ${response.body}");
     List<String> timeLists = [];
     // var data = DateModel.fromJson(json.decode(response.body)).data;
     finalResult = DateModel.fromJson(json.decode(response.body)).data;
@@ -161,6 +162,7 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
     print("date time now here ${dateTime}");
     setState(() {
       checkDate = DateFormat('yyyy-MM-dd').format(dateTime);
+      print("Check date: $checkDate");
     });
     currentTime = DateFormat("HH:mm:ss").format(DateTime.now());
   }
@@ -313,8 +315,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
             ? _isLoading
                 ? getProgress()
                 : Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5),
                     child: Column(
                       children: [
                         Expanded(
@@ -397,7 +399,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                           CUR_CURRENCY! +
                                                           " " +
                                                           remWalBal
-                                                              .toStringAsFixed(2)
+                                                              .toStringAsFixed(
+                                                                  2)
                                                       : getTranslated(context,
                                                               'TOTAL_BAL')! +
                                                           " : " +
@@ -406,7 +409,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                           double.parse(
                                                                   userProvider
                                                                       .curBalance)
-                                                              .toStringAsFixed(2),
+                                                              .toStringAsFixed(
+                                                                  2),
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       color: Theme.of(context)
@@ -428,7 +432,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Text(
                                                 getTranslated(
                                                     context, 'PREFERED_TIME')!,
@@ -450,8 +455,10 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                   shrinkWrap: true,
                                                   scrollDirection:
                                                       Axis.horizontal,
-                                                  itemCount: int.parse(allowDay!),
-                                                  itemBuilder: (context, index) {
+                                                  itemCount:
+                                                      int.parse(allowDay!),
+                                                  itemBuilder:
+                                                      (context, index) {
                                                     return dateCell(index);
                                                   }),
                                             ),
@@ -470,36 +477,33 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                                       index]
                                                                   .totalOrder
                                                                   .toString()) >=
-                                                              int.parse(
-                                                                  timesList[index]
-                                                                      .limit
-                                                                      .toString())
+                                                              int.parse(timesList[
+                                                                      index]
+                                                                  .limit
+                                                                  .toString())
                                                           ? SizedBox.shrink()
                                                           : Padding(
-                                                              padding:
-                                                                  EdgeInsets.only(
+                                                              padding: EdgeInsets
+                                                                  .only(
                                                                       bottom: 8,
                                                                       left: 5),
                                                               child: InkWell(
                                                                 onTap: () {
                                                                   setState(() {
                                                                     selectedindex =
-                                                                        timesList[
-                                                                                index]
+                                                                        timesList[index]
                                                                             .id;
                                                                     print(
                                                                         "selected id here ${selectedindex}");
-                                                                    selTime =
-                                                                        timesList[
-                                                                                index]
-                                                                            .title;
+                                                                    selTime = timesList[
+                                                                            index]
+                                                                        .title;
                                                                   });
                                                                 },
                                                                 child: Row(
                                                                   children: [
                                                                     selectedindex ==
-                                                                            timesList[index]
-                                                                                .id
+                                                                            timesList[index].id
                                                                         ? Container(
                                                                             height:
                                                                                 20,
@@ -507,20 +511,15 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                                                 20,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color:
-                                                                                  Colors.green,
-                                                                              borderRadius:
-                                                                                  BorderRadius.circular(100),
-                                                                              border:
-                                                                                  Border.all(color: Colors.grey),
+                                                                              color: Colors.green,
+                                                                              borderRadius: BorderRadius.circular(100),
+                                                                              border: Border.all(color: Colors.grey),
                                                                             ),
                                                                             child:
                                                                                 Icon(
                                                                               Icons.check,
-                                                                              color:
-                                                                                  Colors.white,
-                                                                              size:
-                                                                                  15,
+                                                                              color: Colors.white,
+                                                                              size: 15,
                                                                             ),
                                                                           )
                                                                         : Container(
@@ -531,10 +530,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                                             decoration:
                                                                                 BoxDecoration(
                                                                               // color: Colors.green,
-                                                                              borderRadius:
-                                                                                  BorderRadius.circular(100),
-                                                                              border:
-                                                                                  Border.all(color: Colors.grey),
+                                                                              borderRadius: BorderRadius.circular(100),
+                                                                              border: Border.all(color: Colors.grey),
                                                                             ),
                                                                             // child: Icon(Icons.check,color: Colors.white,size: 15,),
                                                                           ),
@@ -550,10 +547,11 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                       // return timeSlotItem(index,timeModel[index].name);
                                                     })
                                                 : Container(
-                                                    height: MediaQuery.of(context)
-                                                            .size
-                                                            .height /
-                                                        2,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            2,
                                                     alignment: Alignment.center,
                                                     child: Column(
                                                       mainAxisAlignment:
@@ -564,7 +562,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                           "Holiday",
                                                           style: TextStyle(
                                                               fontWeight:
-                                                                  FontWeight.bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                               fontSize: 25,
                                                               color: Theme.of(
                                                                       context)
@@ -577,7 +576,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                         Text(
                                                           "Please select other date",
                                                           style: TextStyle(
-                                                              color: Colors.black,
+                                                              color:
+                                                                  Colors.black,
                                                               fontSize: 16,
                                                               fontWeight:
                                                                   FontWeight
@@ -609,7 +609,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                       color: Theme.of(context)
                                                           .colorScheme
                                                           .fontColor,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 16,
                                                     ),
                                                   ),
@@ -627,40 +628,56 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                     shrinkWrap: true,
                                                     physics:
                                                         NeverScrollableScrollPhysics(),
-                                                    itemCount:
-                                                        paymentMethodList.length,
+                                                    itemCount: paymentMethodList
+                                                        .length,
                                                     itemBuilder:
                                                         (context, index) {
                                                       if (index == 1 && cod)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 2 &&
                                                           paypal)
-                                                        return paymentItem(index);
-                                                        else if (index == 3 && upi)
-                                                        return widget.isEnbleUpi == "1"  ? paymentItem(index):SizedBox.shrink();
+                                                        return paymentItem(
+                                                            index);
+                                                      else if (index == 3 &&
+                                                          upi)
+                                                        return widget
+                                                                    .isEnbleUpi ==
+                                                                "1"
+                                                            ? paymentItem(index)
+                                                            : SizedBox.shrink();
                                                       else if (index == 4 &&
                                                           paumoney)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 5 &&
                                                           razorpay)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 6 &&
                                                           paystack)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 7 &&
                                                           flutterwave)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 8 &&
                                                           stripe)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 9 &&
                                                           paytm)
-                                                        return paymentItem(index);
-                                                      else if (index == 0 && gpay)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
+                                                      else if (index == 0 &&
+                                                          gpay)
+                                                        return paymentItem(
+                                                            index);
                                                       else if (index == 10 &&
                                                           bankTransfer)
-                                                        return paymentItem(index);
+                                                        return paymentItem(
+                                                            index);
                                                       else
                                                         return Container();
                                                     }),

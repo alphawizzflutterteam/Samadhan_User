@@ -576,15 +576,15 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
               double.parse(widget.model!.prVarientList![pos].disPrice!))
           .toDouble();
       print("off value here now is ${off}");
-      off = off * 100 / double.parse(widget.model!.prVarientList![pos].price!);
+      // off = off * 100 / double.parse(widget.model!.prVarientList![pos].price!);
       // off =
       //     (double.parse(widget.model!.prVarientList![pos].price!) * off) / 100;
       print(
           "sfsfsfsfsfs ${widget.model!.prVarientList![pos].price!}   nad ${off}");
-      variationOff =
-          (double.parse(widget.model!.prVarientList![pos].price.toString()) *
-                  off) /
-              100;
+      variationOff = off;
+      // (double.parse(widget.model!.prVarientList![pos].price.toString()) *
+      //         off) /
+      //     100;
       print(
           "checking final percent of here ${variationOff} and ${widget.model!.prVarientList![pos].price} and more ${off}");
       //  return finalOff.toStringAsFixed(2);
@@ -2900,7 +2900,6 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                               index: index,
                               model: widget.model,
                             )));
-                
               },
               child: Hero(
                 tag: "$index${reviewList[i].id}",

@@ -97,6 +97,7 @@ class Product {
       noOfRating,
       attrIds,
       tax,
+      taxType,
       categoryId,
       shortDescription,
       qtyStepSize;
@@ -145,6 +146,7 @@ class Product {
   Product(
       {this.id,
       this.minMaxOff,
+      this.taxType,
       this.name,
       this.desc,
       this.image,
@@ -253,6 +255,7 @@ class Product {
         filterList: filterList,
         isFavLoading: false,
         selVarient: 0,
+        taxType: json['is_prices_inclusive_tax'],
         attrIds: json[ATTR_VALUE],
         madein: json[MADEIN],
         shortDescription: json[SHORT],

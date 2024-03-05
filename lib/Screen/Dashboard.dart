@@ -11,8 +11,6 @@ import 'package:eshop_multivendor/Helper/app_assets.dart';
 import 'package:eshop_multivendor/Model/Section_Model.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Favorite.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/MyProfile.dart';
 import 'package:eshop_multivendor/Screen/Product_Detail.dart';
 import 'package:eshop_multivendor/Screen/starting_view/clipper_path.dart';
 import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';

@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -39,6 +38,7 @@ import 'package:sizer/sizer.dart';
 import '../../main.dart';
 import '../Manage_Address.dart';
 import 'package:http/http.dart' as http;
+
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({Key? key}) : super(key: key);
 
@@ -99,99 +99,102 @@ class _DrawerScreenState extends State<DrawerScreen> {
     });
     super.initState();
   }
+
   _getSaved() async {
     SettingProvider settingsProvider =
-    Provider.of<SettingProvider>(this.context, listen: false);
+        Provider.of<SettingProvider>(this.context, listen: false);
     //String get = await settingsProvider.getPrefrence(APP_THEME) ?? '';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? get = prefs.getString(APP_THEME);
     curTheme = themeList.indexOf(get == '' || get == DEFAULT_SYSTEM
         ? getTranslated(context, 'SYSTEM_DEFAULT')
         : get == LIGHT
-        ? getTranslated(context, 'LIGHT_THEME')
-        : getTranslated(context, 'DARK_THEME'));
+            ? getTranslated(context, 'LIGHT_THEME')
+            : getTranslated(context, 'DARK_THEME'));
 
     String getlng = await settingsProvider.getPrefrence(LAGUAGE_CODE) ?? '';
     selectLan = langCode.indexOf(getlng == '' ? "en" : getlng);
     if (mounted) setState(() {});
   }
+
   List<Widget> getLngList(BuildContext ctx, StateSetter setModalState) {
     return languageList
         .asMap()
         .map(
           (index, element) => MapEntry(
-          index,
-          InkWell(
-            onTap: () {
-              if (mounted)
-                setState(() {
-                  selectLan = index;
-                  _changeLan(langCode[index], ctx);
-                });
-              setModalState(() {});
-            },
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10),
-              child: Column(
-                children: [
-                  Row(
+              index,
+              InkWell(
+                onTap: () {
+                  if (mounted)
+                    setState(() {
+                      selectLan = index;
+                      _changeLan(langCode[index], ctx);
+                    });
+                  setModalState(() {});
+                },
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10),
+                  child: Column(
                     children: [
-                      Container(
-                        height: 25.0,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: selectLan == index
-                                ? colors.grad2Color
-                                : Theme.of(context).colorScheme.fontColor,
-                            border: Border.all(color: colors.grad2Color)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: selectLan == index
-                              ? Icon(
-                            Icons.check,
-                            size: 17.0,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .fontColor,
-                          )
-                              : Icon(
-                            Icons.check_box_outline_blank,
-                            size: 15.0,
-                            color:
-                            Theme.of(context).colorScheme.fontColor,
+                      Row(
+                        children: [
+                          Container(
+                            height: 25.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: selectLan == index
+                                    ? colors.grad2Color
+                                    : Theme.of(context).colorScheme.fontColor,
+                                border: Border.all(color: colors.grad2Color)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: selectLan == index
+                                  ? Icon(
+                                      Icons.check,
+                                      size: 17.0,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .fontColor,
+                                    )
+                                  : Icon(
+                                      Icons.check_box_outline_blank,
+                                      size: 15.0,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .fontColor,
+                                    ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: 15.0,
+                              ),
+                              child: Text(
+                                languageList[index]!,
+                                style: Theme.of(this.context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
+                              ))
+                        ],
                       ),
-                      Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            start: 15.0,
-                          ),
-                          child: Text(
-                            languageList[index]!,
-                            style: Theme.of(this.context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .lightBlack),
-                          ))
+                      // index == languageList.length - 1
+                      //     ? Container(
+                      //         margin: EdgeInsetsDirectional.only(
+                      //           bottom: 10,
+                      //         ),
+                      //       )
+                      //     : Divider(
+                      //         color: Theme.of(context).colorScheme.lightBlack,
+                      //       ),
                     ],
                   ),
-                  // index == languageList.length - 1
-                  //     ? Container(
-                  //         margin: EdgeInsetsDirectional.only(
-                  //           bottom: 10,
-                  //         ),
-                  //       )
-                  //     : Divider(
-                  //         color: Theme.of(context).colorScheme.lightBlack,
-                  //       ),
-                ],
-              ),
-            ),
-          )),
-    )
+                ),
+              )),
+        )
         .values
         .toList();
   }
@@ -222,7 +225,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     Navigator.of(context).pop();
     if (!error) {
       var settingProvider =
-      Provider.of<SettingProvider>(context, listen: false);
+          Provider.of<SettingProvider>(context, listen: false);
       var userProvider = Provider.of<UserProvider>(context, listen: false);
 
       if ((username != "") && (userEmail != "")) {
@@ -238,7 +241,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
     }
   }
 
-
   setSnackbar(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
       content: new Text(
@@ -250,78 +252,80 @@ class _DrawerScreenState extends State<DrawerScreen> {
       elevation: 1.0,
     ));
   }
+
   List<Widget> themeListView(BuildContext ctx) {
     return themeList
         .asMap()
         .map(
           (index, element) => MapEntry(
-          index,
-          InkWell(
-            onTap: () {
-              _updateState(index, ctx);
-            },
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10),
-              child: Column(
-                children: [
-                  Row(
+              index,
+              InkWell(
+                onTap: () {
+                  _updateState(index, ctx);
+                },
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10),
+                  child: Column(
                     children: [
-                      Container(
-                        height: 25.0,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: curTheme == index
-                              ? colors.grad2Color
-                              : Theme.of(context).colorScheme.fontColor,
-                          border: Border.all(color: colors.grad2Color),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: curTheme == index
-                                ? Icon(
-                              Icons.check,
-                              size: 17.0,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .fontColor,
-                            )
-                                : Icon(
-                              Icons.check_box_outline_blank,
-                              size: 15.0,
-                              color:
-                              Theme.of(context).colorScheme.fontColor,
-                            )),
-                      ),
-                      Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            start: 15.0,
+                      Row(
+                        children: [
+                          Container(
+                            height: 25.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: curTheme == index
+                                  ? colors.grad2Color
+                                  : Theme.of(context).colorScheme.fontColor,
+                              border: Border.all(color: colors.grad2Color),
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: curTheme == index
+                                    ? Icon(
+                                        Icons.check,
+                                        size: 17.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .fontColor,
+                                      )
+                                    : Icon(
+                                        Icons.check_box_outline_blank,
+                                        size: 15.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .fontColor,
+                                      )),
                           ),
-                          child: Text(
-                            themeList[index]!,
-                            style: Theme.of(ctx)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .lightBlack),
-                          ))
+                          Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: 15.0,
+                              ),
+                              child: Text(
+                                themeList[index]!,
+                                style: Theme.of(ctx)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
+                              ))
+                        ],
+                      ),
+                      // index == themeList.length - 1
+                      //     ? Container(
+                      //         margin: EdgeInsetsDirectional.only(
+                      //           bottom: 10,
+                      //         ),
+                      //       )
+                      //     : Divider(
+                      //         color: Theme.of(context).colorScheme.lightBlack,
+                      //       )
                     ],
                   ),
-                  // index == themeList.length - 1
-                  //     ? Container(
-                  //         margin: EdgeInsetsDirectional.only(
-                  //           bottom: 10,
-                  //         ),
-                  //       )
-                  //     : Divider(
-                  //         color: Theme.of(context).colorScheme.lightBlack,
-                  //       )
-                ],
-              ),
-            ),
-          )),
-    )
+                ),
+              )),
+        )
         .values
         .toList();
   }
@@ -333,9 +337,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   void onThemeChanged(
-      String value,
-      BuildContext ctx,
-      ) async {
+    String value,
+    BuildContext ctx,
+  ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (value == getTranslated(ctx, 'SYSTEM_DEFAULT')) {
       themeNotifier.setThemeMode(ThemeMode.system);
@@ -373,59 +377,59 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   Future<void> _openStoreListing() => _inAppReview.openStoreListing(
-    appStoreId: appStoreId,
-    microsoftStoreId: 'microsoftStoreId',
-  );
+        appStoreId: appStoreId,
+        microsoftStoreId: 'microsoftStoreId',
+      );
 
   logOutDailog() async {
     await dialogAnimate(context,
         StatefulBuilder(builder: (BuildContext context, StateSetter setStater) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setStater) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                  content: Text(
-                    getTranslated(context, 'LOGOUTTXT')!,
-                    style: Theme.of(this.context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Theme.of(context).colorScheme.fontColor),
-                  ),
-                  actions: <Widget>[
-                    new TextButton(
-                        child: Text(
-                          getTranslated(context, 'NO')!,
-                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
-                              color: Theme.of(context).colorScheme.lightBlack,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                        }),
-                    new TextButton(
-                        child: Text(
-                          getTranslated(context, 'YES')!,
-                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
-                              color: Theme.of(context).colorScheme.fontColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          SettingProvider settingProvider =
-                          Provider.of<SettingProvider>(context, listen: false);
-                          settingProvider.clearUserSession(context);
-                          //favList.clear();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/home', (Route<dynamic> route) => false);
-                        })
-                  ],
-                );
-              });
-        }));
+      return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setStater) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          content: Text(
+            getTranslated(context, 'LOGOUTTXT')!,
+            style: Theme.of(this.context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Theme.of(context).colorScheme.fontColor),
+          ),
+          actions: <Widget>[
+            new TextButton(
+                child: Text(
+                  getTranslated(context, 'NO')!,
+                  style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                      color: Theme.of(context).colorScheme.lightBlack,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                }),
+            new TextButton(
+                child: Text(
+                  getTranslated(context, 'YES')!,
+                  style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                      color: Theme.of(context).colorScheme.fontColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  SettingProvider settingProvider =
+                      Provider.of<SettingProvider>(context, listen: false);
+                  settingProvider.clearUserSession(context);
+                  //favList.clear();
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/home', (Route<dynamic> route) => false);
+                })
+          ],
+        );
+      });
+    }));
   }
+
   @override
   Widget build(BuildContext context) {
-
     languageList = [
       getTranslated(context, 'ENGLISH_LAN'),
       getTranslated(context, 'CHINESE_LAN'),
@@ -447,20 +451,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
       child: SingleChildScrollView(
         child: Container(
           color: Theme.of(context).colorScheme.black,
-          child:  Column(
+          child: Column(
             children: [
-
               Container(
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Color(0xffA3C940),
-                          Color(0xff0BA84A),
-                        ])
-                ),
-                padding: EdgeInsets.only(left:getWidth(60),right: getWidth(36) ),
+                      Color(0xffA3C940),
+                      Color(0xff0BA84A),
+                    ])),
+                padding:
+                    EdgeInsets.only(left: getWidth(60), right: getWidth(36)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -468,16 +471,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: getHeight(53.36),
                     ),
                     InkWell(
-                      onTap: (){
-
-                      },
+                      onTap: () {},
                       child: Row(
                         children: [
                           Selector<UserProvider, String>(
                               selector: (_, provider) => provider.profilePic,
                               builder: (context, profileImage, child) {
-                                return getUserImage(
-                                    profileImage, openChangeUserDetailsBottomSheet);
+                                return getUserImage(profileImage,
+                                    openChangeUserDetailsBottomSheet);
                               }),
                           SizedBox(
                             width: getWidth(19.36),
@@ -489,9 +490,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Selector<UserProvider, String>(
-                                    selector: (_, provider) => provider.curUserName,
+                                    selector: (_, provider) =>
+                                        provider.curUserName,
                                     builder: (context, userName, child) {
-                                      nameController = TextEditingController(text: userName);
+                                      nameController.text = userName;
                                       return Text(
                                         userName == ""
                                             ? getTranslated(context, 'GUEST')!
@@ -500,8 +502,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             .textTheme
                                             .subtitle1!
                                             .copyWith(
-                                          color: Theme.of(context).colorScheme.white,
-                                        ),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .white,
+                                            ),
                                       );
                                     }),
                                 Selector<UserProvider, String>(
@@ -509,18 +513,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     builder: (context, userMobile, child) {
                                       return userMobile != ""
                                           ? Text(
-                                        userMobile,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                            color:Theme.of(context).colorScheme.white,
-                                            fontWeight: FontWeight.normal),
-                                      )
+                                              userMobile,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .white,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                            )
                                           : Container(
-                                        height: 0,
-                                      );
+                                              height: 0,
+                                            );
                                     }),
+
                                 /// show  email section here
                                 // Selector<UserProvider, String>(
                                 //     selector: (_, provider) => provider.email,
@@ -556,28 +564,36 @@ class _DrawerScreenState extends State<DrawerScreen> {
                               height: 0,
                             );
                   }),*/
-                                Consumer<UserProvider>(builder: (context, userProvider, _) {
+                                Consumer<UserProvider>(
+                                    builder: (context, userProvider, _) {
                                   return userProvider.curUserName == ""
                                       ? Padding(
-                                      padding: const EdgeInsetsDirectional.only(top: 7),
-                                      child: InkWell(
-                                        child: Text(
-                                            getTranslated(context, 'LOGIN_REGISTER_LBL')!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption!
-                                                .copyWith(
-                                              color: Theme.of(context).colorScheme.white,
-                                              decoration: TextDecoration.underline,
-                                            )),
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => Login(),
-                                              ));
-                                        },
-                                      ))
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  top: 7),
+                                          child: InkWell(
+                                            child: Text(
+                                                getTranslated(context,
+                                                    'LOGIN_REGISTER_LBL')!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption!
+                                                    .copyWith(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .white,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                    )),
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Login(),
+                                                  ));
+                                            },
+                                          ))
                                       : Container();
                                 }),
                               ],
@@ -600,33 +616,44 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     boxHeight(20),
                     boxHeight(15),
                     Padding(
-                      padding:  EdgeInsets.only(left: getWidth(60)),
-                      child: text("My Information",fontSize: 12.sp,fontFamily: fontRegular,textColor: Theme.of(context).colorScheme.black.withOpacity(0.7)),
+                      padding: EdgeInsets.only(left: getWidth(60)),
+                      child: text("My Information",
+                          fontSize: 12.sp,
+                          fontFamily: fontRegular,
+                          textColor: Theme.of(context)
+                              .colorScheme
+                              .black
+                              .withOpacity(0.7)),
                     ),
                     boxHeight(25),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 1, "assets/images/pro_myorder.svg", getTranslated(context, 'MY_ORDERS_LBL')!),
+                        : tabItem(context, 1, "assets/images/pro_myorder.svg",
+                            getTranslated(context, 'MY_ORDERS_LBL')!),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 2, "assets/images/pro_address.svg", getTranslated(context, 'MANAGE_ADD_LBL')!),
+                        : tabItem(context, 2, "assets/images/pro_address.svg",
+                            getTranslated(context, 'MANAGE_ADD_LBL')!),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 3, "assets/images/pro_wh.svg", getTranslated(context, 'MYWALLET')!),
+                        : tabItem(context, 3, "assets/images/pro_wh.svg",
+                            getTranslated(context, 'MYWALLET')!),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        : tabItem(context, 4, "assets/images/pro_th.svg", getTranslated(context, 'MYTRANSACTION')!),
-                    tabItem(context, 5, "assets/images/pro_theme.svg", getTranslated(context, 'CHANGE_THEME_LBL')!),
-
-                    tabItem(context, 6, "assets/images/pro_language.svg", getTranslated(context, 'CHANGE_LANGUAGE_LBL')!),
+                        : tabItem(context, 4, "assets/images/pro_th.svg",
+                            getTranslated(context, 'MYTRANSACTION')!),
+                    tabItem(context, 5, "assets/images/pro_theme.svg",
+                        getTranslated(context, 'CHANGE_THEME_LBL')!),
+                    tabItem(context, 6, "assets/images/pro_language.svg",
+                        getTranslated(context, 'CHANGE_LANGUAGE_LBL')!),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 7, "assets/images/pro_pass.svg", getTranslated(context, 'CHANGE_PASS_LBL')!),
+                        : tabItem(context, 7, "assets/images/pro_pass.svg",
+                            getTranslated(context, 'CHANGE_PASS_LBL')!),
                     boxHeight(25),
                   ],
                 ),
               ),
-
               Container(
                 color: Theme.of(context).cardColor.withOpacity(0.9),
                 child: Column(
@@ -634,23 +661,32 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   children: [
                     boxHeight(15),
                     Padding(
-                      padding:  EdgeInsets.only(left: getWidth(60)),
-                      child: text("Other",fontSize: 12.sp,fontFamily: fontRegular,textColor: Theme.of(context).colorScheme.black.withOpacity(0.7)),
+                      padding: EdgeInsets.only(left: getWidth(60)),
+                      child: text("Other",
+                          fontSize: 12.sp,
+                          fontFamily: fontRegular,
+                          textColor: Theme.of(context)
+                              .colorScheme
+                              .black
+                              .withOpacity(0.7)),
                     ),
                     boxHeight(18),
-                    tabItem(context, 8, "assets/images/pro_customersupport.svg",getTranslated(context, 'CUSTOMER_SUPPORT')!),
-                    tabItem(context, 9, "assets/images/pro_aboutus.svg",getTranslated(context, 'ABOUT_LBL')!),
-
-                    tabItem(context, 10, "assets/images/pro_aboutus.svg", getTranslated(context, 'CONTACT_LBL')!),
-
-                    tabItem(context, 11, "assets/images/pro_faq.svg", getTranslated(context, 'FAQS')!),
-
-                    tabItem(context, 12, "assets/images/pro_pp.svg",  getTranslated(context, 'PRIVACY')!),
-
-                    tabItem(context, 13, "assets/images/pro_tc.svg",  getTranslated(context, 'TERM')!),
-
-                    tabItem(context, 17, "assets/images/pro_tc.svg",  getTranslated(context, 'REFUND_POLICY')!),
-                    tabItem(context, 19, "assets/images/refer.svg",  getTranslated(context, 'REFEREARN')!),
+                    tabItem(context, 8, "assets/images/pro_customersupport.svg",
+                        getTranslated(context, 'CUSTOMER_SUPPORT')!),
+                    tabItem(context, 9, "assets/images/pro_aboutus.svg",
+                        getTranslated(context, 'ABOUT_LBL')!),
+                    tabItem(context, 10, "assets/images/pro_aboutus.svg",
+                        getTranslated(context, 'CONTACT_LBL')!),
+                    tabItem(context, 11, "assets/images/pro_faq.svg",
+                        getTranslated(context, 'FAQS')!),
+                    tabItem(context, 12, "assets/images/pro_pp.svg",
+                        getTranslated(context, 'PRIVACY')!),
+                    tabItem(context, 13, "assets/images/pro_tc.svg",
+                        getTranslated(context, 'TERM')!),
+                    tabItem(context, 17, "assets/images/pro_tc.svg",
+                        getTranslated(context, 'REFUND_POLICY')!),
+                    tabItem(context, 19, "assets/images/refer.svg",
+                        getTranslated(context, 'REFEREARN')!),
                     boxHeight(18),
                   ],
                 ),
@@ -660,17 +696,18 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    tabItem(context, 14, "assets/images/pro_rateus.svg",  getTranslated(context, 'RATE_US')!),
-                    tabItem(context, 15, "assets/images/pro_share.svg",  getTranslated(context, 'SHARE_APP')!),
-
-
+                    tabItem(context, 14, "assets/images/pro_rateus.svg",
+                        getTranslated(context, 'RATE_US')!),
+                    tabItem(context, 15, "assets/images/pro_share.svg",
+                        getTranslated(context, 'SHARE_APP')!),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        : tabItem(context, 16, "assets/images/delete.svg", getTranslated(context, 'DELETE')!),
-
+                        : tabItem(context, 16, "assets/images/delete.svg",
+                            getTranslated(context, 'DELETE')!),
                     CUR_USERID == "" || CUR_USERID == null
                         ? Container()
-                        :tabItem(context, 18, "assets/images/pro_logout.svg", getTranslated(context, 'LOGOUT')!),
+                        : tabItem(context, 18, "assets/images/pro_logout.svg",
+                            getTranslated(context, 'LOGOUT')!),
                     boxHeight(35),
                   ],
                 ),
@@ -681,10 +718,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
       ),
     );
   }
+
   Widget tabItem(BuildContext context, var pos, var icon, String title) {
     return GestureDetector(
       onTap: () {
-
         setState(() {
           selectedIndex = pos;
         });
@@ -699,17 +736,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
         if (pos == 2) {
           CUR_USERID == null
               ? Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Login(),
-              ))
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(),
+                  ))
               : Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ManageAddress(
-                  home: true,
-                ),
-              ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ManageAddress(
+                      home: true,
+                    ),
+                  ));
         }
         if (pos == 3) {
           Navigator.push(
@@ -737,12 +774,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
         if (pos == 8) {
           CUR_USERID == null
               ? Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Login(),
-              ))
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(),
+                  ))
               : Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CustomerSupport()));
+                  MaterialPageRoute(builder: (context) => CustomerSupport()));
         }
         if (pos == 9) {
           Navigator.push(
@@ -794,28 +831,40 @@ class _DrawerScreenState extends State<DrawerScreen> {
           _openStoreListing();
         }
         if (pos == 15) {
-
           var str =
               "$appName\n\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n\n ${getTranslated(context, 'IOSLBL')}\n$iosLink";
 
           Share.share(str);
-        }if (pos == 16) {
+        }
+        if (pos == 16) {
           deleteAccountDailog();
         }
 
         if (pos == 18) {
           logOutDailog();
         }
-        if(pos == 17){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => RefundPolicy(title:  getTranslated(context, 'REFUND_POLICY'),)));
+        if (pos == 17) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RefundPolicy(
+                        title: getTranslated(context, 'REFUND_POLICY'),
+                      )));
         }
-        if(pos == 19){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ReferEarn()));
+        if (pos == 19) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ReferEarn()));
         }
       },
       child: Container(
-        padding: EdgeInsets.only(left:getWidth(60),right: getWidth(36),top: getHeight(18),bottom: getHeight(18) ),
-        color: selectedIndex!=pos?Colors.transparent:Color(0xffF4B71E).withOpacity(0.2),
+        padding: EdgeInsets.only(
+            left: getWidth(60),
+            right: getWidth(36),
+            top: getHeight(18),
+            bottom: getHeight(18)),
+        color: selectedIndex != pos
+            ? Colors.transparent
+            : Color(0xffF4B71E).withOpacity(0.2),
         alignment: Alignment.center,
         child: Row(
           children: [
@@ -832,80 +881,77 @@ class _DrawerScreenState extends State<DrawerScreen> {
             text(title,
                 fontFamily: fontSemibold,
                 fontSize: 10.5.sp,
-                textColor: Theme.of(context).colorScheme.black
-            ),
+                textColor: Theme.of(context).colorScheme.black),
           ],
         ),
       ),
     );
   }
+
   deleteAccountDailog() async {
     await dialogAnimate(context,
         StatefulBuilder(builder: (BuildContext context, StateSetter setStater) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setStater) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                  content: Text(
-                    getTranslated(context, 'DELETE_ACCOUNT')!,
-                    style: Theme.of(this.context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Theme.of(context).colorScheme.fontColor),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                        child: Text(
-                          getTranslated(context, 'NO')!,
-                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
-                              color: Theme.of(context).colorScheme.lightBlack,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                        }),
-                    TextButton(
-                        child: Text(
-                          getTranslated(context, 'YES')!,
-                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
-                              color: Theme.of(context).colorScheme.fontColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          deleteAccount();
-                          // SettingProvider settingProvider =
-                          // Provider.of<SettingProvider>(context, listen: false);
-                          // settingProvider.clearUserSession(context);
-                          // //favList.clear();
-                          // Navigator.of(context).pushNamedAndRemoveUntil(
-                          //     '/home', (Route<dynamic> route) => false);
-                        })
-                  ],
-                );
-              });
-        }));
+      return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setStater) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          content: Text(
+            getTranslated(context, 'DELETE_ACCOUNT')!,
+            style: Theme.of(this.context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Theme.of(context).colorScheme.fontColor),
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: Text(
+                  getTranslated(context, 'NO')!,
+                  style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                      color: Theme.of(context).colorScheme.lightBlack,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                }),
+            TextButton(
+                child: Text(
+                  getTranslated(context, 'YES')!,
+                  style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                      color: Theme.of(context).colorScheme.fontColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  deleteAccount();
+                  // SettingProvider settingProvider =
+                  // Provider.of<SettingProvider>(context, listen: false);
+                  // settingProvider.clearUserSession(context);
+                  // //favList.clear();
+                  // Navigator.of(context).pushNamedAndRemoveUntil(
+                  //     '/home', (Route<dynamic> route) => false);
+                })
+          ],
+        );
+      });
+    }));
   }
 
   deleteAccount() async {
-    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_users'));
-    request.fields.addAll({
-      'user_id': CUR_USERID.toString()
-    });
+    var request =
+        http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_users'));
+    request.fields.addAll({'user_id': CUR_USERID.toString()});
     print('-----------${request.fields}___${Uri.parse}______');
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      var result  =  await response.stream.bytesToString();
-      var finalResult =  jsonDecode(result);
+      var result = await response.stream.bytesToString();
+      var finalResult = jsonDecode(result);
       Fluttertoast.showToast(msg: "${finalResult['message']}");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
-
-    }
-    else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    } else {
       print(response.reasonPhrase);
     }
-
   }
+
   Widget getUserImage(String profileImage, VoidCallback? onBtnSelected) {
     return Stack(
       children: <Widget>[
@@ -922,23 +968,24 @@ class _DrawerScreenState extends State<DrawerScreen> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                    width: 1.0, color: Theme.of(context).colorScheme.fontColor)),
+                    width: 1.0,
+                    color: Theme.of(context).colorScheme.fontColor)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100.0),
               child:
-              Consumer<UserProvider>(builder: (context, userProvider, _) {
+                  Consumer<UserProvider>(builder: (context, userProvider, _) {
                 return userProvider.profilePic != ''
                     ? new FadeInImage(
-                  fadeInDuration: Duration(milliseconds: 150),
-                  image:
-                  CachedNetworkImageProvider(userProvider.profilePic),
-                  height: 64.0,
-                  width: 64.0,
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (context, error, stackTrace) =>
-                      erroWidget(64),
-                  placeholder: placeHolder(64),
-                )
+                        fadeInDuration: Duration(milliseconds: 150),
+                        image:
+                            CachedNetworkImageProvider(userProvider.profilePic),
+                        height: 64.0,
+                        width: 64.0,
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            erroWidget(64),
+                        placeholder: placeHolder(64),
+                      )
                     : imagePlaceHolder(62, context);
               }),
             ),
@@ -996,6 +1043,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       ],
     );
   }
+
   void openChangeUserDetailsBottomSheet() {
     showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -1032,12 +1080,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     Selector<UserProvider, String>(
                         selector: (_, provider) => provider.email,
                         builder: (context, userEmail, child) {
+                          emailController.text = userEmail;
                           return setEmailField(userEmail);
                         }),
                     saveButton(getTranslated(context, "SAVE_LBL")!, () {
                       validateAndSave(_changeUserDetailsKey);
                     }),
-                    SizedBox(height: 50,)
+                    SizedBox(
+                      height: 50,
+                    )
                   ],
                 ),
               ),
@@ -1062,9 +1113,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   Widget bottomsheetLabel(String labelName) => Padding(
-    padding: const EdgeInsets.only(top: 30.0, bottom: 20),
-    child: getHeading(labelName),
-  );
+        padding: const EdgeInsets.only(top: 30.0, bottom: 20),
+        child: getHeading(labelName),
+      );
 
   void _imgFromGallery() async {
     var result = await FilePicker.platform.pickFiles();
@@ -1103,7 +1154,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             image = i[IMAGE];
           }
           var settingProvider =
-          Provider.of<SettingProvider>(context, listen: false);
+              Provider.of<SettingProvider>(context, listen: false);
           settingProvider.setPrefrence(IMAGE, image!);
           var userProvider = Provider.of<UserProvider>(context, listen: false);
           userProvider.setProfilePic(image!);
@@ -1124,78 +1175,78 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   Widget setNameField(String userName) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
-    child: Container(
-      padding:
-      EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        child: TextFormField(
-          //initialValue: nameController.text,
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.fontColor,
-              fontWeight: FontWeight.bold),
-          controller: nameController,
-          decoration: InputDecoration(
-              label: Text(
-                getTranslated(
-                  context,
-                  "NAME_LBL",
-                )!,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              fillColor: Theme.of(context).cardColor,
-              border: InputBorder.none),
-          validator: (val) => validateUserName(
-              val!,
-              getTranslated(context, 'USER_REQUIRED'),
-              getTranslated(context, 'USER_LENGTH')),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: TextFormField(
+              //initialValue: nameController.text,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.fontColor,
+                  fontWeight: FontWeight.bold),
+              controller: nameController,
+              decoration: InputDecoration(
+                  label: Text(
+                    getTranslated(
+                      context,
+                      "NAME_LBL",
+                    )!,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  fillColor: Theme.of(context).cardColor,
+                  border: InputBorder.none),
+              validator: (val) => validateUserName(
+                  val!,
+                  getTranslated(context, 'USER_REQUIRED'),
+                  getTranslated(context, 'USER_LENGTH')),
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget setEmailField(String email) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
-    child: Container(
-      padding:
-      EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        child: TextFormField(
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.fontColor,
-              fontWeight: FontWeight.bold),
-          controller: emailController,
-          decoration: InputDecoration(
-              label: Text(
-                getTranslated(context, "EMAILHINT_LBL")!,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              fillColor: Theme.of(context).cardColor,
-              border: InputBorder.none),
-          validator: (val) => validateEmail(
-              val!,
-              getTranslated(context, 'EMAIL_REQUIRED'),
-              getTranslated(context, 'VALID_EMAIL')),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: TextFormField(
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.fontColor,
+                  fontWeight: FontWeight.bold),
+              controller: emailController,
+              decoration: InputDecoration(
+                  label: Text(
+                    getTranslated(context, "EMAILHINT_LBL")!,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  fillColor: Theme.of(context).cardColor,
+                  border: InputBorder.none),
+              validator: (val) => validateEmail(
+                  val!,
+                  getTranslated(context, 'EMAIL_REQUIRED'),
+                  getTranslated(context, 'VALID_EMAIL')),
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget saveButton(String title, VoidCallback? onBtnSelected) {
     return Row(
@@ -1203,7 +1254,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
         Expanded(
           child: Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
             child: MaterialButton(
               height: 45.0,
               textColor: Theme.of(context).colorScheme.fontColor,

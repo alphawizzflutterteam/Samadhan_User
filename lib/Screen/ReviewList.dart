@@ -11,6 +11,8 @@ import 'package:eshop_multivendor/Provider/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'Product_Detail.dart';
 import '../Model/User.dart';
@@ -87,7 +89,7 @@ class StateRate extends State<ReviewList> {
                 icon: const Icon(
                   Icons.create,
                   size: 20,
-color: colors.white70,
+                  color: colors.white70,
                 ),
                 label: Text(
                   getTranslated(context, "WRITE_REVIEW_LBL")!,
@@ -465,19 +467,50 @@ color: colors.white70,
                 const EdgeInsetsDirectional.only(end: 10, bottom: 5.0, top: 5),
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => ProductPreview(
-                        pos: index,
-                        secPos: 0,
-                        index: 0,
-                        id: "$index${reviewList[i].id}",
-                        imgList: reviewList[i].imgList,
-                        list: true,
-                        from: false,
-                      ),
-                    ));
+                showDialog(
+                    context: context,
+                    builder: (context) => Container(
+                            child: PhotoViewGallery.builder(
+                          scrollPhysics: const BouncingScrollPhysics(),
+                          builder: (BuildContext context, int index) {
+                            return PhotoViewGalleryPageOptions(
+                                initialScale:
+                                    PhotoViewComputedScale.contained * 0.9,
+                                minScale:
+                                    PhotoViewComputedScale.contained * 0.9,
+                                imageProvider: NetworkImage(
+                                    reviewList[i].imgList![index]));
+                          },
+                          itemCount: reviewList[i].imgList?.length ?? 0,
+                          loadingBuilder: (context, event) => Center(
+                            child: Container(
+                              width: 20.0,
+                              height: 20.0,
+                              child: CircularProgressIndicator(
+                                value: event == null
+                                    ? 0
+                                    : event.cumulativeBytesLoaded /
+                                        event.expectedTotalBytes!,
+                              ),
+                            ),
+                          ),
+                          backgroundDecoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.white),
+                          pageController: PageController(initialPage: i),
+                        )));
+                // Navigator.push(
+                //     context,
+                //     PageRouteBuilder(
+                //       pageBuilder: (_, __, ___) => ProductPreview(
+                //         pos: index,
+                //         secPos: 0,
+                //         index: 0,
+                //         id: "$index${reviewList[i].id}",
+                //         imgList: reviewList[i].imgList,
+                //         list: true,
+                //         from: false,
+                //       ),
+                //     ));
               },
               child: Hero(
                 tag: '$index${reviewList[i].id}',

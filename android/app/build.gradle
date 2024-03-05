@@ -40,7 +40,7 @@ android {
         applicationId "com.samadhan.user"
 
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

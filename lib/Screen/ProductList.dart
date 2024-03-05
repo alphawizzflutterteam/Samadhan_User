@@ -918,7 +918,7 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                             )
                           : Selector<FavoriteProvider, List<String?>>(
                               builder: (context, data, child) {
-                                return InkWell(
+                                return GestureDetector(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Icon(
@@ -972,7 +972,7 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                 .timeout(Duration(seconds: timeOut));
 
         var getdata = json.decode(response.body);
-
+        log(getdata.toString());
         bool error = getdata["error"];
         String? msg = getdata["message"];
         if (!error) {
@@ -1815,7 +1815,7 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                                     )
                                   : Selector<FavoriteProvider, List<String?>>(
                                       builder: (context, data, child) {
-                                        return InkWell(
+                                        return GestureDetector(
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Icon(

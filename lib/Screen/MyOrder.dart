@@ -4,12 +4,9 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop_multivendor/Model/Order_Model.dart';
 import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../Helper/AppBtn.dart';
 import '../Helper/Color.dart';
@@ -18,7 +15,6 @@ import '../Helper/Session.dart';
 import '../Helper/String.dart';
 
 import '../Helper/my_new_helper.dart';
-import 'Login.dart';
 import 'OrderDetail.dart';
 
 class MyOrder extends StatefulWidget {
@@ -234,7 +230,7 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
                             ? Center(
                                 child: Text(getTranslated(context, 'noItem')!))
                             : RefreshIndicator(
-                                 color: colors.primary,
+                                color: colors.primary,
                                 key: _refreshIndicatorKey,
                                 onRefresh: _refresh,
                                 child: ListView.builder(
@@ -262,7 +258,8 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
 
                                     return orderItem == null
                                         ? Container()
-                                        : productItem(index, orderItem);
+                                        : productItem(index, orderItem,
+                                            searchList[index]);
                                   },
                                 )),
                       ),
@@ -308,7 +305,8 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
               }
             });
           }
-              print("checking parameters ${CUR_USERID.toString()} and ${offset.toString()} and ${perPage.toString()} and ${_searchText.toString()}");
+          print(
+              "checking parameters ${CUR_USERID.toString()} and ${offset.toString()} and ${perPage.toString()} and ${_searchText.toString()}");
           if (CUR_USERID != null) {
             var parameter = {
               USER_ID: CUR_USERID,
@@ -427,7 +425,7 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
     ));
   }
 
-  productItem(int index, OrderItem orderItem) {
+  productItem(int index, OrderItem orderItem, OrderModel order) {
     if (orderItem != null) {
       String? sDate = orderItem.listDate!.last;
       String? proStatus = orderItem.listStatus!.last;
@@ -485,83 +483,87 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
                     ),
                   )),
               Expanded(
-                  child: Padding(
-                      padding: EdgeInsetsDirectional.only(
-                          start: 10.0, end: 5.0, bottom: 8.0, top: 8.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                  top: 5.0),
-                              child: Text(
-                                getString(name),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .fontColor),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                      start: 10.0, end: 5.0, bottom: 8.0, top: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.check_circle,
+                              color: back,
+                              size: 15,
                             ),
                             Text(
-                              "$proStatus on $sDate",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .lightBlack),
+                              capitalize(orderItem.listStatus!.last),
+                              style: TextStyle(color: back),
                             ),
-                            boxHeight(10),
-                            Text(
-                              orderItem.seller_name!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .fontColor),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            boxHeight(10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Samadhaan Price" + " " + CUR_CURRENCY! + " " + orderItem.price!,
-                                  style: TextStyle(
-                                      color:
-                                      Theme.of(context).colorScheme.fontColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-
-
-
-                              ],
-                            ),
-                            boxHeight(10),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Icon(Icons.check_circle,color: back,),
-                                  Text(
-                                    capitalize(orderItem.listStatus!.last),
-                                    style:  TextStyle(color: back),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]))),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(top: 5.0),
+                        child: Text(
+                          getString(name),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.fontColor),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        "$proStatus on $sDate",
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                            color: Theme.of(context).colorScheme.lightBlack),
+                      ),
+                      boxHeight(10),
+                      Text(
+                        orderItem.seller_name!,
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                            color: Theme.of(context).colorScheme.fontColor),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      boxHeight(10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Samadhaan Price" +
+                                " " +
+                                CUR_CURRENCY! +
+                                " " +
+                                orderItem.price!,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.fontColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      boxHeight(10),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Order ID - ${order.id}'),
+                              Text('OTP - ${order.orderOtp}'),
+                            ]),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ]),
           ]),
           onTap: () async {
