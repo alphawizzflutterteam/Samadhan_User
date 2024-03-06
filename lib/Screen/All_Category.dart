@@ -16,6 +16,9 @@ import 'HomePage.dart';
 import 'ProductList.dart';
 
 class AllCategory extends StatefulWidget {
+  final bool isFromCart;
+
+  const AllCategory({super.key, required this.isFromCart});
   @override
   State<AllCategory> createState() => _AllCategoryState();
 }
@@ -24,7 +27,7 @@ class _AllCategoryState extends State<AllCategory> {
   @override
   void initState() {
     super.initState();
-   // getCat();
+    // getCat();
   }
 
   Future<void> getCat() async {
@@ -67,6 +70,8 @@ class _AllCategoryState extends State<AllCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:
+          widget.isFromCart ? getSimpleAppBar('All Categories', context) : null,
       body: Consumer<HomeProvider>(
         builder: (context, homeProvider, _) {
           if (homeProvider.catLoading) {
@@ -90,7 +95,6 @@ class _AllCategoryState extends State<AllCategory> {
                                   shrinkWrap: true,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 10,
-
                                   children: List.generate(
                                     data.length,
                                     (index) {
@@ -243,14 +247,14 @@ class _AllCategoryState extends State<AllCategory> {
   subCatItem(List<Product> subList, int index, BuildContext context) {
     return GestureDetector(
       child: Container(
-        decoration: BoxDecoration(color:  Colors.white,borderRadius: BorderRadius.circular(15.0)),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsetsDirectional.only(
-                  bottom:10.0),
+              padding: const EdgeInsetsDirectional.only(bottom: 10.0),
               child: new ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: new FadeInImage(
@@ -261,8 +265,7 @@ class _AllCategoryState extends State<AllCategory> {
                   height: 15.h,
                   width: 100.w,
                   fit: BoxFit.fill,
-                  imageErrorBuilder:
-                      (context, error, stackTrace) =>
+                  imageErrorBuilder: (context, error, stackTrace) =>
                       erroWidget(50),
                   placeholder: placeHolder(50),
                 ),
@@ -271,12 +274,8 @@ class _AllCategoryState extends State<AllCategory> {
             Container(
               child: Text(
                 subList[index].name!,
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(
-                    color: Theme.of(context)
-                        .colorScheme.black,
+                style: Theme.of(context).textTheme.caption!.copyWith(
+                    color: Theme.of(context).colorScheme.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 14),
                 overflow: TextOverflow.ellipsis,
@@ -333,7 +332,7 @@ class _AllCategoryState extends State<AllCategory> {
               MaterialPageRoute(
                 builder: (context) => SubCategory(
                   subList: subList[index].subList,
-                  image: subList[index].image?? "",
+                  image: subList[index].image ?? "",
                   title: subList[index].name ?? "",
                 ),
               ));

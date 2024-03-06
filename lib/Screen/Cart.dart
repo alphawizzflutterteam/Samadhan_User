@@ -12,6 +12,7 @@ import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,6 +21,7 @@ import 'package:http/http.dart';
 import 'package:paytm/paytm.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:upi_india/upi_india.dart';
 import 'package:upi_pay_x/upi_pay.dart';
 
@@ -32,6 +34,7 @@ import '../Model/Model.dart';
 import '../Model/Section_Model.dart';
 import '../Model/User.dart';
 import 'Add_Address.dart';
+import 'All_Category.dart';
 import 'Manage_Address.dart';
 import 'Order_Success.dart';
 import 'Payment.dart';
@@ -440,7 +443,54 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       child: Scaffold(
           appBar: widget.fromBottom
               ? null
-              : getSimpleAppBar(getTranslated(context, 'CART')!, context),
+              : AppBar(
+                  titleSpacing: 0,
+                  backgroundColor: Theme.of(context).colorScheme.white,
+                  leading: Builder(builder: (BuildContext context) {
+                    return Container(
+                      margin: EdgeInsets.all(10),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(4),
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Center(
+                          child: Icon(
+                            Icons.arrow_back_ios_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                  flexibleSpace: Image.asset(
+                    "assets/images/login_option_bg.png",
+                    width: 100.w,
+                    fit: BoxFit.fill,
+                  ),
+                  title: Text(
+                    getTranslated(context, 'CART')!,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.normal),
+                  ),
+                  actions: [
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SafeArea(
+                              child: AllCategory(isFromCart: true),
+                            ),
+                          )),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: SvgPicture.asset('assets/images/category.svg'),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
           body: _isNetworkAvail
               ? Stack(
                   children: <Widget>[

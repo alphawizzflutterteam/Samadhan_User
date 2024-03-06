@@ -44,8 +44,8 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
@@ -86,14 +86,13 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                   ),
                 );
                 _tabController.animateTo(0);
-              }else{
+              } else {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ViewProfileScreen(),
                   ),
                 );
-
               }
             }
           },
@@ -196,23 +195,24 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
       }
     }
   }
+
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  Widget check(context){
+  Widget check(context) {
     return PhysicalShape(
       elevation: 8,
       color: Colors.transparent,
       clipper: CircularNotchedAndCorneredRectangleClipper(
         shape: CircularNotchedAndCorneredRectangle(
           notchSmoothness: NotchSmoothness.defaultEdge,
-          leftCornerRadius:  0,
-          rightCornerRadius:  0,
+          leftCornerRadius: 0,
+          rightCornerRadius: 0,
         ),
         geometry: Scaffold.geometryOf(context),
         notchMargin: 8,
       ),
       clipBehavior: Clip.antiAlias,
       child: Material(
-        color:  Theme.of(context).cardColor,
+        color: Theme.of(context).cardColor,
         child: SafeArea(
           child: Container(
             height: 76,
@@ -223,7 +223,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
               mainAxisSize: MainAxisSize.max,
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     _tabController.animateTo(0);
                   },
                   child: Column(
@@ -235,12 +235,17 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                         width: 32,
                         height: 32,
                       ),
-                      Text( getTranslated(context, 'HOME_LBL')!,style:TextStyle(color: Theme.of(context).colorScheme.fontColor,fontSize:10.0),),
+                      Text(
+                        getTranslated(context, 'HOME_LBL')!,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.fontColor,
+                            fontSize: 10.0),
+                      ),
                     ],
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     _tabController.animateTo(1);
                   },
                   child: Column(
@@ -252,13 +257,20 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                         width: 32,
                         height: 32,
                       ),
-                      Text( getTranslated(context, 'category')!,style:TextStyle(color: Theme.of(context).colorScheme.fontColor,fontSize:10.0),),
+                      Text(
+                        getTranslated(context, 'category')!,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.fontColor,
+                            fontSize: 10.0),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(width: 40,),
+                SizedBox(
+                  width: 40,
+                ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     _tabController.animateTo(2);
                   },
                   child: Column(
@@ -270,12 +282,17 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                         width: 32,
                         height: 32,
                       ),
-                      Text(getTranslated(context, 'SALE')!,style:TextStyle(color: Theme.of(context).colorScheme.fontColor,fontSize:10.0),),
+                      Text(
+                        getTranslated(context, 'SALE')!,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.fontColor,
+                            fontSize: 10.0),
+                      ),
                     ],
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     _tabController.animateTo(4);
                   },
                   child: Column(
@@ -287,11 +304,15 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                         width: 32,
                         height: 32,
                       ),
-                      Text( getTranslated(context, 'ACCOUNT')!,style:TextStyle(color: Theme.of(context).colorScheme.fontColor,fontSize:10.0),),
+                      Text(
+                        getTranslated(context, 'ACCOUNT')!,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.fontColor,
+                            fontSize: 10.0),
+                      ),
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
@@ -299,6 +320,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -310,97 +332,94 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
         return true;
       },
       child: Scaffold(
-        body: Builder(
-            builder: (context) {
-              return Scaffold(
-                key: scaffoldKey,
-                backgroundColor: Theme.of(context).colorScheme.lightWhite,
-                appBar: _selBottom == 0 ? null : _getAppBar(),
-                body: SafeArea(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      HomePage((result){
-                        if(result !=null){
-                          _tabController.animateTo(1);
-                        }
-                      }),
-                      AllCategory(),
-                      Sale(),
-                      Cart(
-                        fromBottom: true,
-                      ),
-                      HomePage((result){
-                        if(result !=null){
-                          _tabController.animateTo(1);
-                        }
-                      }),
-                    ],
+        body: Builder(builder: (context) {
+          return Scaffold(
+            key: scaffoldKey,
+            backgroundColor: Theme.of(context).colorScheme.lightWhite,
+            appBar: _selBottom == 0 ? null : _getAppBar(),
+            body: SafeArea(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  HomePage((result) {
+                    if (result != null) {
+                      _tabController.animateTo(1);
+                    }
+                  }),
+                  AllCategory(isFromCart: false),
+                  Sale(),
+                  Cart(
+                    fromBottom: true,
                   ),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: (){
-                    _tabController.animateTo(3);
-                  },
-                  backgroundColor: colors.primary,
-                  child: Selector<UserProvider, String>(
-                    builder: (context, data, child) {
-                      return Stack(
-                        children: [
-                          Center(
-                            child: _selBottom == 3
-                                ? SvgPicture.asset(
-                              imagePath + "cart01.svg",
-                              color: Colors.white,
-                            )
-                                : SvgPicture.asset(
-                              imagePath + "cart.svg",
-                              color: Colors.white,
-                            ),
-                          ),
-                          (data != null && data.isNotEmpty && data != "0")
-                              ? new Positioned.directional(
-                            bottom: _selBottom == 3 ? 6 : 20,
-                            textDirection: Directionality.of(context),
-                            end: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: colors.primary),
-                              child: new Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(3),
-                                  child: new Text(
-                                    data,
-                                    style: TextStyle(
-                                        fontSize: 7,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .white),
+                  HomePage((result) {
+                    if (result != null) {
+                      _tabController.animateTo(1);
+                    }
+                  }),
+                ],
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                _tabController.animateTo(3);
+              },
+              backgroundColor: colors.primary,
+              child: Selector<UserProvider, String>(
+                builder: (context, data, child) {
+                  return Stack(
+                    children: [
+                      Center(
+                        child: _selBottom == 3
+                            ? SvgPicture.asset(
+                                imagePath + "cart01.svg",
+                                color: Colors.white,
+                              )
+                            : SvgPicture.asset(
+                                imagePath + "cart.svg",
+                                color: Colors.white,
+                              ),
+                      ),
+                      (data != null && data.isNotEmpty && data != "0")
+                          ? new Positioned.directional(
+                              bottom: _selBottom == 3 ? 6 : 20,
+                              textDirection: Directionality.of(context),
+                              end: 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: colors.primary),
+                                child: new Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(3),
+                                    child: new Text(
+                                      data,
+                                      style: TextStyle(
+                                          fontSize: 7,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .white),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                              : Container()
-                        ],
-                      );
-                    },
-                    selector: (_, homeProvider) => homeProvider.curCartCount,
-                  ),
-                ),
-                floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-                bottomNavigationBar: Builder(
-                    builder: (context) {
-                      return check(context);
-                    }
-                ),
-                //fragments[_selBottom],
-                //bottomNavigationBar: _getBottomBar(),
-              );
-            }
-        ),
+                            )
+                          : Container()
+                    ],
+                  );
+                },
+                selector: (_, homeProvider) => homeProvider.curCartCount,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: Builder(builder: (context) {
+              return check(context);
+            }),
+            //fragments[_selBottom],
+            //bottomNavigationBar: _getBottomBar(),
+          );
+        }),
       ),
     );
   }
@@ -424,10 +443,14 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
             )
           : Text(
               title!,
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.normal),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
             ),
-      flexibleSpace: Image.asset("assets/images/login_option_bg.png",width: 100.w,fit: BoxFit.fill,),
+      flexibleSpace: Image.asset(
+        "assets/images/login_option_bg.png",
+        width: 100.w,
+        fit: BoxFit.fill,
+      ),
       leading: _selBottom == 0
           ? InkWell(
               child: Center(
@@ -506,11 +529,6 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.white,
     );
   }
-
-
-
-
-
 
   Widget _getBottomBar() {
     return Material(

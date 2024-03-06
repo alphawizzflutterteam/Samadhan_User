@@ -782,7 +782,8 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                                               int.parse(
                                                   widget.model!.qtyStepSize!))
                                           .toString(),
-                                      false);
+                                      false,
+                                      '0');
                               },
                             )
                           ],
@@ -1530,7 +1531,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
     print("final variation here ${widget.model!.selVarient}");
   }
 
-  Future<void> addToCart(String qty, bool intent) async {
+  Future<void> addToCart(String qty, bool intent, String clear) async {
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       if (CUR_USERID != null) {
@@ -1548,6 +1549,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
             USER_ID: CUR_USERID,
             PRODUCT_VARIENT_ID: model.prVarientList![model.selVarient!].id,
             QTY: qty,
+            'clear': clear
           };
           print(
               "yes ${CUR_USERID} and ${model.prVarientList![model.selVarient!].id} and ${qty}");
@@ -1581,6 +1583,35 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                 ),
               );
           } else {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(
+                  'Replace Cart item?',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                content: Text(
+                  "Your cart contains items from another store. Do you want to remove those items from cart and add items from this store?",
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('NO'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colors.primary,
+                    ),
+                    child: Text('Yes'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      addToCart('1', intent, '1');
+                    },
+                  ),
+                ],
+              ),
+            );
             setSnackbar(msg!, context);
           }
           if (mounted)
@@ -2214,7 +2245,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                               // (int.parse(widget.model!.qtyStepSize!))
                               )
                               .toString();
-                          addToCart(qty, true);
+                          addToCart(qty, true, '0');
                         },
                         icon: Icon(
                           Icons.shopping_bag,

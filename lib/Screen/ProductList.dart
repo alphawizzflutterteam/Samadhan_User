@@ -801,7 +801,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                                                                     index,
                                                                     (int.parse(model.prVarientList![model.selVarient!].cartCount!) +
                                                                             int.parse(model.qtyStepSize!))
-                                                                        .toString());
+                                                                        .toString(),
+                                                                    '0');
                                                             },
                                                           )
                                                         ],
@@ -884,7 +885,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                                   index,
                                   (int.parse(_controller[index].text) +
                                           int.parse(model.qtyStepSize!))
-                                      .toString());
+                                      .toString(),
+                                  '0');
                           },
                           child: Card(
                             elevation: 1,
@@ -1645,7 +1647,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                                                           .text) +
                                                       int.parse(
                                                           model.qtyStepSize!))
-                                                  .toString());
+                                                  .toString(),
+                                              '0');
                                       },
                                       child: Card(
                                         elevation: 1,
@@ -1748,7 +1751,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                                                   ),
                                                   onSelected: (String value) {
                                                     if (_isProgress == false)
-                                                      addToCart(index, value);
+                                                      addToCart(
+                                                          index, value, '0');
                                                   },
                                                   itemBuilder:
                                                       (BuildContext context) {
@@ -1792,7 +1796,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                                                                 .text) +
                                                             int.parse(model
                                                                 .qtyStepSize!))
-                                                        .toString());
+                                                        .toString(),
+                                                    '0');
                                             },
                                           )
                                         ],
@@ -2208,7 +2213,7 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
     }
   }*/
 
-  Future<void> addToCart(int index, String qty) async {
+  Future<void> addToCart(int index, String qty, String clear) async {
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       if (CUR_USERID != null) {
@@ -2228,7 +2233,8 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
           PRODUCT_VARIENT_ID: productList[index]
               .prVarientList![productList[index].selVarient!]
               .id,
-          QTY: qty
+          QTY: qty,
+          'clear': clear
         };
 
         apiBaseHelper.postAPICall(manageCartApi, parameter).then((getdata) {
@@ -2251,6 +2257,35 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                 .toList();
             context.read<CartProvider>().setCartlist(cartList);
           } else {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(
+                  'Replace Cart item?',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                content: Text(
+                  "Your cart contains items from another store. Do you want to remove those items from cart and add items from this store?",
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('NO'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colors.primary,
+                    ),
+                    child: Text('Yes'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      addToCart(index, qty, '1');
+                    },
+                  ),
+                ],
+              ),
+            );
             setSnackbar(msg!, context);
           }
           if (mounted)

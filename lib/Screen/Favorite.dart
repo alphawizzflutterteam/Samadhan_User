@@ -153,7 +153,7 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
 
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
-        child:  Card(
+        child: Card(
           elevation: 0.1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -182,7 +182,7 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                                 fit: BoxFit.fill,
                                 imageErrorBuilder:
                                     (context, error, stackTrace) =>
-                                    erroWidget(120),
+                                        erroWidget(120),
 
                                 // errorWidget: (context, url, e) => placeHolder(80),
                                 placeholder: placeHolder(120),
@@ -191,51 +191,51 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                             Positioned.fill(
                                 child: favList[index].availability == "0"
                                     ? Container(
-                                  height: 55,
-                                  color: Colors.white70,
-                                  // width: double.maxFinite,
-                                  padding: EdgeInsets.all(2),
-                                  child: Center(
-                                    child: Text(
-                                      getTranslated(context,
-                                          'OUT_OF_STOCK_LBL')!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(
-                                        color: Colors.red,
-                                        fontWeight:
-                                        FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                )
+                                        height: 55,
+                                        color: Colors.white70,
+                                        // width: double.maxFinite,
+                                        padding: EdgeInsets.all(2),
+                                        child: Center(
+                                          child: Text(
+                                            getTranslated(
+                                                context, 'OUT_OF_STOCK_LBL')!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption!
+                                                .copyWith(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      )
                                     : Container()),
                             off != 0
                                 ? Container(
-                              decoration: BoxDecoration(
-                                  color: colors.red,
-                                  borderRadius:
-                                  BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  off.toStringAsFixed(2) + "%",
-                                  style: TextStyle(
-                                      color: colors.whiteTemp,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 9),
-                                ),
-                              ),
-                              margin: EdgeInsets.all(5),
-                            )
+                                    decoration: BoxDecoration(
+                                        color: colors.red,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        off.toStringAsFixed(2) + "%",
+                                        style: TextStyle(
+                                            color: colors.whiteTemp,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 9),
+                                      ),
+                                    ),
+                                    margin: EdgeInsets.all(5),
+                                  )
                                 : Container(),
                           ],
                         ))),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8.0,end: 8.0),
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 8.0, end: 8.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,9 +250,9 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .fontColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .fontColor),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -262,9 +262,8 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                               child: InkWell(
                                 child: Icon(
                                   Icons.delete_outline,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .lightBlack,
+                                  color:
+                                      Theme.of(context).colorScheme.lightBlack,
                                 ),
                                 onTap: () {
                                   _removeFav(index, favList, context);
@@ -275,43 +274,39 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                         ),
                         favList[index].noOfRating! != "0"
                             ? Row(
-                          children: [
-                            RatingBarIndicator(
-                              rating: double.parse(
-                                  favList[index].rating!),
-                              itemBuilder: (context, index) => Icon(
-                                Icons.star_rate_rounded,
-                                color: Colors.amber,
-                                //color: colors.primary,
-                              ),
-                              unratedColor:
-                              Colors.grey.withOpacity(0.5),
-                              itemCount: 5,
-                              itemSize: 18.0,
-                              direction: Axis.horizontal,
-                            ),
-                            Text(
-                              " (" + favList[index].noOfRating! + ")",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .overline,
-                            )
-                          ],
-                        )
+                                children: [
+                                  RatingBarIndicator(
+                                    rating:
+                                        double.parse(favList[index].rating!),
+                                    itemBuilder: (context, index) => Icon(
+                                      Icons.star_rate_rounded,
+                                      color: Colors.amber,
+                                      //color: colors.primary,
+                                    ),
+                                    unratedColor: Colors.grey.withOpacity(0.5),
+                                    itemCount: 5,
+                                    itemSize: 18.0,
+                                    direction: Axis.horizontal,
+                                  ),
+                                  Text(
+                                    " (" + favList[index].noOfRating! + ")",
+                                    style: Theme.of(context).textTheme.overline,
+                                  )
+                                ],
+                              )
                             : Container(),
                         boxHeight(10),
                         Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              top: 5.0),
+                          padding: const EdgeInsetsDirectional.only(top: 5.0),
                           child: Text(
                             favList[index].seller_name!,
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2!
                                 .copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .fontColor),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .fontColor),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -322,42 +317,52 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Column(
-                                crossAxisAlignment:CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    " " + CUR_CURRENCY! + " " + price.toString(),
+                                    " " +
+                                        CUR_CURRENCY! +
+                                        " " +
+                                        price.toString(),
                                     style: TextStyle(
-                                        color:
-                                        Theme.of(context).colorScheme.fontColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .fontColor,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     double.parse(favList[index]
-                                        .prVarientList![0]
-                                        .disPrice!) !=
-                                        0
+                                                .prVarientList![0]
+                                                .disPrice!) !=
+                                            0
                                         ? CUR_CURRENCY! +
-                                        "" +
-                                        favList[index]
-                                            .prVarientList![0]
-                                            .price!
+                                            "" +
+                                            favList[index]
+                                                .prVarientList![0]
+                                                .price!
                                         : "",
                                     style: Theme.of(context)
                                         .textTheme
                                         .overline!
                                         .copyWith(
-                                        decoration: TextDecoration.lineThrough,
-                                        letterSpacing: 0.7),
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            letterSpacing: 0.7),
                                   ),
                                 ],
                               ),
                               InkWell(
-                                onTap: (){
-                                  if (_isProgress == false) addToCart(index, favList, context);
+                                onTap: () {
+                                  if (_isProgress == false)
+                                    addToCart(index, favList, context, '0');
                                 },
                                 child: Container(
-                                  decoration: boxDecoration(bgColor: colors.primary,radius: 8,showShadow: true),
-                                  padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 1.h),
+                                  decoration: boxDecoration(
+                                      bgColor: colors.primary,
+                                      radius: 8,
+                                      showShadow: true),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 4.w, vertical: 1.h),
                                   child: Row(
                                     children: <Widget>[
                                       Icon(
@@ -366,7 +371,12 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                                         color: Colors.white,
                                       ),
                                       boxWidth(5),
-                                      Text("Add To Cart",style: TextStyle(color: Colors.white,fontSize: 10.sp),)
+                                      Text(
+                                        "Add To Cart",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10.sp),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -387,13 +397,13 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
                 context,
                 PageRouteBuilder(
                     pageBuilder: (_, __, ___) => ProductDetail(
-                      model: model,
+                          model: model,
 
-                      secPos: 0,
-                      index: index,
-                      list: true,
-                      //  title: productList[index].name,
-                    )),
+                          secPos: 0,
+                          index: index,
+                          list: true,
+                          //  title: productList[index].name,
+                        )),
               );
             },
           ),
@@ -447,8 +457,8 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> addToCart(
-      int index, List<Product> favList, BuildContext context) async {
+  Future<void> addToCart(int index, List<Product> favList, BuildContext context,
+      String clear) async {
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       try {
@@ -469,6 +479,7 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
           PRODUCT_VARIENT_ID: favList[index].prVarientList![0].id,
           USER_ID: CUR_USERID,
           QTY: qty,
+          'clear': clear,
         };
 
         Response response =
@@ -488,6 +499,35 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
             context.read<UserProvider>().setCartCount(data['cart_count']);
             favList[index].prVarientList![0].cartCount = qty.toString();
           } else {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(
+                  'Replace Cart item?',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                content: Text(
+                  "Your cart contains items from another store. Do you want to remove those items from cart and add items from this store?",
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('NO'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colors.primary,
+                    ),
+                    child: Text('Yes'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      addToCart(index, favList, context, '1');
+                    },
+                  ),
+                ],
+              ),
+            );
             setSnackbar(msg!, context);
           }
           if (mounted)
