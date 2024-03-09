@@ -539,11 +539,11 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Samadhaan Price" +
+                            "Order Amount : " +
                                 " " +
                                 CUR_CURRENCY! +
                                 " " +
-                                orderItem.price!,
+                                order.total!,
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.fontColor,
                                 fontWeight: FontWeight.bold),

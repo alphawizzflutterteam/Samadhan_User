@@ -49,7 +49,16 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
   var isDarkTheme;
   bool isDark = false;
   late ThemeNotifier themeNotifier;
-  List<String> langCode = ["en", "zh", "es", "hi", "ar", "ru", "ja", "de"];
+  List<String> langCode = [
+    "en",
+    // "zh",
+    // "es",
+    "hi",
+    // "ar",
+    // "ru",
+    // "ja",
+    // "de",
+  ];
   List<String?> themeList = [];
   List<String?> languageList = [];
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -85,13 +94,13 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
     new Future.delayed(Duration.zero, () {
       languageList = [
         getTranslated(context, 'ENGLISH_LAN'),
-        getTranslated(context, 'CHINESE_LAN'),
-        getTranslated(context, 'SPANISH_LAN'),
+        // getTranslated(context, 'CHINESE_LAN'),
+        // getTranslated(context, 'SPANISH_LAN'),
         getTranslated(context, 'HINDI_LAN'),
-        getTranslated(context, 'ARABIC_LAN'),
-        getTranslated(context, 'RUSSIAN_LAN'),
-        getTranslated(context, 'JAPANISE_LAN'),
-        getTranslated(context, 'GERMAN_LAN')
+        // getTranslated(context, 'ARABIC_LAN'),
+        // getTranslated(context, 'RUSSIAN_LAN'),
+        // getTranslated(context, 'JAPANISE_LAN'),
+        // getTranslated(context, 'GERMAN_LAN')
       ];
 
       themeList = [
@@ -509,8 +518,8 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
             'assets/images/pro_share.svg'),
         CUR_USERID == "" || CUR_USERID == null
             ? Container()
-            : _getDrawerItem(getTranslated(context, 'DELETE')!,
-            'assets/images/DELETE.png'),
+            : _getDrawerItem(
+                getTranslated(context, 'DELETE')!, 'assets/images/DELETE.png'),
         // CUR_USERID == "" || CUR_USERID == null ? Container() : _getDivider(),
         CUR_USERID == "" || CUR_USERID == null
             ? Container()
@@ -664,7 +673,7 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
           } else if (title == getTranslated(context, 'DELETE')) {
             deleteAccountDailog();
           } else if (title == getTranslated(context, 'CHANGE_PASS_LBL')) {
-           // openChangePasswordBottomSheet();
+            // openChangePasswordBottomSheet();
           } else if (title == getTranslated(context, 'CHANGE_LANGUAGE_LBL')) {
             openChangeLanguageBottomSheet();
           }
@@ -672,72 +681,69 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
       ),
     );
   }
+
   deleteAccountDailog() async {
     await dialogAnimate(context,
         StatefulBuilder(builder: (BuildContext context, StateSetter setStater) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setStater) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                  content: Text(
-                    getTranslated(context, 'DELETE_ACCOUNT')!,
-                    style: Theme.of(this.context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Theme.of(context).colorScheme.fontColor),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                        child: Text(
-                          getTranslated(context, 'NO')!,
-                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
-                              color: Theme.of(context).colorScheme.lightBlack,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                        }),
-                    TextButton(
-                        child: Text(
-                          getTranslated(context, 'YES')!,
-                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
-                              color: Theme.of(context).colorScheme.fontColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          deleteAccount();
-                          // SettingProvider settingProvider =
-                          // Provider.of<SettingProvider>(context, listen: false);
-                          // settingProvider.clearUserSession(context);
-                          // //favList.clear();
-                          // Navigator.of(context).pushNamedAndRemoveUntil(
-                          //     '/home', (Route<dynamic> route) => false);
-                        })
-                  ],
-                );
-              });
-        }));
+      return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setStater) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          content: Text(
+            getTranslated(context, 'DELETE_ACCOUNT')!,
+            style: Theme.of(this.context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Theme.of(context).colorScheme.fontColor),
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: Text(
+                  getTranslated(context, 'NO')!,
+                  style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                      color: Theme.of(context).colorScheme.lightBlack,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                }),
+            TextButton(
+                child: Text(
+                  getTranslated(context, 'YES')!,
+                  style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                      color: Theme.of(context).colorScheme.fontColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  deleteAccount();
+                  // SettingProvider settingProvider =
+                  // Provider.of<SettingProvider>(context, listen: false);
+                  // settingProvider.clearUserSession(context);
+                  // //favList.clear();
+                  // Navigator.of(context).pushNamedAndRemoveUntil(
+                  //     '/home', (Route<dynamic> route) => false);
+                })
+          ],
+        );
+      });
+    }));
   }
 
   deleteAccount() async {
-    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_users'));
-    request.fields.addAll({
-      'user_id': CUR_USERID.toString()
-    });
+    var request =
+        http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_users'));
+    request.fields.addAll({'user_id': CUR_USERID.toString()});
     print('-----------${request.fields}___${Uri.parse}______');
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      var result  =  await response.stream.bytesToString();
-      var finalResult =  jsonDecode(result);
+      var result = await response.stream.bytesToString();
+      var finalResult = jsonDecode(result);
       Fluttertoast.showToast(msg: "${finalResult['message']}");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
-
-    }
-    else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    } else {
       print(response.reasonPhrase);
     }
-
   }
 
   List<Widget> themeListView(BuildContext ctx) {
@@ -918,13 +924,13 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     languageList = [
       getTranslated(context, 'ENGLISH_LAN'),
-      getTranslated(context, 'CHINESE_LAN'),
-      getTranslated(context, 'SPANISH_LAN'),
+      // getTranslated(context, 'CHINESE_LAN'),
+      // getTranslated(context, 'SPANISH_LAN'),
       getTranslated(context, 'HINDI_LAN'),
-      getTranslated(context, 'ARABIC_LAN'),
-      getTranslated(context, 'RUSSIAN_LAN'),
-      getTranslated(context, 'JAPANISE_LAN'),
-      getTranslated(context, 'GERMAN_LAN')
+      // getTranslated(context, 'ARABIC_LAN'),
+      // getTranslated(context, 'RUSSIAN_LAN'),
+      // getTranslated(context, 'JAPANISE_LAN'),
+      // getTranslated(context, 'GERMAN_LAN')
     ];
     themeList = [
       getTranslated(context, 'SYSTEM_DEFAULT'),
@@ -1475,9 +1481,12 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
               color: Theme.of(context).colorScheme.fontColor,
             ),
             decoration: InputDecoration(
-                label: Text(getTranslated(context, "CUR_PASS_LBL")!,style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),),
+                label: Text(
+                  getTranslated(context, "CUR_PASS_LBL")!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
                 fillColor: Theme.of(context).colorScheme.white,
                 border: InputBorder.none),
             onSaved: (String? value) {
@@ -1501,8 +1510,11 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         child: InkWell(
           child: Text(getTranslated(context, "FORGOT_PASSWORD_LBL")!),
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => SendOtp()));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SendOtp(
+                      title: getTranslated(context, 'FORGOT_PASS_TITLE')
+                          .toString(),
+                    )));
           },
         ),
       ),

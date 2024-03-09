@@ -2248,7 +2248,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             context.read<CartProvider>().setProgress(false);
           }
 
-          totalPrice = 0.0;
+          // totalPrice = 0.0;
 
           if (!ISFLAT_DEL) {
             if (addressList.length > 0 &&
@@ -2268,7 +2268,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               deliveryCharges = double.parse(CUR_DEL_CHR!);
             } else {
               // delCharge = 0;
-              deliveryCharges = 0.0;
+              // deliveryCharges = 0.0;
             }
           }
           // totalPrice = delCharge + oriPrice;
@@ -3384,7 +3384,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
   doPayment() {
     print("final checking paymethod here ${payMethod}");
-    if (payMethod == getTranslated(context, 'PAYPAL_LBL')) {
+    if (payMethod == 'Wallet') {
+      placeOrder('', "");
+    } else if (payMethod == getTranslated(context, 'PAYPAL_LBL')) {
       placeOrder('', "");
     } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
       razorpayPayment();

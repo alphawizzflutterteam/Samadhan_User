@@ -511,7 +511,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
               : indicator == "2"
                   ? Image.asset(
                       "assets/icons/nonVeg.png",
-                      color: colors.primary,
+                      color: Colors.red,
                     )
                   : Container()),
     ));
@@ -2478,7 +2478,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         RatingBarIndicator(
-                          rating: double.parse(widget.model!.rating!),
+                          rating: double.parse(productList[index].rating!),
                           itemBuilder: (context, index) => Icon(
                             Icons.star_rate_rounded,
                             color: Colors.amber,
@@ -2583,7 +2583,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
               onTap: () {
                 Product model = productList[index];
                 notificationoffset = 0;
-                print("Name: ${model.name}");
+                print("Rating: ${model.rating}");
                 Navigator.push(
                   context,
                   PageRouteBuilder(
@@ -2681,7 +2681,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
           };
           print("params here ${parameter}");
           if (CUR_USERID != null) parameter[USER_ID] = CUR_USERID;
-
+          print(getProductApi);
           Response response =
               await post(getProductApi, headers: headers, body: parameter)
                   .timeout(Duration(seconds: timeOut));

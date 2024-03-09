@@ -459,7 +459,7 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                     MaterialPageRoute(
                         builder: (context) => SendOtp(
                               title:
-                                  getTranslated(context, 'FORGOT_PASS_TITLE'),
+                                  getTranslated(context, 'FORGOT_PASS_TITLE').toString(),
                             )));
               },
               child: Text(getTranslated(context, 'FORGOT_PASSWORD_LBL')!,
@@ -487,7 +487,7 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                 print("==========");
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => SendOtp(
-                    title: getTranslated(context, 'SEND_OTP_TITLE'),
+                    title: getTranslated(context, 'SEND_OTP_TITLE').toString(),
                   ),
                 ));
               },
@@ -551,7 +551,7 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                               MaterialPageRoute(
                                   builder: (context) => SendOtp(
                                         title: getTranslated(
-                                            context, 'FORGOT_PASS_TITLE'),
+                                            context, 'FORGOT_PASS_TITLE').toString(),
                                       )));
                         },
                         child: Text(
@@ -694,7 +694,7 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                       context,
                       MaterialPageRoute(
                           builder: (context) => SendOtp(
-                                title: getTranslated(context, 'FORGOT_PASS_TITLE'),
+                                title: getTranslated(context, 'FORGOT_PASS_TITLE').toString(),
                               )));
                 },
                 child: Container(

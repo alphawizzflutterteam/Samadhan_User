@@ -11,24 +11,23 @@ class DemoLocalization {
     return Localizations.of<DemoLocalization>(context, DemoLocalization);
   }
 
-
   static late Map<String, String> _localizedValues;
 
   Future<void> load() async {
     String jsonStringValues =
-    await rootBundle.loadString('lib/Language/${locale.languageCode}.json');
+        await rootBundle.loadString('lib/Language/${locale.languageCode}.json');
     Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
     _localizedValues =
         mappedJson.map((key, value) => MapEntry(key, value.toString()));
-
   }
+
   String? translate(String key) {
     return _localizedValues[key];
   }
 
   // static member to have simple access to the delegate from Material App
   static const LocalizationsDelegate<DemoLocalization> delegate =
-  _DemoLocalizationsDelegate();
+      _DemoLocalizationsDelegate();
 }
 
 class _DemoLocalizationsDelegate
@@ -37,8 +36,16 @@ class _DemoLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'zh', 'es', 'hi', 'ar', 'ru', 'ja', 'de']
-        .contains(locale.languageCode);
+    return [
+      'en',
+      // 'zh',
+      // 'es',
+      'hi',
+      // 'ar',
+      // 'ru',
+      // 'ja',
+      // 'de',
+    ].contains(locale.languageCode);
   }
 
   @override

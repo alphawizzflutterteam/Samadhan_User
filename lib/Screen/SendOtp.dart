@@ -22,9 +22,9 @@ import '../Helper/Constant.dart';
 import '../Helper/Session.dart';
 
 class SendOtp extends StatefulWidget {
-  String? title;
+  final String title;
 
-  SendOtp({Key? key, this.title}) : super(key: key);
+  SendOtp({Key? key, required this.title}) : super(key: key);
 
   @override
   _SendOtpState createState() => _SendOtpState();
@@ -138,22 +138,25 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
 
   Future<void> getVerifyUser() async {
     try {
-      var data = {MOBILE: mobile, "forgot_otp" : "true"};
+      var data = {MOBILE: mobile, "forgot_otp": "true"};
       Response response =
           await post(getVerifyUserApi, body: data, headers: headers)
               .timeout(Duration(seconds: timeOut));
       print(response.body);
       var getdata = json.decode(response.body);
-      bool? error = getdata["error"];
+      bool error = getdata["error"];
+      print("Error: $error");
       String? msg = getdata["message"];
       await buttonController!.reverse();
 
       SettingProvider settingsProvider =
           Provider.of<SettingProvider>(context, listen: false);
-
+      print(widget.title);
       if (widget.title == getTranslated(context, 'SEND_OTP_TITLE')) {
-        if (!error!) {
+        if (!error) {
+          print("someee");
           setSnackbar(msg!);
+
           // settingsProvider.setPrefrence(MOBILE, mobile!);
           // settingsProvider.setPrefrence(COUNTRY_CODE, countrycode!);
 
@@ -173,6 +176,7 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
       }
       if (widget.title == getTranslated(context, 'FORGOT_PASS_TITLE')) {
         if (!error!) {
+          print("HEre");
           settingsProvider.setPrefrence(MOBILE, mobile!);
           settingsProvider.setPrefrence(COUNTRY_CODE, countrycode!);
           Future.delayed(Duration(seconds: 1)).then((_) {
@@ -467,7 +471,8 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
                                     0.0, -mysize.height / 20, 0.0),
                                 child: Text(
                                   widget.title ==
-                                          getTranslated(context, 'SEND_OTP_TITLE')
+                                          getTranslated(
+                                              context, 'SEND_OTP_TITLE')
                                       ? getTranslated(context, 'SIGN_UP_LBL')!
                                       : getTranslated(
                                           context, 'FORGOT_PASSWORDTITILE')!,
@@ -502,8 +507,7 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
                           Container(
                               transform: Matrix4.translationValues(
                                   0.0, -mysize.height / 10, 0.0),
-                              child: getLoginContainer()
-                          ),
+                              child: getLoginContainer()),
                         ],
                       ),
                     ),

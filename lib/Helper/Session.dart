@@ -622,20 +622,20 @@ Locale _locale(String languageCode) {
   switch (languageCode) {
     case "en":
       return Locale("en", 'US');
-    case "zh":
-      return Locale("zh", "CN");
-    case "es":
-      return Locale("es", "ES");
+    // case "zh":
+    //   return Locale("zh", "CN");
+    // case "es":
+    //   return Locale("es", "ES");
     case "hi":
       return Locale("hi", "IN");
-    case "ar":
-      return Locale("ar", "DZ");
-    case "ru":
-      return Locale("ru", "RU");
-    case "ja":
-      return Locale("ja", "JP");
-    case "de":
-      return Locale("de", "DE");
+    // case "ar":
+    //   return Locale("ar", "DZ");
+    // case "ru":
+    //   return Locale("ru", "RU");
+    // case "ja":
+    //   return Locale("ja", "JP");
+    // case "de":
+    //   return Locale("de", "DE");
     default:
       return Locale("en", 'US');
   }

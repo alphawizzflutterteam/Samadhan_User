@@ -1295,76 +1295,6 @@ class StateOrder extends State<OrderDetail>
                                 color: Theme.of(context).colorScheme.btnColor),
                           ),
                         ),
-                      ),
-                    if (!orderItem.listStatus!.contains(DELIVERD) &&
-                        (!orderItem.listStatus!.contains(RETURNED)) &&
-                        orderItem.isCancle == "1" &&
-                        orderItem.isAlrCancelled == "0")
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: OutlinedButton(
-                              onPressed: _isReturnClick
-                                  ? () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text(
-                                              getTranslated(
-                                                  context, 'ARE_YOU_SURE?')!,
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .fontColor),
-                                            ),
-                                            content: Text(
-                                              "Would you like to cancel this product?",
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .fontColor),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                child: Text(
-                                                  getTranslated(
-                                                      context, 'YES')!,
-                                                  style: TextStyle(
-                                                      color: colors.primary),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                  setState(() {
-                                                    _isReturnClick = false;
-                                                    _isProgress = true;
-                                                  });
-                                                  cancelOrder(
-                                                      CANCLED,
-                                                      updateOrderItemApi,
-                                                      orderItem.id);
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: Text(
-                                                  getTranslated(context, 'NO')!,
-                                                  style: TextStyle(
-                                                      color: colors.primary),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-                                  : null,
-                              child:
-                                  Text(getTranslated(context, 'ITEM_CANCEL')!),
-                            )),
                       )
                     else
                       (orderItem.listStatus!.contains(DELIVERD) &&
@@ -1856,10 +1786,12 @@ class StateOrder extends State<OrderDetail>
     if (_isNetworkAvail) {
       try {
         var parameter = {ORDERID: id, STATUS: status};
+        print("$parameter $api");
         var response = await post(api, body: parameter, headers: headers)
             .timeout(Duration(seconds: timeOut));
 
         var getdata = json.decode(response.body);
+        log(response.body.toString());
         bool error = getdata["error"];
         String msg = getdata["message"];
         if (!error) {
@@ -2174,7 +2106,69 @@ class StateOrder extends State<OrderDetail>
                 : Container(),
             bankTransfer(model),
             getSingleProduct(model, ''),
-            // Todo uncommment
+            // Todo uncommment,
+            if (!orderItem.listStatus!.contains(DELIVERD) &&
+                (!orderItem.listStatus!.contains(PROCESSED)) &&
+                (!orderItem.listStatus!.contains(RETURNED)) &&
+                orderItem.isCancle == "1" &&
+                orderItem.isAlrCancelled == "0")
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: ElevatedButton(
+                  onPressed: _isReturnClick
+                      ? () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  getTranslated(context, 'ARE_YOU_SURE?')!,
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .fontColor),
+                                ),
+                                content: Text(
+                                  "Would you like to cancel this product?",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .fontColor),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    child: Text(
+                                      getTranslated(context, 'YES')!,
+                                      style: TextStyle(color: colors.primary),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        _isReturnClick = false;
+                                        _isProgress = true;
+                                      });
+                                      cancelOrder(CANCLED, updateOrderItemApi,
+                                          widget.model!.id);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text(
+                                      getTranslated(context, 'NO')!,
+                                      style: TextStyle(color: colors.primary),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      : null,
+                  child: Text("Cancel Order"),
+                ),
+              ),
             downloadInvoice(),
             shippingDetails(),
             priceDetails(),

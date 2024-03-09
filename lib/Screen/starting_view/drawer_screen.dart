@@ -646,10 +646,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         getTranslated(context, 'CHANGE_THEME_LBL')!),
                     tabItem(context, 6, "assets/images/pro_language.svg",
                         getTranslated(context, 'CHANGE_LANGUAGE_LBL')!),
-                    CUR_USERID == "" || CUR_USERID == null
-                        ? Container()
-                        : tabItem(context, 7, "assets/images/pro_pass.svg",
-                            getTranslated(context, 'CHANGE_PASS_LBL')!),
+                    // CUR_USERID == "" || CUR_USERID == null
+                    //     ? Container()
+                    //     : tabItem(context, 7, "assets/images/pro_pass.svg",
+                    //         getTranslated(context, 'CHANGE_PASS_LBL')!),
                     boxHeight(25),
                   ],
                 ),
@@ -1467,8 +1467,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
         child: InkWell(
           child: Text(getTranslated(context, "FORGOT_PASSWORD_LBL")!),
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => SendOtp()));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SendOtp(
+                      title: getTranslated(context, 'FORGOT_PASS_TITLE')
+                          .toString(),
+                    )));
           },
         ),
       ),

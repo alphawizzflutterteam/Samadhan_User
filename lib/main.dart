@@ -135,96 +135,95 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider<CartProvider>(
                 create: (context) => CartProvider()),
           ],
-          child: Sizer(
-            builder: (context, orientation, deviceType) {
-              return MaterialApp(
-                //scaffoldMessengerKey: rootScaffoldMessengerKey,
-                locale: _locale,
-                supportedLocales: [
-                  Locale("en", "US"),
-                  Locale("zh", "CN"),
-                  Locale("es", "ES"),
-                  Locale("hi", "IN"),
-                  Locale("ar", "DZ"),
-                  Locale("ru", "RU"),
-                  Locale("ja", "JP"),
-                  Locale("de", "DE")
-                ],
-                localizationsDelegates: [
-                  CountryLocalizations.delegate,
-                  DemoLocalization.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                localeResolutionCallback: (locale, supportedLocales) {
-                  for (var supportedLocale in supportedLocales) {
-                    if (supportedLocale.languageCode == locale!.languageCode &&
-                        supportedLocale.countryCode == locale.countryCode) {
-                      return supportedLocale;
-                    }
+          child: Sizer(builder: (context, orientation, deviceType) {
+            return MaterialApp(
+              //scaffoldMessengerKey: rootScaffoldMessengerKey,
+              locale: _locale,
+              supportedLocales: [
+                Locale("en", "US"),
+                // Locale("zh", "CN"),
+                // Locale("es", "ES"),
+                Locale("hi", "IN"),
+                // Locale("ar", "DZ"),
+                // Locale("ru", "RU"),
+                // Locale("ja", "JP"),
+                // Locale("de", "DE")
+              ],
+              localizationsDelegates: [
+                CountryLocalizations.delegate,
+                DemoLocalization.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              localeResolutionCallback: (locale, supportedLocales) {
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale!.languageCode &&
+                      supportedLocale.countryCode == locale.countryCode) {
+                    return supportedLocale;
                   }
-                  return supportedLocales.first;
-                },
-                title: appName,
+                }
+                return supportedLocales.first;
+              },
+              title: appName,
 
-                theme: ThemeData(
-                  canvasColor: Theme.of(context).colorScheme.lightWhite,
-                  cardColor: Theme.of(context).colorScheme.white,
-                  dialogBackgroundColor: Theme.of(context).colorScheme.white,
-                  iconTheme:
-                      Theme.of(context).iconTheme.copyWith(color: colors.primary),
-                  primarySwatch: colors.primary_app,
-                  primaryColor: Theme.of(context).colorScheme.lightWhite,
-                  fontFamily: 'opensans',
-                  brightness: Brightness.light,
-                  textTheme: TextTheme(
-                          headline6: TextStyle(
+              theme: ThemeData(
+                canvasColor: Theme.of(context).colorScheme.lightWhite,
+                cardColor: Theme.of(context).colorScheme.white,
+                dialogBackgroundColor: Theme.of(context).colorScheme.white,
+                iconTheme:
+                    Theme.of(context).iconTheme.copyWith(color: colors.primary),
+                primarySwatch: colors.primary_app,
+                primaryColor: Theme.of(context).colorScheme.lightWhite,
+                fontFamily: 'opensans',
+                brightness: Brightness.light,
+                textTheme: TextTheme(
+                        headline6: TextStyle(
+                          color: Theme.of(context).colorScheme.fontColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        subtitle1: TextStyle(
                             color: Theme.of(context).colorScheme.fontColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          subtitle1: TextStyle(
-                              color: Theme.of(context).colorScheme.fontColor,
-                              fontWeight: FontWeight.bold))
-                      .apply(bodyColor: Theme.of(context).colorScheme.fontColor),
-                ),
-                debugShowCheckedModeBanner: false,
-                initialRoute: '/',
-                routes: {
-                  '/': (context) => Splash(),
-                  // '/': (context) => WelcomeOneView(),
-                  '/home': (context) => Dashboard(),
-                },
-                darkTheme: ThemeData(
-                  canvasColor: colors.darkColor,
-                  cardColor: colors.darkColor2,
-                  dialogBackgroundColor: colors.darkColor2,
-                  primarySwatch: colors.primary_app,
-                  primaryColor: colors.darkColor,
-                  textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: colors.darkIcon,
-                      selectionColor: colors.darkIcon,
-                      selectionHandleColor: colors.darkIcon),
-                  toggleableActiveColor: colors.primary,
-                  fontFamily: 'opensans',
-                  brightness: Brightness.dark,
-                  accentColor: colors.darkIcon,
-                  iconTheme:
-                      Theme.of(context).iconTheme.copyWith(color: colors.secondary),
-                  textTheme: TextTheme(
-                          headline6: TextStyle(
+                            fontWeight: FontWeight.bold))
+                    .apply(bodyColor: Theme.of(context).colorScheme.fontColor),
+              ),
+              debugShowCheckedModeBanner: false,
+              initialRoute: '/',
+              routes: {
+                '/': (context) => Splash(),
+                // '/': (context) => WelcomeOneView(),
+                '/home': (context) => Dashboard(),
+              },
+              darkTheme: ThemeData(
+                canvasColor: colors.darkColor,
+                cardColor: colors.darkColor2,
+                dialogBackgroundColor: colors.darkColor2,
+                primarySwatch: colors.primary_app,
+                primaryColor: colors.darkColor,
+                textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: colors.darkIcon,
+                    selectionColor: colors.darkIcon,
+                    selectionHandleColor: colors.darkIcon),
+                toggleableActiveColor: colors.primary,
+                fontFamily: 'opensans',
+                brightness: Brightness.dark,
+                accentColor: colors.darkIcon,
+                iconTheme: Theme.of(context)
+                    .iconTheme
+                    .copyWith(color: colors.secondary),
+                textTheme: TextTheme(
+                        headline6: TextStyle(
+                          color: Theme.of(context).colorScheme.fontColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        subtitle1: TextStyle(
                             color: Theme.of(context).colorScheme.fontColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          subtitle1: TextStyle(
-                              color: Theme.of(context).colorScheme.fontColor,
-                              fontWeight: FontWeight.bold))
-                      .apply(bodyColor: Theme.of(context).colorScheme.fontColor),
-                ),
-                themeMode: themeNotifier.getThemeMode(),
-              );
-            }
-          ));
+                            fontWeight: FontWeight.bold))
+                    .apply(bodyColor: Theme.of(context).colorScheme.fontColor),
+              ),
+              themeMode: themeNotifier.getThemeMode(),
+            );
+          }));
     }
   }
 }
