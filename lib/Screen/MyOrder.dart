@@ -501,7 +501,9 @@ class StateMyOrder extends State<MyOrder> with TickerProviderStateMixin {
                               size: 15,
                             ),
                             Text(
-                              capitalize(orderItem.listStatus!.last),
+                              capitalize(orderItem.listStatus!.last == SHIPED
+                                  ? 'Dispatch'
+                                  : orderItem.listStatus!.last),
                               style: TextStyle(color: back),
                             ),
                           ],

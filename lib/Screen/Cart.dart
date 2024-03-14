@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -52,7 +53,11 @@ class Cart extends StatefulWidget {
 List<User> addressList = [];
 //List<SectionModel> cartList = [];
 List<Promo> promoList = [];
-double totalPrice = 0, oriPrice = 0, delCharge = 0, taxPer = 0;
+double totalPrice = 0,
+    oriPrice = 0,
+    delCharge = 0,
+    taxPer = 0,
+    overall_tax = 0.0;
 int? selectedAddress = 0;
 String? selAddress, payMethod = '', selTime, selDate, promocode;
 bool isTimeSlot = false,
@@ -327,7 +332,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
   clearAll() {
     totalPrice = 0;
     oriPrice = 0;
-
+    overall_tax = 0;
     taxPer = 0;
     delCharge = 0;
     deliveryCharges = 0.0;
@@ -544,7 +549,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     }
     if (cartList[index].productList![0].availability != "0") {
       cartList[index].perItemTotal =
-          (price * double.parse(cartList[index].qty!)).toString();
+          (price * int.parse(cartList[index].qty!)).toString();
       _controller[index].text = cartList[index].qty!;
     }
     List att = [], val = [];
@@ -1032,7 +1037,13 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       if (cartList[index].varientId ==
           cartList[index].productList![0].prVarientList![i].id) selectedPos = i;
     }
-
+    String sub = (double.parse(cartList[index].subTotal.toString()) *
+            int.parse(cartList[index].qty!.toString()))
+        .toStringAsFixed(2);
+    String tax = (double.parse(cartList[index].taxAmt.toString()) *
+            int.parse(cartList[index].qty!.toString()))
+        .toStringAsFixed(2);
+    log(sub + 'Subtotal');
     double price = double.parse(
         cartList[index].productList![0].prVarientList![selectedPos].disPrice!);
     if (price == 0)
@@ -1375,7 +1386,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                       color: Theme.of(context).colorScheme.lightBlack2),
                 ),
                 Text(
-                  CUR_CURRENCY! + " " + cartList[index].perItemTotal!,
+                  CUR_CURRENCY! + " " + sub,
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.lightBlack2),
                 )
@@ -1390,7 +1401,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                       color: Theme.of(context).colorScheme.lightBlack2),
                 ),
                 Text(
-                  cartList[index].productList![0].tax! + "%",
+                  "${cartList[index].productList![0].tax!} % ($CUR_CURRENCY $tax)",
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.lightBlack2),
                 ),
@@ -1719,9 +1730,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
           var data = getdata["data"];
 
-          oriPrice = double.parse(getdata[SUB_TOTAL]);
+          oriPrice = double.parse(getdata['overall_amount']);
           taxPer = double.parse(getdata[TAX_PER]);
-
+          overall_tax = double.parse(getdata['tax_amount']);
           // totalPrice = delCharge + oriPrice;
           totalPrice = deliveryCharges + oriPrice;
           List<SectionModel> cartList = (data as List)

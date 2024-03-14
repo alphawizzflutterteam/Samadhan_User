@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Model/User.dart';
 
@@ -10,7 +12,9 @@ class SectionModel {
       perItemTotal,
       perItemPrice,
       style,
-      shortDesc;
+      shortDesc,
+      subTotal,
+      taxAmt;
   List<Product>? productList;
   List<Promo>? promoList;
   List<Filter>? filterList;
@@ -30,6 +34,8 @@ class SectionModel {
       this.style,
       this.totalItem,
       this.offset,
+      this.subTotal,
+      this.taxAmt,
       this.selectedId,
       this.filterList,
       this.promoList});
@@ -54,6 +60,8 @@ class SectionModel {
         productList: productList,
         offset: 0,
         totalItem: 0,
+        subTotal: parsedJson['sub_total'],
+        taxAmt: parsedJson['tax_amount'],
         filterList: filterList,
         selectedId: selected);
   }
@@ -69,6 +77,8 @@ class SectionModel {
       qty: parsedJson[QTY],
       perItemTotal: "0",
       perItemPrice: "0",
+      subTotal: parsedJson['sub_total'],
+      taxAmt: parsedJson['tax_amount'],
       productList: productList,
     );
   }
@@ -80,6 +90,8 @@ class SectionModel {
 
     return SectionModel(
         id: parsedJson[ID],
+        subTotal: parsedJson['sub_total'],
+        taxAmt: parsedJson['tax_amount'],
         productId: parsedJson[PRODUCT_ID],
         productList: productList);
   }

@@ -671,7 +671,8 @@ class StateOrder extends State<OrderDetail>
                     Text("${getTranslated(context, 'PRICE_LBL')!} :",
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: Theme.of(context).colorScheme.lightBlack2)),
-                    Text("${CUR_CURRENCY!} ${widget.model!.subTotal!}",
+                    Text(
+                        "${CUR_CURRENCY!} ${(double.parse(widget.model!.subTotal!) - double.parse(widget.model!.taxAmt!)).toStringAsFixed(2)}",
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: Theme.of(context).colorScheme.lightBlack2))
                   ],
@@ -686,6 +687,20 @@ class StateOrder extends State<OrderDetail>
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: Theme.of(context).colorScheme.lightBlack2)),
                     Text("+ " + CUR_CURRENCY! + " " + widget.model!.delCharge!,
+                        style: Theme.of(context).textTheme.button!.copyWith(
+                            color: Theme.of(context).colorScheme.lightBlack2))
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Tax' + " " + ":",
+                        style: Theme.of(context).textTheme.button!.copyWith(
+                            color: Theme.of(context).colorScheme.lightBlack2)),
+                    Text("+ " + CUR_CURRENCY! + " " + widget.model!.taxAmt!,
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: Theme.of(context).colorScheme.lightBlack2))
                   ],
@@ -1597,7 +1612,7 @@ class StateOrder extends State<OrderDetail>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      getTranslated(context, 'ORDER_SHIPPED')!,
+                      'Order Dispatch',
                       style: TextStyle(fontSize: 8),
                       textAlign: TextAlign.center,
                     ),
