@@ -577,40 +577,41 @@ class StateOrder extends State<OrderDetail>
     );
   }
 
-/*  returnable() {
+  returnable() {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
             begin: AlignmentDirectional.topStart,
             end: AlignmentDirectional.bottomEnd,
             colors: [colors.grad1Color, colors.grad2Color],
             stops: [0, 1]),
-        boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.black26, blurRadius: 10)],
+        boxShadow: [
+          BoxShadow(
+              color: Theme.of(context).colorScheme.black26, blurRadius: 10)
+        ],
       ),
       width: deviceWidth,
       child: InkWell(
         onTap: _isReturnClick
             ? () {
-          setState(() {
-            _isReturnClick = false;
-            _isProgress = true;
-          });
-          cancelOrder(RETURNED, updateOrderApi, widget.model!.id);
-        }
+                setState(() {
+                  _isReturnClick = false;
+                  _isProgress = true;
+                });
+                cancelOrder(RETURNED, updateOrderApi, widget.model!.id);
+              }
             : null,
         child: Center(
             child: Text(
-              getTranslated(context, 'RETURN_ORDER')!,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .button!
-                  .copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.white),
-            )),
+          getTranslated(context, 'RETURN_ORDER')!,
+          style: Theme.of(context).textTheme.button!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.white),
+        )),
       ),
     );
-  }*/
+  }
 
   /* cancelable() {
     return Container(

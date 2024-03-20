@@ -1010,6 +1010,7 @@ class _HomePageState extends State<HomePage>
         onTap: () {
           if (offerImages[index].type == "products") {
             Product? item = offerImages[index].list;
+            print("HERE ------1");
 
             Navigator.push(
               context,
@@ -1446,6 +1447,8 @@ class _HomePageState extends State<HomePage>
                                   } else {
                                     Product model =
                                         sectionList[secPos].productList![index];
+                                    print("HERE ------2");
+
                                     Navigator.push(
                                       context,
                                       PageRouteBuilder(
@@ -1492,6 +1495,8 @@ class _HomePageState extends State<HomePage>
                 ]),
                 onTap: () {
                   Product model = sectionList[secPos].productList![index];
+                  print("HERE ------3");
+
                   Navigator.push(
                     context,
                     PageRouteBuilder(
@@ -1721,6 +1726,8 @@ class _HomePageState extends State<HomePage>
           ),
           onTap: () {
             Product model = sectionList[secPos].productList![index];
+            print("HERE ------4");
+
             Navigator.push(
               context,
               PageRouteBuilder(
@@ -2246,7 +2253,7 @@ class _HomePageState extends State<HomePage>
         ));
   }
 
-  Widget _buildImagePageItem(Model slider) {
+  Widget _buildImagePageItem(Model slider, int pos) {
     double height = deviceWidth! / 0.5;
     return GestureDetector(
       child: Container(
@@ -2277,9 +2284,20 @@ class _HomePageState extends State<HomePage>
       ),
       onTap: () async {
         int curSlider = context.read<HomeProvider>().curSlider;
+        print("I AM HEREEEE");
+        print(curSlider.toString() + "SLIDER CLICK curser");
+        print(pos.toString() + "SLIDER CLICK curser check");
 
-        if (homeSliderList[curSlider].type == "products") {
-          Product? item = homeSliderList[curSlider].list;
+        print(slider.id.toString() + "SLIDER CLICK");
+        print(slider.type.toString() + "SLIDER CLICK");
+
+        print(homeSliderList[curSlider].id.toString() + "SLIDER CLICK");
+        print(homeSliderList[curSlider].type.toString() + "SLIDER CLICK Check");
+
+        // if (pos == 0) {
+        if (slider.type == "products") {
+          Product? item = slider.list;
+          print("HERE ------5");
 
           Navigator.push(
             context,
@@ -2287,31 +2305,73 @@ class _HomePageState extends State<HomePage>
                 pageBuilder: (_, __, ___) => ProductDetail(
                     model: item, secPos: 0, index: 0, list: true)),
           );
-        } else if (homeSliderList[curSlider].type == "categories") {
-          Product item = homeSliderList[curSlider].list;
-          if (item.subList == null || item.subList!.length == 0) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductList(
-                    name: item.name,
-                    id: item.id,
-                    tag: false,
-                    fromSeller: false,
-                  ),
-                ));
-          } else {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SubCategory(
-                    title: item.name!,
-                    image: item.image!,
-                    subList: item.subList,
-                  ),
-                ));
-          }
+        } else if (slider.type == "categories") {
+          print("categories");
+          Product item = slider.list;
+          //     if (item.subList == null || item.subList!.length == 0) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductList(
+                  name: item.name,
+                  id: item.id,
+                  tag: false,
+                  fromSeller: false,
+                ),
+              ));
+          //       }
+        } else {
+          // Product item = slider.list;
+
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => SubCategory(
+          //         title: item.name!,
+          //         image: item.image!,
+          //         subList: item.subList,
+          //       ),
+          //     ));
         }
+        //    }
+        //  else {
+        //   if (homeSliderList[curSlider].type == "products") {
+        //     Product? item = homeSliderList[curSlider].list;
+        //     print("HERE ------5");
+
+        //     Navigator.push(
+        //       context,
+        //       PageRouteBuilder(
+        //           pageBuilder: (_, __, ___) => ProductDetail(
+        //               model: item, secPos: 0, index: 0, list: true)),
+        //     );
+        //   } else if (homeSliderList[curSlider].type == "categories") {
+        //     Product item = homeSliderList[curSlider].list;
+        //     if (item.subList == null || item.subList!.length == 0) {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) => ProductList(
+        //               name: item.name,
+        //               id: item.id,
+        //               tag: false,
+        //               fromSeller: false,
+        //             ),
+        //           ));
+        //     } else {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) => SubCategory(
+        //               title: item.name!,
+        //               image: item.image!,
+        //               subList: item.subList,
+        //             ),
+        //           ));
+        //     }
+        //   }
+
+        // }
       },
     );
   }
@@ -2570,7 +2630,7 @@ class _HomePageState extends State<HomePage>
             (data as List).map((data) => new Model.fromSlider(data)).toList();
         setState(() {
           pages = homeSliderList.map((slider) {
-            return _buildImagePageItem(slider);
+            return _buildImagePageItem(slider, 0);
           }).toList();
         });
       } else {
@@ -2596,7 +2656,7 @@ class _HomePageState extends State<HomePage>
 
         setState(() {
           pages1 = homeSliderList.map((slider) {
-            return _buildImagePageItem(slider);
+            return _buildImagePageItem(slider, 1);
           }).toList();
         });
       } else {
@@ -2624,7 +2684,7 @@ class _HomePageState extends State<HomePage>
 
         setState(() {
           pages2 = homeSliderList.map((slider) {
-            return _buildImagePageItem(slider);
+            return _buildImagePageItem(slider, 2);
           }).toList();
         });
       } else {
@@ -2652,7 +2712,7 @@ class _HomePageState extends State<HomePage>
 
         setState(() {
           pages3 = homeSliderList.map((slider) {
-            return _buildImagePageItem(slider);
+            return _buildImagePageItem(slider, 3);
           }).toList();
         });
       } else {
@@ -2680,7 +2740,7 @@ class _HomePageState extends State<HomePage>
 
         setState(() {
           pages4 = homeSliderList.map((slider) {
-            return _buildImagePageItem(slider);
+            return _buildImagePageItem(slider, 4);
           }).toList();
         });
       } else {
@@ -2707,7 +2767,7 @@ class _HomePageState extends State<HomePage>
             (data as List).map((data) => new Model.fromSlider(data)).toList();
         setState(() {
           pages5 = homeSliderList.map((slider) {
-            return _buildImagePageItem(slider);
+            return _buildImagePageItem(slider, 5);
           }).toList();
         });
       } else {
