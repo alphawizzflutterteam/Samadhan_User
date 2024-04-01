@@ -1,7 +1,7 @@
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Screen/SignInUpAcc.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Screen/SignInUpAcc.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -36,14 +36,14 @@ class WelcomeTwoView extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: Image.asset(
                   'assets/images/welcome_2_shop.png',
-                 scale: 8,
+                  scale: 8,
                 ),
               ),
               SizedBox(
                 height: mysize.height / 20,
               ),
               Container(
-               // margin: EdgeInsets.symmetric(horizontal: mysize.width / 10),
+                // margin: EdgeInsets.symmetric(horizontal: mysize.width / 10),
                 child: Text(
                   "Welcome To Samadhaan Online",
                   textAlign: TextAlign.center,
@@ -54,9 +54,9 @@ class WelcomeTwoView extends StatelessWidget {
                 height: mysize.height / 40,
               ),
               Container(
-               // margin: EdgeInsets.symmetric(horizontal: mysize.width / 10),
+                // margin: EdgeInsets.symmetric(horizontal: mysize.width / 10),
                 child: Text(
-                      "Register or login using your whatsapp number",
+                  "Register or login using your whatsapp number",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w400),
                 ),
@@ -102,4 +102,3 @@ class WelcomeTwoView extends StatelessWidget {
     );
   }
 }
-

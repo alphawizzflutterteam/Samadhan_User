@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Map.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/Map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';

@@ -1,4 +1,4 @@
-//import 'package:eshop_multivendor/Helper/Session.dart';
+//import 'package:samadhaan_user/Helper/Session.dart';
 //import 'package:flutter/material.dart';
 //import 'package:sizer/sizer.dart';
 //
@@ -51,7 +51,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:eshop_multivendor/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -185,18 +185,18 @@ class StatePrivacy extends State<RefundPolicy> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return _isLoading
         ? Scaffold(
-      key: _scaffoldKey,
-      appBar: getSimpleAppBar(widget.title!, context),
-      body: getProgress(),
-    )
+            key: _scaffoldKey,
+            appBar: getSimpleAppBar(widget.title!, context),
+            body: getProgress(),
+          )
         : refund != null
-        ? Scaffold(
-        key: _scaffoldKey,
-        appBar: getSimpleAppBar(widget.title!, context),
-        body: SingleChildScrollView(
-            child: Html(
-              data: refund,
-            )) /*InAppWebView(
+            ? Scaffold(
+                key: _scaffoldKey,
+                appBar: getSimpleAppBar(widget.title!, context),
+                body: SingleChildScrollView(
+                    child: Html(
+                  data: refund,
+                )) /*InAppWebView(
                     initialData: InAppWebViewInitialData(
                         baseUrl: Uri.dataFromString(privacy!,
                             mimeType: 'text/html', encoding: utf8),
@@ -228,8 +228,8 @@ class StatePrivacy extends State<RefundPolicy> with TickerProviderStateMixin {
                           resources: resources,
                           action: PermissionRequestResponseAction.GRANT);
                     })*/
-    )
-    /*WebviewScaffold(
+                )
+            /*WebviewScaffold(
                 appBar: getSimpleAppBar(widget.title!, context),
                 withJavascript: true,
                 appCacheEnabled: true,
@@ -241,11 +241,11 @@ class StatePrivacy extends State<RefundPolicy> with TickerProviderStateMixin {
                     ? "^tel:|^https:\/\/api.whatsapp.com\/send|^mailto:"
                     : "^tel:|^mailto:",
               )*/
-        : Scaffold(
-      key: _scaffoldKey,
-      appBar: getSimpleAppBar(widget.title!, context),
-      body: _isNetworkAvail ? Container() : noInternet(context),
-    );
+            : Scaffold(
+                key: _scaffoldKey,
+                appBar: getSimpleAppBar(widget.title!, context),
+                body: _isNetworkAvail ? Container() : noInternet(context),
+              );
   }
 
   Future<void> getSetting() async {
@@ -253,9 +253,9 @@ class StatePrivacy extends State<RefundPolicy> with TickerProviderStateMixin {
     if (_isNetworkAvail) {
       try {
         String? type;
-        if(widget.title == getTranslated(context, 'REFUND_POLICY'))
+        if (widget.title == getTranslated(context, 'REFUND_POLICY'))
           type = 'refund_policy';
-       else if (widget.title == getTranslated(context, 'PRIVACY'))
+        else if (widget.title == getTranslated(context, 'PRIVACY'))
           type = PRIVACY_POLLICY;
         else if (widget.title == getTranslated(context, 'TERM'))
           type = TERM_COND;
@@ -266,8 +266,8 @@ class StatePrivacy extends State<RefundPolicy> with TickerProviderStateMixin {
 
         var parameter = {TYPE: type};
         Response response =
-        await post(getSettingApi, body: parameter, headers: headers)
-            .timeout(Duration(seconds: timeOut));
+            await post(getSettingApi, body: parameter, headers: headers)
+                .timeout(Duration(seconds: timeOut));
         if (response.statusCode == 200) {
           var getdata = json.decode(response.body);
           bool error = getdata["error"];

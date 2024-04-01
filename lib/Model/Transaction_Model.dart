@@ -1,8 +1,8 @@
-import 'package:eshop_multivendor/Helper/String.dart';
+import 'package:samadhaan_user/Helper/String.dart';
 import 'package:intl/intl.dart';
 
 class TransactionModel {
-  String? id, amt, status, msg, date, type,txnID,orderId;
+  String? id, amt, status, msg, date, type, txnID, orderId;
 
   TransactionModel(
       {this.id,
@@ -17,7 +17,7 @@ class TransactionModel {
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     String date = json[TRN_DATE];
 
-   date = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.parse(date));
+    date = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.parse(date));
     return new TransactionModel(
         orderId: json[ORDER_ID],
         amt: json[AMOUNT],
@@ -25,7 +25,7 @@ class TransactionModel {
         msg: json[MESSAGE],
         type: json[TYPE],
         txnID: json[TXNID],
-       id: json[ID],
+        id: json[ID],
         date: date);
   }
 

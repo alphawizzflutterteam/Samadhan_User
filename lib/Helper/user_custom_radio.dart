@@ -1,4 +1,4 @@
-import 'package:eshop_multivendor/Model/User.dart';
+import 'package:samadhaan_user/Model/User.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,9 @@ class RadioItem extends StatelessWidget {
                       height: 20.0,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color:
-                              _item.isSelected! ? colors.primary : Theme.of(context).colorScheme.white,
+                          color: _item.isSelected!
+                              ? colors.primary
+                              : Theme.of(context).colorScheme.white,
                           border: Border.all(color: colors.primary)),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
@@ -94,15 +95,16 @@ class RadioItem extends StatelessWidget {
                                     color: _item.addItem!.isDefault == "1"
                                         ? colors.primary
                                         : Theme.of(context).colorScheme.white,
-                                    border:
-                                        Border.all(color: colors.primary)),
+                                    border: Border.all(color: colors.primary)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
                                   child: _item.addItem!.isDefault == "1"
                                       ? Icon(
                                           Icons.check,
                                           size: 15.0,
-                                          color: Theme.of(context).colorScheme.white,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .white,
                                         )
                                       : Container(),
                                 ),
@@ -130,14 +132,18 @@ class RadioItem extends StatelessWidget {
                                             getTranslated(
                                                 context, 'SET_DEFAULT')!,
                                             style: TextStyle(
-                                              color: Theme.of(context).colorScheme.fontColor,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .fontColor,
                                             ),
                                           )
                                         : Text(
                                             getTranslated(
                                                 context, 'MARKED_DEFAULT')!,
                                             style: TextStyle(
-                                              color: Theme.of(context).colorScheme.fontColor,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .fontColor,
                                             ),
                                           ),
                                   ),
@@ -158,14 +164,18 @@ class RadioItem extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
                                       border: Border.all(
-                                          color: colors.primary, width: 1,),
+                                        color: colors.primary,
+                                        width: 1,
+                                      ),
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     child: Text(
                                       getTranslated(context, 'DELETE')!,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: Theme.of(context).colorScheme.fontColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .fontColor,
                                           fontSize: 10),
                                     ),
                                   ),

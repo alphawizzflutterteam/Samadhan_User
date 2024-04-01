@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-import 'package:eshop_multivendor/Model/Section_Model.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/MyOrder.dart';
+import 'package:samadhaan_user/Model/Section_Model.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/MyOrder.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -30,7 +31,6 @@ Future<void> backgroundMessage(RemoteMessage message) async {
 }
 
 class PushNotificationService {
-
   late BuildContext context;
   final TabController tabController;
 
@@ -40,7 +40,7 @@ class PushNotificationService {
     messaging.getToken().then((token) async {
       SettingProvider settingsProvider =
           Provider.of<SettingProvider>(this.context, listen: false);
-
+       log("FCM : ${token.toString()}");
       if (settingsProvider.userId != null && settingsProvider.userId != "")
         _registerToken(token);
     });
@@ -248,6 +248,7 @@ class PushNotificationService {
       }
     });
   }
+
   void iOSPermission() async {
     await messaging.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -255,6 +256,7 @@ class PushNotificationService {
       sound: true,
     );
   }
+
   void _registerToken(String? token) async {
     SettingProvider settingsProvider =
         Provider.of<SettingProvider>(this.context, listen: false);

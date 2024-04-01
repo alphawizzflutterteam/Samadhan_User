@@ -1,15 +1,14 @@
-
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Verify_Otp.dart';
-import 'package:eshop_multivendor/Screen/starting_view/otp_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/utils/colors.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/Verify_Otp.dart';
+import 'package:samadhaan_user/Screen/starting_view/otp_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/utils/colors.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../Helper/my_new_helper.dart';
-
 
 class ForgetScreen extends StatefulWidget {
   const ForgetScreen({Key? key}) : super(key: key);
@@ -45,8 +43,8 @@ class _ForgetScreenState extends State<ForgetScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
-
   }
+
   Future<void> checkNetwork() async {
     bool avail = await isNetworkAvailable();
     if (avail) {
@@ -56,11 +54,12 @@ class _ForgetScreenState extends State<ForgetScreen>
         if (mounted)
           setState(() {
             _isNetworkAvail = false;
-            status =false;
+            status = false;
           });
       });
     }
   }
+
   setSnackbar(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
@@ -73,24 +72,23 @@ class _ForgetScreenState extends State<ForgetScreen>
     ));
   }
 
-
   Future<void> getVerifyUser() async {
     try {
       var data = {MOBILE: phoneController.text, "forgot_otp": "true"};
       Response response =
-      await post(getVerifyUserApi, body: data, headers: headers)
-          .timeout(Duration(seconds: timeOut));
+          await post(getVerifyUserApi, body: data, headers: headers)
+              .timeout(Duration(seconds: timeOut));
       print(response.body);
       var getdata = json.decode(response.body);
 
       bool? error = getdata["error"];
       String? msg = getdata["message"];
       setState(() {
-        status =false;
+        status = false;
       });
 
       SettingProvider settingsProvider =
-      Provider.of<SettingProvider>(context, listen: false);
+          Provider.of<SettingProvider>(context, listen: false);
 
       if (!error!) {
         settingsProvider.setPrefrence(MOBILE, phoneController.text);
@@ -100,22 +98,23 @@ class _ForgetScreenState extends State<ForgetScreen>
               context,
               MaterialPageRoute(
                   builder: (context) => OtpScreen(
-                    mobileNumber:phoneController.text,
-                    countryCode: "91",
-                    otp:getdata["data"]["otp"].toString(),
-                    title: getTranslated(context, 'FORGOT_PASS_TITLE'),
-                  )));
+                        mobileNumber: phoneController.text,
+                        countryCode: "91",
+                        otp: getdata["data"]["otp"].toString(),
+                        title: getTranslated(context, 'FORGOT_PASS_TITLE'),
+                      )));
         });
       } else {
         setSnackbar(getTranslated(context, 'FIRSTSIGNUP_MSG')!);
       }
     } on TimeoutException catch (_) {
       setState(() {
-        status =false;
+        status = false;
       });
       setSnackbar(getTranslated(context, 'somethingMSg')!);
     }
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -152,9 +151,9 @@ class _ForgetScreenState extends State<ForgetScreen>
                   width: 100.w,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/login_option_bg.png"),
-                        fit: BoxFit.fill,
-                      )),
+                    image: AssetImage("assets/images/login_option_bg.png"),
+                    fit: BoxFit.fill,
+                  )),
                   child: Center(
                     child: Column(
                       children: [
@@ -190,14 +189,14 @@ class _ForgetScreenState extends State<ForgetScreen>
                   curve: Curves.easeInOut,
                   margin: EdgeInsets.only(top: 16.h),
                   width: 83.33.w,
-                  height:  42.96.h ,
+                  height: 42.96.h,
                   decoration:
-                  boxDecoration(radius: 50.0, bgColor: Color(0xffffffff)),
-                  child:firstSign(context),
+                      boxDecoration(radius: 50.0, bgColor: Color(0xffffffff)),
+                  child: firstSign(context),
                 ),
                 Center(
                   child: Container(
-                    margin: EdgeInsets.only(top:  58.96.h, bottom: 8.h),
+                    margin: EdgeInsets.only(top: 58.96.h, bottom: 8.h),
                     child: InkWell(
                       onTap: () async {
                         setState(() {
@@ -208,36 +207,41 @@ class _ForgetScreenState extends State<ForgetScreen>
                         setState(() {
                           enabled = false;
                         });
-                        if(validateMob(
-                            phoneController.text,
-                            getTranslated(context, 'MOB_REQUIRED'),
-                            getTranslated(context, 'VALID_MOB'))!=null){
+                        if (validateMob(
+                                phoneController.text,
+                                getTranslated(context, 'MOB_REQUIRED'),
+                                getTranslated(context, 'VALID_MOB')) !=
+                            null) {
                           setSnackbar(validateMob(
-                              phoneController.text,
-                              getTranslated(context, 'MOB_REQUIRED'),
-                              getTranslated(context, 'VALID_MOB')).toString());
+                                  phoneController.text,
+                                  getTranslated(context, 'MOB_REQUIRED'),
+                                  getTranslated(context, 'VALID_MOB'))
+                              .toString());
                           return;
                         }
                         setState(() {
-                          status =true;
+                          status = true;
                         });
                         checkNetwork();
                         //  Navigator.push(context, PageTransition(child: ForgetScreen(), type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 500),));
                       },
-                      child:  !status?Container(
-                        width: 69.99.w,
-                        height: 6.46.h,
-                        decoration: boxDecoration(
-                            radius: 15.0, bgColor: AppColor().colorPrimaryDark()),
-                        child: Center(
-                          child: text(
-                            "Send",
-                            textColor: Color(0xffffffff),
-                            fontSize: 14.sp,
-                            fontFamily: fontRegular,
-                          ),
-                        ),
-                      ):CircularProgressIndicator(),
+                      child: !status
+                          ? Container(
+                              width: 69.99.w,
+                              height: 6.46.h,
+                              decoration: boxDecoration(
+                                  radius: 15.0,
+                                  bgColor: AppColor().colorPrimaryDark()),
+                              child: Center(
+                                child: text(
+                                  "Send",
+                                  textColor: Color(0xffffffff),
+                                  fontSize: 14.sp,
+                                  fontFamily: fontRegular,
+                                ),
+                              ),
+                            )
+                          : CircularProgressIndicator(),
                     ),
                   ),
                 ),
@@ -264,7 +268,6 @@ class _ForgetScreenState extends State<ForgetScreen>
             width: 29.72.w,
           ),
         ),
-
         Center(
           child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -327,11 +330,11 @@ class _ForgetScreenState extends State<ForgetScreen>
                         ),
                       ),
                       suffixIcon: phoneController.text.length == 10
-                          ?Icon(
-                        Icons.check,
-                        color: AppColor().colorPrimary(),
-                        size: 10.sp,
-                      )
+                          ? Icon(
+                              Icons.check,
+                              color: AppColor().colorPrimary(),
+                              size: 10.sp,
+                            )
                           : SizedBox(),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(

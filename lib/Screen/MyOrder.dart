@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Model/Order_Model.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Model/Order_Model.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';

@@ -1,4 +1,4 @@
-import 'package:eshop_multivendor/Model/Section_Model.dart';
+import 'package:samadhaan_user/Model/Section_Model.dart';
 import 'package:flutter/material.dart';
 
 class CartProvider extends ChangeNotifier {
@@ -6,9 +6,6 @@ class CartProvider extends ChangeNotifier {
 
   get cartList => _cartList;
   bool _isProgress = false;
-
-
-
 
   get cartIdList => _cartList.map((fav) => fav.id).toList();
 

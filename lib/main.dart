@@ -1,13 +1,13 @@
 import 'package:country_code_picker/country_localizations.dart';
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/CategoryProvider.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Provider/HomeProvider.dart';
-import 'package:eshop_multivendor/Provider/ProductDetailProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/starting_view/Splash.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
+import 'package:samadhaan_user/Provider/CartProvider.dart';
+import 'package:samadhaan_user/Provider/CategoryProvider.dart';
+import 'package:samadhaan_user/Provider/FavoriteProvider.dart';
+import 'package:samadhaan_user/Provider/HomeProvider.dart';
+import 'package:samadhaan_user/Provider/ProductDetailProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/starting_view/Splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,7 @@ import 'Provider/Theme.dart';
 import 'Provider/SettingProvider.dart';
 import 'Provider/order_provider.dart';
 import 'Screen/Dashboard.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,10 @@ void main() async {
     systemNavigationBarColor: colors.primary, // navigation bar color
     statusBarColor: colors.primary, // status bar color
   ));
-  await Firebase.initializeApp();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   initializedDownload();
   FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

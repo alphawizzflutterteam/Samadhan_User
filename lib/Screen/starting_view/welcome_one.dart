@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Helper/my_new_helper.dart';
-import 'package:eshop_multivendor/Screen/starting_view/welcome_two.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Helper/my_new_helper.dart';
+import 'package:samadhaan_user/Screen/starting_view/welcome_two.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,13 +33,12 @@ class _WelcomeOneViewState extends State<WelcomeOneView> {
               ),
               Image.asset(
                 "assets/images/titleicon.png",
-               scale: 5,
+                scale: 5,
 
-               // height: mysize.height / 8,
+                // height: mysize.height / 8,
               ),
-
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.04,
+                height: MediaQuery.of(context).size.height * 0.04,
                 //height: mysize.height / 20,
               ),
               Padding(
@@ -47,16 +46,16 @@ class _WelcomeOneViewState extends State<WelcomeOneView> {
                 child: Image.asset(
                   'assets/images/welcom_banner_img.png',
                   scale: 5,
-                 // height: mysize.height / 5,
-                //  fit: BoxFit.contain,
+                  // height: mysize.height / 5,
+                  //  fit: BoxFit.contain,
                   //width: mysize.width,
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.06,
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: mysize.width /20),
+                margin: EdgeInsets.symmetric(horizontal: mysize.width / 20),
                 child: Text(
                   "Welcome To Samadhaan  Online Shopping ",
                   textAlign: TextAlign.center,

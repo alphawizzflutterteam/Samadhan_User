@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:eshop_multivendor/Helper/AppBtn.dart';
+import 'package:samadhaan_user/Helper/AppBtn.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/rendering.dart';
 
 import 'Chat.dart';
 import '../Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -195,7 +195,7 @@ class _CustomerSupportState extends State<CustomerSupport>
   Widget setType() {
     return DropdownButtonFormField(
       iconEnabledColor: Theme.of(context).colorScheme.fontColor,
-     isExpanded: true,
+      isExpanded: true,
       isDense: true,
       hint: new Text(
         getTranslated(context, 'SELECT_TYPE')!,
@@ -204,7 +204,7 @@ class _CustomerSupportState extends State<CustomerSupport>
             fontWeight: FontWeight.normal),
       ),
       decoration: InputDecoration(
-       filled: true,
+        filled: true,
         isDense: true,
         fillColor: Theme.of(context).colorScheme.lightWhite,
         contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -228,7 +228,7 @@ class _CustomerSupportState extends State<CustomerSupport>
         if (mounted)
           setState(() {
             type = newValue;
-           print("1111111111111111${type}");
+            print("1111111111111111${type}");
           });
       },
       items: typeList.map((Model user) {
@@ -424,7 +424,6 @@ class _CustomerSupportState extends State<CustomerSupport>
       try {
         Response response = await post(getTicketTypeApi, headers: headers)
             .timeout(Duration(seconds: timeOut));
-
 
         var getdata = json.decode(response.body);
         bool error = getdata["error"];
@@ -764,7 +763,6 @@ class _CustomerSupportState extends State<CustomerSupport>
           if (mounted)
             setState(() {
               status = newValue;
-
             });
         },
         items: statusList.map((Model user) {

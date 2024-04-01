@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cc_avenue/cc_avenue.dart';
-import 'package:eshop_multivendor/Model/DateModel.dart';
-import 'package:eshop_multivendor/Model/NewDateModel.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Model/DateModel.dart';
+import 'package:samadhaan_user/Model/NewDateModel.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';

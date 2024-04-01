@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Model/User.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Model/User.dart';
 
 class SectionModel {
   String? id,

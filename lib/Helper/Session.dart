@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/Cart.dart';
-import 'package:eshop_multivendor/Screen/Favorite.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/Search.dart';
-import 'package:eshop_multivendor/Screen/starting_view/feature_order.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/Cart.dart';
+import 'package:samadhaan_user/Screen/Favorite.dart';
+import 'package:samadhaan_user/Screen/Login.dart';
+import 'package:samadhaan_user/Screen/Search.dart';
+import 'package:samadhaan_user/Screen/starting_view/feature_order.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -97,7 +97,11 @@ getAppBar(
   return AppBar(
     titleSpacing: 0,
     backgroundColor: Theme.of(context).colorScheme.white,
-    flexibleSpace: Image.asset("assets/images/login_option_bg.png",width: 100.w,fit: BoxFit.fill,),
+    flexibleSpace: Image.asset(
+      "assets/images/login_option_bg.png",
+      width: 100.w,
+      fit: BoxFit.fill,
+    ),
     leading: Builder(
       builder: (BuildContext context) {
         return Container(
@@ -117,7 +121,8 @@ getAppBar(
     ),
     title: Text(
       title,
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal,fontSize: 15),
+      style: TextStyle(
+          color: Colors.white, fontWeight: FontWeight.normal, fontSize: 15),
     ),
     actions: <Widget>[
       IconButton(
@@ -217,10 +222,7 @@ getAppBar(
   );
 }
 
-getSimpleAppBar(
-    String title,
-    BuildContext context,{String? show}
-    ) {
+getSimpleAppBar(String title, BuildContext context, {String? show}) {
   return AppBar(
     titleSpacing: 0,
     backgroundColor: Theme.of(context).colorScheme.white,
@@ -233,45 +235,48 @@ getSimpleAppBar(
           child: Center(
             child: Icon(
               Icons.arrow_back_ios_rounded,
-              color:Colors.white,
+              color: Colors.white,
             ),
           ),
         ),
       );
     }),
-    flexibleSpace: Image.asset("assets/images/login_option_bg.png",width: 100.w,fit: BoxFit.fill,),
+    flexibleSpace: Image.asset(
+      "assets/images/login_option_bg.png",
+      width: 100.w,
+      fit: BoxFit.fill,
+    ),
     title: Text(
       title,
       style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
     ),
     actions: [
-      show!=null?IconButton(
-          icon: SvgPicture.asset(
-            imagePath + "pro_myorder.svg",
-            height: 20,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            if(show!="data"){
-              if(CUR_USERID == null){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Login(),
-                  ),
-                );
-              }else{
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FeatureOrder(),
-                    ));
-              }
-
-            }else{
-            }
-
-          }):SizedBox(),
+      show != null
+          ? IconButton(
+              icon: SvgPicture.asset(
+                imagePath + "pro_myorder.svg",
+                height: 20,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                if (show != "data") {
+                  if (CUR_USERID == null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FeatureOrder(),
+                        ));
+                  }
+                } else {}
+              })
+          : SizedBox(),
     ],
   );
 }
@@ -366,8 +371,6 @@ String? validateSocity(String value, String? msg1, String? msg2) {
   return null;
 }
 
-
-
 String? validateMob(String value, String? msg1, String? msg2) {
   if (value.isEmpty) {
     return msg1;
@@ -439,15 +442,18 @@ Widget getProgress() {
 Widget getNoItem(BuildContext context) {
   return Center(child: Text(getTranslated(context, 'noItem')!));
 }
-String getString(String name){
-  String temp ="";
-  if(name!=null&&name!=""){
-    temp = name[0].toString().toUpperCase()  + name.toString().substring(1).toLowerCase();
-  }else{
-    temp ="No Data";
+
+String getString(String name) {
+  String temp = "";
+  if (name != null && name != "") {
+    temp = name[0].toString().toUpperCase() +
+        name.toString().substring(1).toLowerCase();
+  } else {
+    temp = "No Data";
   }
   return temp;
 }
+
 Widget shimmer(BuildContext context) {
   return Container(
     width: double.infinity,
@@ -519,15 +525,17 @@ Widget shimmer(BuildContext context) {
     ),
   );
 }
-String parseString(name){
-  String temp ="";
-  if(name!=null&&name!=""){
+
+String parseString(name) {
+  String temp = "";
+  if (name != null && name != "") {
     temp = parse(name).body!.text.toString();
-  }else{
-    temp ="No Data";
+  } else {
+    temp = "No Data";
   }
   return temp;
 }
+
 Widget singleItemSimmer(BuildContext context) {
   return Container(
       width: double.infinity,
@@ -645,8 +653,6 @@ String? getTranslated(BuildContext context, String key) {
   return DemoLocalization.of(context)!.translate(key);
 }
 
-
-
 String getToken() {
   final claimSet = new JwtClaim(
       issuer: 'eshop',
@@ -658,13 +664,13 @@ String getToken() {
   return token;
 }
 
-void saveTokenShared(String token) async{
+void saveTokenShared(String token) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   sharedPreferences.setString("token-key", "");
   sharedPreferences.setString("token-key", token);
 }
 
-  Map<String, String> get headers => {
+Map<String, String> get headers => {
       "Authorization": 'Bearer ' + getToken(),
     };
 

@@ -1,18 +1,17 @@
-
 import 'dart:convert';
 
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/my_new_helper.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/SendOtp.dart';
-import 'package:eshop_multivendor/Screen/starting_view/forget_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/otp_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/signup_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/utils/colors.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/my_new_helper.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/SendOtp.dart';
+import 'package:samadhaan_user/Screen/starting_view/forget_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/otp_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/signup_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/utils/colors.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +26,7 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login>
-    with SingleTickerProviderStateMixin {
+class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   TextEditingController phoneController = new TextEditingController();
@@ -78,9 +76,9 @@ class _LoginState extends State<Login>
                   width: 100.w,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/login_option_bg.png"),
-                        fit: BoxFit.fill,
-                      )),
+                    image: AssetImage("assets/images/login_option_bg.png"),
+                    fit: BoxFit.fill,
+                  )),
                   child: Center(
                     child: Column(
                       children: [
@@ -116,45 +114,47 @@ class _LoginState extends State<Login>
                   curve: Curves.fastLinearToSlowEaseIn,
                   margin: EdgeInsets.only(top: 25.h),
                   width: 83.33.w,
-                  height:30.96.h,
-                  decoration:
-                      boxDecoration(radius: 50.0, bgColor: Color(0xffffffff),showShadow: true),
+                  height: 30.96.h,
+                  decoration: boxDecoration(
+                      radius: 50.0,
+                      bgColor: Color(0xffffffff),
+                      showShadow: true),
                   child: firstSign(context),
                 ),
-               Container(
-                 // alignment: Alignment.bottomCenter,
-                      margin: EdgeInsets.only(top: 72.81.h,bottom: 8.h),
-                      child: InkWell(
-                        onTap: () async {
-                          setState(() {
-                            edit = true;
-                          });
-                          await Future.delayed(Duration(milliseconds: 200));
-                          setState(() {
-                            edit = false;
-                          });
-                          navigateScreen(context, SignUpScreen());
-                        },
-                        child: RichText(
-                          text: new TextSpan(
-                            text: "Don't Have An Account? ",
+                Container(
+                  // alignment: Alignment.bottomCenter,
+                  margin: EdgeInsets.only(top: 72.81.h, bottom: 8.h),
+                  child: InkWell(
+                    onTap: () async {
+                      setState(() {
+                        edit = true;
+                      });
+                      await Future.delayed(Duration(milliseconds: 200));
+                      setState(() {
+                        edit = false;
+                      });
+                      navigateScreen(context, SignUpScreen());
+                    },
+                    child: RichText(
+                      text: new TextSpan(
+                        text: "Don't Have An Account? ",
+                        style: TextStyle(
+                          color: Color(0xff171717),
+                          fontSize: 10.sp,
+                          fontFamily: fontBold,
+                        ),
+                        children: <TextSpan>[
+                          new TextSpan(
+                            text: 'SignUp',
                             style: TextStyle(
-                              color: Color(0xff171717),
+                              color: Color(0xffF4B71E),
                               fontSize: 10.sp,
                               fontFamily: fontBold,
                             ),
-                            children: <TextSpan>[
-                              new TextSpan(
-                                text: 'SignUp',
-                                style: TextStyle(
-                                  color:Color(0xffF4B71E),
-                                  fontSize: 10.sp,
-                                  fontFamily: fontBold,
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -165,7 +165,7 @@ class _LoginState extends State<Login>
     );
   }
 
-  Widget firstSign(BuildContext context){
+  Widget firstSign(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +188,7 @@ class _LoginState extends State<Login>
                       cursorColor: Colors.red,
                       keyboardType: TextInputType.phone,
                       controller: phoneController,
-                      style:TextStyle(
+                      style: TextStyle(
                         color: AppColor().colorTextFour(),
                         fontSize: 10.sp,
                       ),
@@ -200,23 +200,22 @@ class _LoginState extends State<Login>
                               color: AppColor().colorEdit(),
                               width: 1.0,
                               style: BorderStyle.solid),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         labelText: 'Mobile Number',
                         labelStyle: TextStyle(
                           color: AppColor().colorTextFour(),
                           fontSize: 10.sp,
                         ),
-                        fillColor: AppColor().colorEdit() ,
+                        fillColor: AppColor().colorEdit(),
                         enabled: true,
                         filled: true,
-                        prefixIcon:  Container(
+                        prefixIcon: Container(
                           padding: EdgeInsets.all(4.0.w),
                           child: Image.asset(
                             "assets/images/phone.png",
                             width: 1.04.w,
-                            height:  1.04.w,
+                            height: 1.04.w,
                             color: Color(0xffF4B71E),
                             fit: BoxFit.fill,
                           ),
@@ -224,24 +223,23 @@ class _LoginState extends State<Login>
                         helperText: '',
                         suffixIcon: phoneController.text.length == 10
                             ? Icon(
-                              Icons.check,
-                              color: AppColor().colorPrimary(),
-                              size: 10.sp,
-                            )
+                                Icons.check,
+                                color: AppColor().colorPrimary(),
+                                size: 10.sp,
+                              )
                             : SizedBox(),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: AppColor().colorEdit(), width: 5.0),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height:1.55.h,
+                    height: 1.55.h,
                   ),
-                 /* Container(
+                  /* Container(
                     width: 69.99.w,
                     height: 9.46.h,
                     child: TextFormField(
@@ -333,17 +331,18 @@ class _LoginState extends State<Login>
                 await Future.delayed(Duration(milliseconds: 200));
                 setState(() {
                   enabled = false;
-
                 });
-                if(validateMob(
-                    phoneController.text,
-                    getTranslated(context, 'MOB_REQUIRED'),
-                    getTranslated(context, 'VALID_MOB'))!=null){
-                    setSnackbar(validateMob(
+                if (validateMob(
                         phoneController.text,
                         getTranslated(context, 'MOB_REQUIRED'),
-                        getTranslated(context, 'VALID_MOB')).toString());
-                    return;
+                        getTranslated(context, 'VALID_MOB')) !=
+                    null) {
+                  setSnackbar(validateMob(
+                          phoneController.text,
+                          getTranslated(context, 'MOB_REQUIRED'),
+                          getTranslated(context, 'VALID_MOB'))
+                      .toString());
+                  return;
                 }
                 // if(validatePass(
                 //     passController.text,
@@ -356,35 +355,37 @@ class _LoginState extends State<Login>
                 //   return;
                 // }
                 setState(() {
-                  status =true;
+                  status = true;
                 });
                 checkNetwork();
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen()));
               },
-              child:  !status?Container(
-                width: 69.99.w,
-                height: 6.46.h,
-                decoration: boxDecoration(
-                    radius: 15.0,
-                    bgColor: AppColor().colorPrimaryDark()),
-                child: Center(
-                  child: text(
-                    "Get OTP",
-                    textColor: Color(0xffffffff),
-                    fontSize: 14.sp,
-                    fontFamily: fontRegular,
-                  ),
-                ),
-              ):CircularProgressIndicator(),
+              child: !status
+                  ? Container(
+                      width: 69.99.w,
+                      height: 6.46.h,
+                      decoration: boxDecoration(
+                          radius: 15.0, bgColor: AppColor().colorPrimaryDark()),
+                      child: Center(
+                        child: text(
+                          "Get OTP",
+                          textColor: Color(0xffffffff),
+                          fontSize: 14.sp,
+                          fontFamily: fontRegular,
+                        ),
+                      ),
+                    )
+                  : CircularProgressIndicator(),
             ),
           ),
           SizedBox(
-            height:6.53.h,
+            height: 6.53.h,
           ),
         ],
       ),
     );
   }
+
   setSnackbar(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
       content: new Text(
@@ -396,6 +397,7 @@ class _LoginState extends State<Login>
       elevation: 1.0,
     ));
   }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final mobileController = TextEditingController();
   final passwordController = TextEditingController();
@@ -427,11 +429,12 @@ class _LoginState extends State<Login>
         if (mounted)
           setState(() {
             _isNetworkAvail = false;
-            status =false;
+            status = false;
           });
       });
     }
   }
+
   /*Future<void> getLoginUser() async {
     var data = {MOBILE: phoneController.text, PASSWORD: passController.text};
 
@@ -484,20 +487,21 @@ class _LoginState extends State<Login>
     var data = {MOBILE: phoneController.text};
 
     Response response =
-    await post(getUserLoginWithOtpApi, body: data, headers: headers)
-        .timeout(Duration(seconds: timeOut));
+        await post(getUserLoginWithOtpApi, body: data, headers: headers)
+            .timeout(Duration(seconds: timeOut));
     var getdata = json.decode(response.body);
     print(response.body);
     bool error = getdata["error"];
     String? msg = getdata["message"];
     setState(() {
-      status =false;
+      status = false;
     });
     if (!error) {
       print("msg here ${msg}");
       setSnackbar("${msg!}");
-      if(msg == "User does not exists !"){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
+      if (msg == "User does not exists !") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SignUpScreen()));
       }
       var i = getdata["data"][0];
       id = i[ID];
@@ -525,13 +529,16 @@ class _LoginState extends State<Login>
       // settingProvider.saveUserDetail(id!, username, email, mobile, city, area,
       //     address, pincode, latitude, longitude, image, context);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(
-        otp: getdata["otp"].toString(),
-        title: "Log In",
-        mobileNumber: phoneController.text,
-        countryCode: "91",
-        i: i,
-      )));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OtpScreen(
+                    otp: getdata["otp"].toString(),
+                    title: "Log In",
+                    mobileNumber: phoneController.text,
+                    countryCode: "91",
+                    i: i,
+                  )));
       // Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
     } else {
       setSnackbar(" ${msg!}");

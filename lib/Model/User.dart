@@ -1,9 +1,9 @@
-import 'package:eshop_multivendor/Helper/String.dart';
+import 'package:samadhaan_user/Helper/String.dart';
 import 'package:intl/intl.dart';
 
 class User {
   String? username,
-  userProfile,
+      userProfile,
       email,
       mobile,
       address,
@@ -30,7 +30,7 @@ class User {
   User(
       {this.id,
       this.username,
-        this.userProfile,
+      this.userProfile,
       this.date,
       this.rating,
       this.comment,
@@ -117,7 +117,7 @@ class User {
         country: parsedJson[COUNTRY],
         latitude: parsedJson[LATITUDE],
         longitude: parsedJson[LONGITUDE],
-    userId: parsedJson[USER_ID],
+        userId: parsedJson[USER_ID],
         name: parsedJson[NAME],
         type: parsedJson[TYPE],
         deliveryCharge: parsedJson[DEL_CHARGES],
@@ -126,16 +126,12 @@ class User {
   }
 }
 
-class imgModel{
+class imgModel {
   int? index;
   String? img;
 
-  imgModel({this.index,this.img});
-  factory imgModel.fromJson(int i,String image) {
-    return new imgModel(
-      index: i,
-      img:image
-    );
+  imgModel({this.index, this.img});
+  factory imgModel.fromJson(int i, String image) {
+    return new imgModel(index: i, img: image);
   }
-
 }

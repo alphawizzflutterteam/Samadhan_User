@@ -1,4 +1,4 @@
-import 'package:eshop_multivendor/Model/Section_Model.dart';
+import 'package:samadhaan_user/Model/Section_Model.dart';
 import 'package:flutter/cupertino.dart';
 
 class FavoriteProvider extends ChangeNotifier {
@@ -13,7 +13,7 @@ class FavoriteProvider extends ChangeNotifier {
   get favIdList => _favList.map((fav) => fav.id).toList();
 
   setFavID() {
-   return _favList.map((fav) => fav.id).toList();
+    return _favList.map((fav) => fav.id).toList();
     //notifyListeners();
   }
 
@@ -26,8 +26,9 @@ class FavoriteProvider extends ChangeNotifier {
     _favList.removeWhere((item) => item.prVarientList![0].id == id);
     notifyListeners();
   }
-  addFavItem(Product? item){
-    if(item!=null) {
+
+  addFavItem(Product? item) {
+    if (item != null) {
       _favList.add(item);
       notifyListeners();
     }

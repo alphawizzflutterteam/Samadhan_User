@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/my_new_helper.dart';
-import 'package:eshop_multivendor/Model/VerifyUserModel.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/Set_Password.dart';
-import 'package:eshop_multivendor/Screen/starting_view/signup_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/utils/colors.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/my_new_helper.dart';
+import 'package:samadhaan_user/Model/VerifyUserModel.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/Set_Password.dart';
+import 'package:samadhaan_user/Screen/starting_view/signup_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/animation.dart';

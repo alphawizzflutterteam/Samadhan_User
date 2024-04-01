@@ -1,4 +1,4 @@
-# eshop_multivendor
+# samadhaan_user
 
 eShop Multivendor App
 

@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Helper/cropped_container.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Privacy_Policy.dart';
-import 'package:eshop_multivendor/Screen/Verify_Otp.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Helper/cropped_container.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/Privacy_Policy.dart';
+import 'package:samadhaan_user/Screen/Verify_Otp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

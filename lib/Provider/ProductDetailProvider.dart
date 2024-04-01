@@ -1,10 +1,9 @@
-import 'package:eshop_multivendor/Model/Section_Model.dart';
+import 'package:samadhaan_user/Model/Section_Model.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductDetailProvider extends ChangeNotifier {
   bool _reviewLoading = true;
   bool _moreProductLoading = true;
-
 
   List<Product> _compareList = [];
 
@@ -13,8 +12,6 @@ class ProductDetailProvider extends ChangeNotifier {
   get moreProductLoading => _moreProductLoading;
 
   get reviewLoading => _reviewLoading;
-
-
 
   setReviewLoading(bool loading) {
     _moreProductLoading = loading;
@@ -25,7 +22,6 @@ class ProductDetailProvider extends ChangeNotifier {
     _moreProductLoading = loading;
     notifyListeners();
   }
-
 
   addCompareList(Product compareList) {
     _compareList.add(compareList);

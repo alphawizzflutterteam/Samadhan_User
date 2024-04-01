@@ -1,5 +1,5 @@
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Screen/Product_Detail.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Screen/Product_Detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:photo_view/photo_view.dart';
@@ -69,7 +69,8 @@ class StatePreview extends State<ReviewPreview> {
                 ),
               ),
             ),
-            backgroundDecoration: BoxDecoration(color: Theme.of(context).colorScheme.white),
+            backgroundDecoration:
+                BoxDecoration(color: Theme.of(context).colorScheme.white),
             pageController: PageController(initialPage: widget.index!),
             onPageChanged: (index) {
               if (mounted)
@@ -126,7 +127,8 @@ class StatePreview extends State<ReviewPreview> {
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(
                               model.comment ?? '',
-                              style: TextStyle(color: Theme.of(context).colorScheme.white),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.white),
                               maxLines: flag ? 2 : null,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -146,11 +148,14 @@ class StatePreview extends State<ReviewPreview> {
                       children: [
                         Text(
                           model.username ?? "",
-                          style: TextStyle(color: Theme.of(context).colorScheme.white),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.white),
                         ),
                         Text(
                           model.date ?? "",
-                          style: TextStyle(color: Theme.of(context).colorScheme.white, fontSize: 11),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.white,
+                              fontSize: 11),
                         )
                       ],
                     ))

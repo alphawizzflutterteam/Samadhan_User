@@ -1,4 +1,4 @@
-import 'package:eshop_multivendor/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
@@ -155,9 +155,7 @@ class StatePreview extends State<ProductPreview> {
     print("length is ${sectionList[widget.secPos!].productList!.length}");
     return Scaffold(
         body: Hero(
-      tag: widget.list!
-          ? "${widget.id}"
-          : "${widget.secPos}${widget.index}",
+      tag: widget.list! ? "${widget.id}" : "${widget.secPos}${widget.index}",
       child: Stack(
         children: <Widget>[
           widget.video == ""

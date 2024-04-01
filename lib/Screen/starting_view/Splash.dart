@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Intro_Slider.dart';
-import 'package:eshop_multivendor/Screen/starting_view/welcome_one.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/Intro_Slider.dart';
+import 'package:samadhaan_user/Screen/starting_view/welcome_one.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +36,7 @@ class _SplashScreen extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-   deviceHeight = MediaQuery.of(context).size.height;
+    deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
     var mysize = MediaQuery.of(context).size;
     //  SystemChrome.setEnabledSystemUIOverlays([]);
@@ -55,12 +55,10 @@ class _SplashScreen extends State<Splash> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 Expanded(
                   child: Image.asset(
                     MyAssets.white_logo,
                     scale: 2,
-
                   ),
                 ),
               ],
@@ -72,7 +70,6 @@ class _SplashScreen extends State<Splash> {
 
   startTime() async {
     print("++++++++++++++++++++++++++");
-
 
     var _duration = Duration(milliseconds: 4);
     return Timer(_duration, navigationPage);

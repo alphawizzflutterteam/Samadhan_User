@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Provider/CartProvider.dart';
+import 'package:samadhaan_user/Provider/FavoriteProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -350,19 +350,23 @@ class StateSection extends State<SectionList> with TickerProviderStateMixin {
                               child: Stack(
                                 children: [
                                   Card(
-                                    child: Container(width: 120,height: 120, child: FadeInImage(
-                                image: CachedNetworkImageProvider(widget
-                                      .section_model!
-                                      .productList![index]
-                                      .image!),
-                                height: 125.0,
-                                width: 110.0,
-                                placeholder: placeHolder(125),
-                                fit:BoxFit.contain,
-                                imageErrorBuilder:
-                                      (context, error, stackTrace) =>
-                                      erroWidget(125),
-                              ),),
+                                    child: Container(
+                                      width: 120,
+                                      height: 120,
+                                      child: FadeInImage(
+                                        image: CachedNetworkImageProvider(widget
+                                            .section_model!
+                                            .productList![index]
+                                            .image!),
+                                        height: 125.0,
+                                        width: 110.0,
+                                        placeholder: placeHolder(125),
+                                        fit: BoxFit.contain,
+                                        imageErrorBuilder:
+                                            (context, error, stackTrace) =>
+                                                erroWidget(125),
+                                      ),
+                                    ),
                                   ),
                                   model.availability == "0"
                                       ? Container(

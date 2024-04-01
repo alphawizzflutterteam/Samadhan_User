@@ -4,12 +4,12 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -24,7 +24,7 @@ import '../Model/Model.dart';
 
 class Chat extends StatefulWidget {
   final String? id, status;
-  const    Chat({Key? key, this.id, this.status}) : super(key: key);
+  const Chat({Key? key, this.id, this.status}) : super(key: key);
 
   @override
   _ChatState createState() => _ChatState();
@@ -46,7 +46,7 @@ class _ChatState extends State<Chat> {
     super.initState();
     downloadlist = new Map<String?, String>();
     CUR_TICK_ID = widget.id;
-  //  FlutterDownloader.registerCallback(downloadCallback);
+    //  FlutterDownloader.registerCallback(downloadCallback);
     setupChannel();
     getMsg();
   }
@@ -265,9 +265,6 @@ class _ChatState extends State<Chat> {
   }
 
   /// test function start here //////////////
-
-
-
 
   Future<bool> Checkpermission() async {
     var status = await Permission.storage.status;
@@ -529,5 +526,3 @@ class _ChatState extends State<Chat> {
           );
   }
 }
-
-

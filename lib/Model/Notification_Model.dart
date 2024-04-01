@@ -1,4 +1,4 @@
-import 'package:eshop_multivendor/Helper/String.dart';
+import 'package:samadhaan_user/Helper/String.dart';
 import 'package:intl/intl.dart';
 
 class NotificationModel {

@@ -1,5 +1,5 @@
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,7 +72,7 @@ class SettingProvider {
   }
 
   Future<void> clearUserSession(BuildContext context) async {
-  /*  final waitList = <Future<void>>[];
+    /*  final waitList = <Future<void>>[];
 
 
 
@@ -82,8 +82,6 @@ class SettingProvider {
     waitList.add(prefs.remove(EMAIL));*/
 
     CUR_USERID = null;
-
-
 
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);

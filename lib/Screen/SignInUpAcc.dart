@@ -1,11 +1,11 @@
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Helper/my_new_helper.dart';
-import 'package:eshop_multivendor/Screen/Dashboard.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/signup_screen.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Helper/my_new_helper.dart';
+import 'package:samadhaan_user/Screen/Dashboard.dart';
+import 'package:samadhaan_user/Screen/Login.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/signup_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -160,9 +160,9 @@ class _SignInUpAccState extends State<SignInUpAcc> {
     var mysize = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
-          children: [
-            SafeArea(
-      child: SingleChildScrollView(
+      children: [
+        SafeArea(
+          child: SingleChildScrollView(
             child: Container(
                 color: Theme.of(context).colorScheme.lightWhite,
                 child: Column(
@@ -196,7 +196,8 @@ class _SignInUpAccState extends State<SignInUpAcc> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: mysize.width * 0.06),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: mysize.width * 0.06),
                       child: Text(
                         "Register or login using your whatsapp number",
                         textAlign: TextAlign.center,
@@ -220,10 +221,10 @@ class _SignInUpAccState extends State<SignInUpAcc> {
                     )
                   ],
                 )),
-      ),
-    ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    ));
     // child: Center(
     //     child: SingleChildScrollView(
     //         child: Column(

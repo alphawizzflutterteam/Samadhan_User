@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:eshop_multivendor/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,7 +10,6 @@ import '../Helper/String.dart';
 import 'package:http/http.dart' as http;
 
 class Write_Review extends StatefulWidget {
-
   BuildContext screenContext;
   String productId;
 
@@ -21,7 +20,6 @@ class Write_Review extends StatefulWidget {
 }
 
 class _Write_ReviewState extends State<Write_Review> {
-
   List<File> reviewPhotos = [];
   TextEditingController commentTextController = TextEditingController();
   double curRating = 0.0;
@@ -29,11 +27,11 @@ class _Write_ReviewState extends State<Write_Review> {
 
   @override
   Widget build(BuildContext context) {
-   return Wrap(
+    return Wrap(
       children: [
         Padding(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -114,12 +112,13 @@ class _Write_ReviewState extends State<Write_Review> {
           maxLines: 5,
           decoration: InputDecoration(
             border: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.lightBlack, width: 1.0)),
+                borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.lightBlack,
+                    width: 1.0)),
             hintText: getTranslated(context, 'REVIEW_HINT_LBL'),
-            hintStyle: Theme.of(context)
-                .textTheme
-                .subtitle2!
-                .copyWith(color: Theme.of(context).colorScheme.lightBlack2.withOpacity(0.7)),
+            hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+                color:
+                    Theme.of(context).colorScheme.lightBlack2.withOpacity(0.7)),
           ),
         ));
   }
@@ -127,75 +126,77 @@ class _Write_ReviewState extends State<Write_Review> {
   Widget getImageField() {
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setModalState) {
-          return Container(
-            padding:
+      return Container(
+        padding:
             const EdgeInsetsDirectional.only(start: 20.0, end: 20.0, top: 5),
-            height: 100,
-            child: Row(
-              children: [
-                Padding(
-                  padding:
+        height: 100,
+        child: Row(
+          children: [
+            Padding(
+              padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-                  child: Column(
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: colors.primary,
+                        borderRadius: BorderRadius.circular(50.0)),
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.camera_alt,
+                          color: Theme.of(context).colorScheme.white,
+                          size: 25.0,
+                        ),
+                        onPressed: () {
+                          _reviewImgFromGallery(setModalState);
+                        }),
+                  ),
+                  Text(
+                    getTranslated(context, 'ADD_YOUR_PHOTOS')!,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.lightBlack,
+                        fontSize: 11),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+                child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: reviewPhotos.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, i) {
+                return InkWell(
+                  child: Stack(
+                    alignment: AlignmentDirectional.topEnd,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: colors.primary,
-                            borderRadius: BorderRadius.circular(50.0)),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.camera_alt,
-                              color: Theme.of(context).colorScheme.white,
-                              size: 25.0,
-                            ),
-                            onPressed: () {
-                              _reviewImgFromGallery(setModalState);
-                            }),
+                      Image.file(
+                        reviewPhotos[i],
+                        width: 100,
+                        height: 100,
                       ),
-                      Text(
-                        getTranslated(context, 'ADD_YOUR_PHOTOS')!,
-                        style: TextStyle(color: Theme.of(context).colorScheme.lightBlack, fontSize: 11),
-                      )
+                      Container(
+                          color: Theme.of(context).colorScheme.black26,
+                          child: const Icon(
+                            Icons.clear,
+                            size: 15,
+                          ))
                     ],
                   ),
-                ),
-                Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: reviewPhotos.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, i) {
-                        return InkWell(
-                          child: Stack(
-                            alignment: AlignmentDirectional.topEnd,
-                            children: [
-                              Image.file(
-                                reviewPhotos[i],
-                                width: 100,
-                                height: 100,
-                              ),
-                              Container(
-                                  color: Theme.of(context).colorScheme.black26,
-                                  child: const Icon(
-                                    Icons.clear,
-                                    size: 15,
-                                  ))
-                            ],
-                          ),
-                          onTap: () {
-                            if (mounted) {
-                              setModalState(() {
-                                reviewPhotos.removeAt(i);
-                              });
-                            }
-                          },
-                        );
-                      },
-                    )),
-              ],
-            ),
-          );
-        });
+                  onTap: () {
+                    if (mounted) {
+                      setModalState(() {
+                        reviewPhotos.removeAt(i);
+                      });
+                    }
+                  },
+                );
+              },
+            )),
+          ],
+        ),
+      );
+    });
   }
 
   void _reviewImgFromGallery(StateSetter setModalState) async {
@@ -213,13 +214,12 @@ class _Write_ReviewState extends State<Write_Review> {
   }
 
   Widget sendReviewButton(var productID) {
-
     return Row(
       children: [
         Expanded(
           child: Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
             child: MaterialButton(
               height: 45.0,
               textColor: Theme.of(context).colorScheme.white,
@@ -229,15 +229,15 @@ class _Write_ReviewState extends State<Write_Review> {
                 if (curRating != 0 ||
                     commentTextController.text != '' ||
                     (reviewPhotos.isNotEmpty)) {
-
                   setRating(curRating, commentTextController.text, reviewPhotos,
                       productID);
                 } else {
                   Navigator.pop(context);
-                  setSnackbar(getTranslated(context, 'REVIEW_W')!,widget.screenContext);
+                  setSnackbar(getTranslated(context, 'REVIEW_W')!,
+                      widget.screenContext);
                 }
               },
-              child:  Text(getTranslated(context, 'SEND_REVIEW')!),
+              child: Text(getTranslated(context, 'SEND_REVIEW')!),
               color: colors.primary,
             ),
           ),
@@ -247,8 +247,8 @@ class _Write_ReviewState extends State<Write_Review> {
   }
 
   Text getHeading(
-      String title,
-      ) {
+    String title,
+  ) {
     return Text(
       getTranslated(context, title)!,
       style: Theme.of(context)
@@ -284,20 +284,18 @@ class _Write_ReviewState extends State<Write_Review> {
         bool error = getdata["error"];
         String? msg = getdata['message'];
 
-
         if (!error) {
           Navigator.pop(context);
-          setSnackbar(msg!,widget.screenContext);
-
+          setSnackbar(msg!, widget.screenContext);
         } else {
-          setSnackbar(msg!,widget.screenContext);
-
+          setSnackbar(msg!, widget.screenContext);
         }
         commentTextController.text = "";
         files.clear();
         reviewPhotos.clear();
       } on TimeoutException catch (_) {
-        setSnackbar(getTranslated(context, 'somethingMSg')!,widget.screenContext);
+        setSnackbar(
+            getTranslated(context, 'somethingMSg')!, widget.screenContext);
       }
     } else if (mounted) {
       setState(() {

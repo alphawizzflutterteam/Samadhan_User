@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/my_new_helper.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/HomePage.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Helper/my_new_helper.dart';
+import 'package:samadhaan_user/Provider/FavoriteProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/HomePage.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

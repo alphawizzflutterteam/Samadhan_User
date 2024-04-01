@@ -1,13 +1,11 @@
-import 'package:eshop_multivendor/Helper/String.dart';
+import 'package:samadhaan_user/Helper/String.dart';
 
 class FaqsModel {
-  String? id, question,answer,status;
+  String? id, question, answer, status;
 
-  FaqsModel(
-      {this.id, this.question, this.answer, this.status});
+  FaqsModel({this.id, this.question, this.answer, this.status});
 
   factory FaqsModel.fromJson(Map<String, dynamic> json) {
-
     return new FaqsModel(
         id: json[ID],
         question: json[QUESTION],

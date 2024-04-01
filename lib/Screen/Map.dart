@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:eshop_multivendor/Screen/Add_Address.dart';
+import 'package:samadhaan_user/Screen/Add_Address.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -133,12 +133,16 @@ class _MapState extends State<Map> {
                   color: colors.primary,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(child: Text("Update Location",style: TextStyle(
-                  color: colors.whiteTemp
-                ),)),
+                child: Center(
+                    child: Text(
+                  "Update Location",
+                  style: TextStyle(color: colors.whiteTemp),
+                )),
               ),
             ),
-            SizedBox(height: 5,)
+            SizedBox(
+              height: 5,
+            )
             // ElevatedButton(
             //
             //   child:

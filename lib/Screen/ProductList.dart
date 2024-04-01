@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/AppBtn.dart';
-import 'package:eshop_multivendor/Helper/SimBtn.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Helper/AppBtn.dart';
+import 'package:samadhaan_user/Helper/SimBtn.dart';
+import 'package:samadhaan_user/Provider/CartProvider.dart';
+import 'package:samadhaan_user/Provider/FavoriteProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';

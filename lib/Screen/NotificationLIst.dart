@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Model/Notification_Model.dart';
+import 'package:samadhaan_user/Model/Notification_Model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -18,8 +18,6 @@ class NotificationList extends StatefulWidget {
   State<StatefulWidget> createState() => StateNoti();
 }
 
-
-
 class StateNoti extends State<NotificationList> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController controller = new ScrollController();
@@ -34,7 +32,6 @@ class StateNoti extends State<NotificationList> with TickerProviderStateMixin {
   int total = 0;
   bool isLoadingmore = true;
   bool _isLoading = true;
-
 
   @override
   void initState() {
@@ -112,7 +109,7 @@ class StateNoti extends State<NotificationList> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(getTranslated(context,'NOTIFICATION')!, context),
+        appBar: getAppBar(getTranslated(context, 'NOTIFICATION')!, context),
         key: _scaffoldKey,
         body: _isNetworkAvail
             ? _isLoading
@@ -124,7 +121,7 @@ class StateNoti extends State<NotificationList> with TickerProviderStateMixin {
                         child: Center(
                             child: Text(getTranslated(context, 'noNoti')!)))
                     : RefreshIndicator(
-                         color: colors.primary,
+                        color: colors.primary,
                         key: _refreshIndicatorKey,
                         onRefresh: _refresh,
                         child: ListView.builder(
@@ -142,8 +139,6 @@ class StateNoti extends State<NotificationList> with TickerProviderStateMixin {
                         ))
             : noInternet(context));
   }
-
-
 
   Widget listItem(int index) {
     NotificationModel model = notiList[index];

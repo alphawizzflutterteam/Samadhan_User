@@ -3,19 +3,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/AppBtn.dart';
-import 'package:eshop_multivendor/Helper/Razorpay.dart';
-import 'package:eshop_multivendor/Helper/SimBtn.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/Cart.dart';
-import 'package:eshop_multivendor/Screen/HomePage.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/Manage_Address.dart';
-import 'package:eshop_multivendor/Screen/Product_Detail.dart';
-import 'package:eshop_multivendor/Screen/starting_view/feature_product.dart';
-import 'package:eshop_multivendor/Screen/starting_view/login_screen.dart';
+import 'package:samadhaan_user/Helper/AppBtn.dart';
+import 'package:samadhaan_user/Helper/Razorpay.dart';
+import 'package:samadhaan_user/Helper/SimBtn.dart';
+import 'package:samadhaan_user/Provider/CartProvider.dart';
+import 'package:samadhaan_user/Provider/FavoriteProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/Cart.dart';
+import 'package:samadhaan_user/Screen/HomePage.dart';
+import 'package:samadhaan_user/Screen/Login.dart';
+import 'package:samadhaan_user/Screen/Manage_Address.dart';
+import 'package:samadhaan_user/Screen/Product_Detail.dart';
+import 'package:samadhaan_user/Screen/starting_view/feature_product.dart';
+import 'package:samadhaan_user/Screen/starting_view/login_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +45,7 @@ class FeatureView extends StatefulWidget {
   // final bool? tag, fromSeller;
   // final int? dis;
 
-  const FeatureView(
-      {Key? key, this.id, this.name})
-      : super(key: key);
+  const FeatureView({Key? key, this.id, this.name}) : super(key: key);
 /*  const FeatureView(
       {Key? key, this.id, this.name, this.tag, this.fromSeller, this.dis})
       : super(key: key);*/
@@ -83,7 +81,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
 
   String selId = "";
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
+      new GlobalKey<RefreshIndicatorState>();
   Animation? buttonSqueezeanimation;
   AnimationController? buttonController;
   bool listType = true;
@@ -151,13 +149,13 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
         key: _scaffoldKey,
         body: _isNetworkAvail
             ? _isLoading
-            ? shimmer(context)
-            : Stack(
-          children: <Widget>[
-            _showForm(context),
-            showCircularProgress(_isProgress, colors.primary),
-          ],
-        )
+                ? shimmer(context)
+                : Stack(
+                    children: <Widget>[
+                      _showForm(context),
+                      showCircularProgress(_isProgress, colors.primary),
+                    ],
+                  )
             : noInternet(context));
   }
 
@@ -198,35 +196,35 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
         padding: EdgeInsetsDirectional.only(bottom: 10.0, top: 50.0),
         child: Center(
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: colors.primary,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => super.widget));
-              },
-              child: Ink(
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: width / 1.2, minHeight: 45),
-                  alignment: Alignment.center,
-                  child: Text(getTranslated(context, 'TRY_AGAIN_INT_LBL')!,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: Theme.of(context).colorScheme.white,
-                          fontWeight: FontWeight.normal)),
-                ),
-              ),
-            )));
+          style: ElevatedButton.styleFrom(
+            primary: colors.primary,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(80.0)),
+          ),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => super.widget));
+          },
+          child: Ink(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: width / 1.2, minHeight: 45),
+              alignment: Alignment.center,
+              child: Text(getTranslated(context, 'TRY_AGAIN_INT_LBL')!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                      color: Theme.of(context).colorScheme.white,
+                      fontWeight: FontWeight.normal)),
+            ),
+          ),
+        )));
   }
 
-  getDays(start,end){
+  getDays(start, end) {
     DateTime startDate = DateFormat("yyyy-MM-dd").parse(start);
     DateTime endDate = DateFormat("yyyy-MM-dd").parse(end);
-    return endDate.difference(startDate).inDays.toString()+" days left";
+    return endDate.difference(startDate).inDays.toString() + " days left";
   }
 
   Widget listItem(int index) {
@@ -263,7 +261,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
                                     fit: BoxFit.cover,
                                     imageErrorBuilder:
                                         (context, error, stackTrace) =>
-                                        erroWidget(125),
+                                            erroWidget(125),
                                     placeholder: placeHolder(125),
                                   ),
                                 ],
@@ -282,9 +280,9 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .lightBlack),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -294,22 +292,24 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
                                     .textTheme
                                     .bodySmall!
                                     .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .lightBlack),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 8,),
+                              SizedBox(
+                                height: 8,
+                              ),
                               Text(
-                                "₹"+model.price,
+                                "₹" + model.price,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .lightBlack),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -323,13 +323,15 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
                                         .textTheme
                                         .bodyMedium!
                                         .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .lightBlack),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .lightBlack),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  SizedBox(width: 5,),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   // InkWell(
                                   //   onTap: () {
                                   //     if(CUR_USERID == null){
@@ -383,8 +385,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
                     ],
                   ),
                 ]),
-                onTap: () {
-                },
+                onTap: () {},
               ),
             ),
             // Positioned.directional(
@@ -399,6 +400,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
     } else
       return Container();
   }
+
   TextEditingController mobileCon = new TextEditingController();
   TextEditingController emailCon = new TextEditingController();
   TextEditingController nameCon = new TextEditingController();
@@ -420,232 +422,271 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       builder: (builder) {
         return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              checkoutState = setState;
-              return Container(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.9),
-                child: Scaffold(
-                  key: _checkscaffoldKey,
-                  body:  SingleChildScrollView(
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Padding(
-                                padding:
-                                EdgeInsetsDirectional.only(top: 19.0, bottom: 16.0),
-                                child: Text(
-                                  //getTranslated(context, 'SORT_BY')!,
-                                  "Add Details",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1!
-                                      .copyWith(
+          checkoutState = setState;
+          return Container(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.9),
+            child: Scaffold(
+              key: _checkscaffoldKey,
+              body: SingleChildScrollView(
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                                top: 19.0, bottom: 16.0),
+                            child: Text(
+                              //getTranslated(context, 'SORT_BY')!,
+                              "Add Details",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
                                       color: Theme.of(context)
-                                          .colorScheme.lightBlack),
-                                )),
-                          ),
-                          SizedBox(height: 20,),
-                          Container(width: deviceWidth!*0.95,child: address(),),
-                          SizedBox(height: 10,),
-                          Container(
-                            width: deviceWidth!*0.95,
-                            child: TextFormField(
-                              controller: nameCon,
-                              keyboardType: TextInputType.name,
+                                          .colorScheme
+                                          .lightBlack),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: deviceWidth! * 0.95,
+                        child: address(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: deviceWidth! * 0.95,
+                        child: TextFormField(
+                          controller: nameCon,
+                          keyboardType: TextInputType.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.lightBlack),
+                          decoration: InputDecoration(
+                            filled: false,
+                            label: Text(
+                              "Full Name",
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1!
                                   .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme.lightBlack) ,
-                              decoration: InputDecoration(
-                                filled: false,
-                                label: Text("Full Name", style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme.lightBlack),),
-                              ),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .lightBlack),
                             ),
                           ),
-                          SizedBox(height:10),
-                          Container(
-                            width: deviceWidth!*0.95,
-                            child: TextFormField(
-                              controller: emailCon,
-                              keyboardType: TextInputType.emailAddress,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: deviceWidth! * 0.95,
+                        child: TextFormField(
+                          controller: emailCon,
+                          keyboardType: TextInputType.emailAddress,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.lightBlack),
+                          decoration: InputDecoration(
+                            filled: false,
+                            label: Text(
+                              "Email Address",
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1!
                                   .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme.lightBlack) ,
-                              decoration: InputDecoration(
-                                filled: false,
-                                label: Text("Email Address",style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme.lightBlack),),
-                              ),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .lightBlack),
                             ),
                           ),
-                          SizedBox(height:10),
-                          Container(
-                            width: deviceWidth!*0.95,
-                            child: TextFormField(
-                              controller: mobileCon,
-                              maxLength: 10,
-                              keyboardType: TextInputType.phone,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: deviceWidth! * 0.95,
+                        child: TextFormField(
+                          controller: mobileCon,
+                          maxLength: 10,
+                          keyboardType: TextInputType.phone,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.lightBlack),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
+                            LengthLimitingTextInputFormatter(10),
+                          ],
+                          decoration: InputDecoration(
+                            filled: false,
+                            counterText: "",
+                            label: Text(
+                              "Mobile Number",
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1!
                                   .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme.lightBlack) ,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
-                                LengthLimitingTextInputFormatter(10),
-                              ],
-                              decoration: InputDecoration(
-                                filled: false,
-                                counterText: "",
-                                label: Text("Mobile Number",style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme.lightBlack),),
-                              ),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .lightBlack),
                             ),
                           ),
-                          SizedBox(height:10),
-                          Container(
-                            width: deviceWidth!*0.95,
-                            child: TextFormField(
-                              controller: qtyCon,
-                              maxLength: 2,
-                              keyboardType: TextInputType.phone,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: deviceWidth! * 0.95,
+                        child: TextFormField(
+                          controller: qtyCon,
+                          maxLength: 2,
+                          keyboardType: TextInputType.phone,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.lightBlack),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
+                            LengthLimitingTextInputFormatter(10),
+                          ],
+                          decoration: InputDecoration(
+                            filled: false,
+                            counterText: "",
+                            label: Text(
+                              "Quantity",
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1!
                                   .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme.lightBlack) ,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
-                                LengthLimitingTextInputFormatter(10),
-                              ],
-                              decoration: InputDecoration(
-                                filled: false,
-                                counterText: "",
-                                label: Text("Quantity",style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme.lightBlack),),
-                              ),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .lightBlack),
                             ),
                           ),
-                          SizedBox(height:10),
-                          Container(
-                            width: deviceWidth!*0.95,
-                            child: TextFormField(
-                              controller: desCon,
-                              keyboardType: TextInputType.text,
-                              minLines: 5,
-                              maxLines: 5,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: deviceWidth! * 0.95,
+                        child: TextFormField(
+                          controller: desCon,
+                          keyboardType: TextInputType.text,
+                          minLines: 5,
+                          maxLines: 5,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.lightBlack),
+                          decoration: InputDecoration(
+                            filled: false,
+                            alignLabelWithHint: true,
+                            label: Text(
+                              "Description",
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1!
                                   .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme.lightBlack) ,
-                              decoration: InputDecoration(
-                                filled: false,
-                                alignLabelWithHint: true,
-                                label: Text("Description",style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme.lightBlack),),
-                              ),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .lightBlack),
                             ),
                           ),
-                          SizedBox(height:20),
-                          !loading?saveButton(getTranslated(context, "SAVE_LBL")!, () {
-                            if (validateField(nameCon.text, "Please Enter Full Name") !=
-                                null) {
-                              setSnackbar1("Please Enter Full Name", _checkscaffoldKey);
-                              return;
-                            }
-                            if (validateEmail(emailCon.text, "Please Enter Email",
-                                "Please Enter Valid Email") !=
-                                null) {
-                              setSnackbar1(
-                                  validateEmail(emailCon.text, "Please Enter Email",
-                                      "Please Enter Valid Email")
-                                      .toString(),
-                                  _checkscaffoldKey);
-                              return;
-                            }
-                            if (validateMob(
-                                mobileCon.text,
-                                "Please Enter Mobile Number",
-                                "Please Enter Valid Mobile Number") !=
-                                null) {
-                              setSnackbar1(
-                                  validateMob(
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      !loading
+                          ? saveButton(getTranslated(context, "SAVE_LBL")!, () {
+                              if (validateField(
+                                      nameCon.text, "Please Enter Full Name") !=
+                                  null) {
+                                setSnackbar1("Please Enter Full Name",
+                                    _checkscaffoldKey);
+                                return;
+                              }
+                              if (validateEmail(
+                                      emailCon.text,
+                                      "Please Enter Email",
+                                      "Please Enter Valid Email") !=
+                                  null) {
+                                setSnackbar1(
+                                    validateEmail(
+                                            emailCon.text,
+                                            "Please Enter Email",
+                                            "Please Enter Valid Email")
+                                        .toString(),
+                                    _checkscaffoldKey);
+                                return;
+                              }
+                              if (validateMob(
                                       mobileCon.text,
                                       "Please Enter Mobile Number",
-                                      "Please Enter Valid Mobile Number")
-                                      .toString(),
-                                  _checkscaffoldKey);
-                              return;
-                            }
-                            if (qtyCon.text=="") {
-                              setSnackbar1("Please Enter Quantity",
-                                  _checkscaffoldKey);
-                              return;
-                            }
-                            if(addressList.length==0){
-                              setSnackbar1("Please Add Address",
-                                  _checkscaffoldKey);
-                              return;
-                            }
-                            setState((){
-                              loading = true;
-                            });
-                            RazorPayHelper razorHelper = new RazorPayHelper(
-                                (double.parse(qtyCon.text)*double.parse(model.price)).toStringAsFixed(2),
-                                context,
-                                    (result) {
-                                  if(result!="error"){
-                                    bookProduct(model.id,model.price);
-                                  }else{
-                                    setState((){
-                                      loading = false;
-                                    });
-                                  }
-                                });
-                            razorHelper.init();
-
-                          }):CircularProgressIndicator(),
-                          SizedBox(height: 10,),
-                        ]),
-                  ),
-                ),
-              );
-            });
+                                      "Please Enter Valid Mobile Number") !=
+                                  null) {
+                                setSnackbar1(
+                                    validateMob(
+                                            mobileCon.text,
+                                            "Please Enter Mobile Number",
+                                            "Please Enter Valid Mobile Number")
+                                        .toString(),
+                                    _checkscaffoldKey);
+                                return;
+                              }
+                              if (qtyCon.text == "") {
+                                setSnackbar1(
+                                    "Please Enter Quantity", _checkscaffoldKey);
+                                return;
+                              }
+                              if (addressList.length == 0) {
+                                setSnackbar1(
+                                    "Please Add Address", _checkscaffoldKey);
+                                return;
+                              }
+                              setState(() {
+                                loading = true;
+                              });
+                              RazorPayHelper razorHelper = new RazorPayHelper(
+                                  (double.parse(qtyCon.text) *
+                                          double.parse(model.price))
+                                      .toStringAsFixed(2),
+                                  context, (result) {
+                                if (result != "error") {
+                                  bookProduct(model.id, model.price);
+                                } else {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                }
+                              });
+                              razorHelper.init();
+                            })
+                          : CircularProgressIndicator(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ]),
+              ),
+            ),
+          );
+        });
       },
     );
   }
+
   bool loading = false;
   Widget getUserImage(String profileImage, VoidCallback? onBtnSelected) {
     return Stack(
@@ -668,16 +709,15 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(100.0),
               child: image != null
                   ? new FadeInImage(
-                fadeInDuration: Duration(milliseconds: 150),
-                image:
-                FileImage(image),
-                height: 96.0,
-                width: 96.0,
-                fit: BoxFit.cover,
-                imageErrorBuilder: (context, error, stackTrace) =>
-                    erroWidget(64),
-                placeholder: placeHolder(96),
-              )
+                      fadeInDuration: Duration(milliseconds: 150),
+                      image: FileImage(image),
+                      height: 96.0,
+                      width: 96.0,
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          erroWidget(64),
+                      placeholder: placeHolder(96),
+                    )
                   : imagePlaceHolder(96, context),
             ),
           ),
@@ -734,12 +774,13 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       ],
     );
   }
+
   var image;
   void _imgFromGallery() async {
     var result = await FilePicker.platform.pickFiles();
     if (result != null) {
       checkoutState!(() {
-        loading=false;
+        loading = false;
         image = File(result.files.single.path!);
       });
       if (mounted) {
@@ -750,7 +791,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> setProfilePic(File _image,String id) async {
+  Future<void> setProfilePic(File _image, String id) async {
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       try {
@@ -786,19 +827,19 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
         print(
             " detail : ${pic.field}, ${pic.length} , ${pic.filename} , ${pic.contentType} , ${pic.toString()}");
         if (!error) {
-          checkoutState!((){
-            loading =false;
+          checkoutState!(() {
+            loading = false;
           });
           Navigator.pop(context);
-          setSnackbar(msg!,context);
+          setSnackbar(msg!, context);
         } else {
-          checkoutState!((){
-            loading =false;
+          checkoutState!(() {
+            loading = false;
           });
-          setSnackbar(msg!,context);
+          setSnackbar(msg!, context);
         }
       } on TimeoutException catch (_) {
-        setSnackbar(getTranslated(context, 'somethingMSg')!,context);
+        setSnackbar(getTranslated(context, 'somethingMSg')!, context);
       }
     } else {
       if (mounted) {
@@ -815,7 +856,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
         Expanded(
           child: Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
             child: MaterialButton(
               height: 45.0,
               textColor: Theme.of(context).colorScheme.white,
@@ -864,108 +905,109 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
             Divider(),
             addressList.length > 0
                 ? Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child:
-                          Text(addressList[selectedAddress!].name!)),
-                      InkWell(
-                        child: Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            getTranslated(context, 'CHANGE')!,
-                            style: TextStyle(
-                              color: colors.primary,
-                            ),
-                          ),
-                        ),
-                        onTap: () async {
-                          await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      ManageAddress(
-                                        home: false,
-                                      )));
-
-                          checkoutState!(() {
-                            deliverable = false;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Text(
-                    addressList[selectedAddress!].address! +
-                        ", " +
-                        addressList[selectedAddress!].area! +
-                        ", " +
-                        addressList[selectedAddress!].city! +
-                        ", " +
-                        addressList[selectedAddress!].state! +
-                        ", " +
-                        addressList[selectedAddress!].country! +
-                        ", " +
-                        addressList[selectedAddress!].pincode!,
-                    style: Theme.of(context).textTheme.caption!.copyWith(
-                        color: Theme.of(context).colorScheme.lightBlack),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Row(
+                    padding: const EdgeInsetsDirectional.only(start: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          addressList[selectedAddress!].mobile!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .lightBlack),
+                        Row(
+                          children: [
+                            Expanded(
+                                child:
+                                    Text(addressList[selectedAddress!].name!)),
+                            InkWell(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  getTranslated(context, 'CHANGE')!,
+                                  style: TextStyle(
+                                    color: colors.primary,
+                                  ),
+                                ),
+                              ),
+                              onTap: () async {
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            ManageAddress(
+                                              home: false,
+                                            )));
+
+                                checkoutState!(() {
+                                  deliverable = false;
+                                });
+                              },
+                            ),
+                          ],
                         ),
+                        Text(
+                          addressList[selectedAddress!].address! +
+                              ", " +
+                              addressList[selectedAddress!].area! +
+                              ", " +
+                              addressList[selectedAddress!].city! +
+                              ", " +
+                              addressList[selectedAddress!].state! +
+                              ", " +
+                              addressList[selectedAddress!].country! +
+                              ", " +
+                              addressList[selectedAddress!].pincode!,
+                          style: Theme.of(context).textTheme.caption!.copyWith(
+                              color: Theme.of(context).colorScheme.lightBlack),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                addressList[selectedAddress!].mobile!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .lightBlack),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   )
-                ],
-              ),
-            )
                 : Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8.0),
-              child: GestureDetector(
-                child: Text(
-                  getTranslated(context, 'ADDADDRESS')!,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.fontColor,
-                  ),
-                ),
-                onTap: () async {
-                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddAddress(
-                          update: false,
-                          index: addressList.length,
-                        )),
-                  );
-                  if (mounted) setState(() {});
-                },
-              ),
-            )
+                    padding: const EdgeInsetsDirectional.only(start: 8.0),
+                    child: GestureDetector(
+                      child: Text(
+                        getTranslated(context, 'ADDADDRESS')!,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.fontColor,
+                        ),
+                      ),
+                      onTap: () async {
+                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddAddress(
+                                    update: false,
+                                    index: addressList.length,
+                                  )),
+                        );
+                        if (mounted) setState(() {});
+                      },
+                    ),
+                  )
           ],
         ),
       ),
     );
   }
+
   StateSetter? checkoutState;
   final GlobalKey<ScaffoldMessengerState> _checkscaffoldKey =
-  new GlobalKey<ScaffoldMessengerState>();
+      new GlobalKey<ScaffoldMessengerState>();
   Future<void> _getAddress() async {
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
@@ -974,8 +1016,8 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
           USER_ID: CUR_USERID,
         };
         Response response =
-        await post(getAddressApi, body: parameter, headers: headers)
-            .timeout(Duration(seconds: timeOut));
+            await post(getAddressApi, body: parameter, headers: headers)
+                .timeout(Duration(seconds: timeOut));
 
         if (response.statusCode == 200) {
           var getdata = json.decode(response.body);
@@ -1052,6 +1094,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
         });
     }
   }
+
   setSnackbar1(
       String msg, GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey) {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
@@ -1065,6 +1108,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       elevation: 1.0,
     ));
   }
+
   String image_url = "";
 
   void getProduct(String top) {
@@ -1085,7 +1129,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       parameter["seller_id"] = widget.id!;
     } else {}*/
     parameter[CATID] = widget.id ?? '';
-    print("okay"+widget.id.toString());
+    print("okay" + widget.id.toString());
     //  if (CUR_USERID != null) parameter[USER_ID] = CUR_USERID!;
 
     //if (widget.dis != null) parameter[DISCOUNT] = widget.dis.toString();
@@ -1113,7 +1157,7 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
         tempList.clear();
 
         var data = getdata["data"];
-        for(var v in data){
+        for (var v in data) {
           tempList.add(new FeatureProductModel.fromJson(v));
         }
 
@@ -1141,7 +1185,8 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       //context.read<productListProvider>().setProductLoading(false);
     });
   }
-  void bookProduct(String id,price) {
+
+  void bookProduct(String id, price) {
     //_currentRangeValues.start.round().toString(),
     // _currentRangeValues.end.round().toString(),
     Map parameter = {
@@ -1158,7 +1203,8 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
     parameter["description"] = desCon.text;
     parameter["product_id"] = id;
     parameter["qty"] = qtyCon.text;
-    parameter["total_amount"] = (double.parse(qtyCon.text)*double.parse(price)).toStringAsFixed(2);
+    parameter["total_amount"] =
+        (double.parse(qtyCon.text) * double.parse(price)).toStringAsFixed(2);
     parameter["address"] = addressList[selectedAddress!].address! +
         ", " +
         addressList[selectedAddress!].area! +
@@ -1174,80 +1220,85 @@ class StateProduct extends State<FeatureView> with TickerProviderStateMixin {
       bool error = getdata["error"];
       String? msg = getdata['message'];
       if (!error) {
-        checkoutState!((){
-          loading =false;
+        checkoutState!(() {
+          loading = false;
         });
         Navigator.pop(context);
-        setSnackbar(msg!,context);
+        setSnackbar(msg!, context);
       } else {
-        checkoutState!((){
-          loading =false;
+        checkoutState!(() {
+          loading = false;
         });
-        setSnackbar(msg!,context);
+        setSnackbar(msg!, context);
       }
       // context.read<productListProvider>().setProductLoading(false);
     }, onError: (error) {
       setSnackbar(error.toString(), context);
-      checkoutState!((){
-        loading =false;
+      checkoutState!(() {
+        loading = false;
       });
       //context.read<productListProvider>().setProductLoading(false);
     });
   }
-
 
   _showForm(BuildContext context) {
     return /*RefreshIndicator(
         key: _refreshIndicatorKey,
         //onRefresh: _refresh,
         child: */
-      Column(
-        children: [
-          SizedBox(height: 5,),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Feature Products",
-                  style: TextStyle(color: colors.primary, fontWeight: FontWeight.w500,fontSize: 12.sp),
+        Column(
+      children: [
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Feature Products",
+                style: TextStyle(
+                    color: colors.primary,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FeatureProduct(
+                          name: "Feature Product",
+                        ),
+                      ));
+                },
+                child: Text(
+                  "View All",
+                  style: TextStyle(
+                      color: colors.primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.sp),
                 ),
-                InkWell(
-                  onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FeatureProduct(
-                              name: "Feature Product",
-                          ),
-                        ));
-                  },
-                  child: Text(
-                    "View All",
-                    style: TextStyle(color: colors.primary, fontWeight: FontWeight.w500,fontSize: 12.sp),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          productList.length == 0
-              ? getNoItem(context)
-              :
-          ListView.builder(
-            controller: controller,
-            itemCount: productList.length,
+        ),
+        productList.length == 0
+            ? getNoItem(context)
+            : ListView.builder(
+                controller: controller,
+                itemCount: productList.length,
                 //>2?2:productList.length,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return (index == productList.length && isLoadingmore)
-                  ? singleItemSimmer(context)
-                  : listItem(index);
-            },
-          ),
-        ],
-      );
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return (index == productList.length && isLoadingmore)
+                      ? singleItemSimmer(context)
+                      : listItem(index);
+                },
+              ),
+      ],
+    );
   }
-
 }

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Helper/cropped_container.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/SendOtp.dart';
-import 'package:eshop_multivendor/Screen/SignUp.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/app_assets.dart';
+import 'package:samadhaan_user/Helper/cropped_container.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Screen/SendOtp.dart';
+import 'package:samadhaan_user/Screen/SignUp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -458,8 +458,8 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SendOtp(
-                              title:
-                                  getTranslated(context, 'FORGOT_PASS_TITLE').toString(),
+                              title: getTranslated(context, 'FORGOT_PASS_TITLE')
+                                  .toString(),
                             )));
               },
               child: Text(getTranslated(context, 'FORGOT_PASSWORD_LBL')!,
@@ -551,7 +551,8 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                               MaterialPageRoute(
                                   builder: (context) => SendOtp(
                                         title: getTranslated(
-                                            context, 'FORGOT_PASS_TITLE').toString(),
+                                                context, 'FORGOT_PASS_TITLE')
+                                            .toString(),
                                       )));
                         },
                         child: Text(
@@ -685,7 +686,7 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
               InkWell(
                 onTap: () {
                   SettingProvider settingsProvider =
-                  Provider.of<SettingProvider>(this.context, listen: false);
+                      Provider.of<SettingProvider>(this.context, listen: false);
 
                   settingsProvider.setPrefrence(ID, id!);
                   settingsProvider.setPrefrence(MOBILE, mobile!);
@@ -694,7 +695,9 @@ class _LoginOldPageState extends State<LoginOld> with TickerProviderStateMixin {
                       context,
                       MaterialPageRoute(
                           builder: (context) => SendOtp(
-                                title: getTranslated(context, 'FORGOT_PASS_TITLE').toString(),
+                                title:
+                                    getTranslated(context, 'FORGOT_PASS_TITLE')
+                                        .toString(),
                               )));
                 },
                 child: Container(

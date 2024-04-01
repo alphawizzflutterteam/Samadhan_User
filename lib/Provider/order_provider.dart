@@ -1,20 +1,19 @@
-import 'package:eshop_multivendor/Helper/ApiBaseHelper.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Model/Order_Model.dart';
+import 'package:samadhaan_user/Helper/ApiBaseHelper.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Model/Order_Model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'UserProvider.dart';
 
 class OrderProvider extends ChangeNotifier {
-
   late List<OrderModel> _orders = [];
 
   late bool isLoading = true;
   late bool hasError = false;
   ApiBaseHelper apiBaseHelper = ApiBaseHelper();
 
-  List<OrderModel>  get orders => _orders;
+  List<OrderModel> get orders => _orders;
 
   void changeIsLoading() {
     isLoading = !isLoading;
@@ -26,25 +25,21 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchOrderDetails(var userID,[var activeStatus]) async {
-
-
+  fetchOrderDetails(var userID, [var activeStatus]) async {
     var parameter = {USER_ID: userID};
-    if(activeStatus!="" && activeStatus !=null)
-      {
-        parameter[ACTIVE_STATUS] = activeStatus;
-      }
-      final result = await apiBaseHelper.postAPICall(getOrderApi,parameter);
-      if(result['error']) {
-        isLoading = !isLoading;
-        hasError = true;
-        notifyListeners();
-      }
-      else {
-        isLoading = false;
-        var orders = result['data'] as List;
-        _orders = orders.map((e) => OrderModel.fromJson(Map.from(e))).toList();
-        notifyListeners();
-      }
+    if (activeStatus != "" && activeStatus != null) {
+      parameter[ACTIVE_STATUS] = activeStatus;
+    }
+    final result = await apiBaseHelper.postAPICall(getOrderApi, parameter);
+    if (result['error']) {
+      isLoading = !isLoading;
+      hasError = true;
+      notifyListeners();
+    } else {
+      isLoading = false;
+      var orders = result['data'] as List;
+      _orders = orders.map((e) => OrderModel.fromJson(Map.from(e))).toList();
+      notifyListeners();
+    }
   }
 }

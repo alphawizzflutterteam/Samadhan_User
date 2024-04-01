@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/my_new_helper.dart';
-import 'package:eshop_multivendor/Model/User.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/starting_view/otp_screen.dart';
-import 'package:eshop_multivendor/Screen/starting_view/utils/colors.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Helper/my_new_helper.dart';
+import 'package:samadhaan_user/Model/User.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/starting_view/otp_screen.dart';
+import 'package:samadhaan_user/Screen/starting_view/utils/colors.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   final ccodeController = TextEditingController();
   final passwordController = TextEditingController();
   final referController = TextEditingController();
-  final firstNameController  = TextEditingController();
+  final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   TextEditingController cPassController = new TextEditingController();
   int count = 1;
@@ -143,7 +143,6 @@ class _SignUpScreenState extends State<SignUpScreen>
     ));
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +268,6 @@ class _SignUpScreenState extends State<SignUpScreen>
             height: 4.32.h,
           ),
           Column(
-
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -282,18 +280,25 @@ class _SignUpScreenState extends State<SignUpScreen>
                       height: 7.4.h,
                       decoration: BoxDecoration(
                         color: AppColor().colorEdit(),
-                        borderRadius: BorderRadius.only(topLeft:Radius.circular(8.0),bottomLeft: Radius.circular(8.0)),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            bottomLeft: Radius.circular(8.0)),
                       ),
                       padding: EdgeInsets.only(left: 5),
-                      child: Icon(Icons.pin_drop,color: Color(0xffF4B71E),)),
+                      child: Icon(
+                        Icons.pin_drop,
+                        color: Color(0xffF4B71E),
+                      )),
                   Container(
                       width: 62.99.w,
                       height: 7.4.h,
                       decoration: BoxDecoration(
                         color: AppColor().colorEdit(),
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(8.0),bottomRight: Radius.circular(8.0)),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(8.0),
+                            bottomRight: Radius.circular(8.0)),
                       ),
-                      padding: EdgeInsets.only(left: 15,right: 20),
+                      padding: EdgeInsets.only(left: 15, right: 20),
                       child: FutureBuilder(
                           future: getZipCodeUser(selectedValue.toString()),
                           builder:
@@ -302,7 +307,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                             if (snapshot.hasData) {
                               return DropdownButtonFormField(
                                 decoration: InputDecoration(
-                                    border: InputBorder.none,
+                                  border: InputBorder.none,
                                 ),
                                 // value: selectedpincode == null ? Text("Select Pincode") : Text("$selectedpincode"),
                                 hint: Text(
@@ -316,7 +321,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 items: getzipcode!.data!.map((value) {
                                   return DropdownMenuItem<String>(
                                     value: value.id,
-                                    child: Text(value.zipcode!,style: TextStyle(fontSize: 12.sp),),
+                                    child: Text(
+                                      value.zipcode!,
+                                      style: TextStyle(fontSize: 12.sp),
+                                    ),
                                   );
                                 }).toList(),
                                 onChanged: (value) {
@@ -325,11 +333,13 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     selectedpincode = value.toString();
                                     pincodeController.text = value.toString();
                                   });
-                                  print("SELECTED PINCODE === $selectedpincode");
+                                  print(
+                                      "SELECTED PINCODE === $selectedpincode");
                                 },
                               );
                             } else if (snapshot.hasError) {
-                              return Center(child: Text("No Internet Available!!"));
+                              return Center(
+                                  child: Text("No Internet Available!!"));
                             } else {
                               return Center(child: CircularProgressIndicator());
                             }
@@ -341,16 +351,15 @@ class _SignUpScreenState extends State<SignUpScreen>
               ),
               Container(
                   width: 69.99.w,
-                   // height: 7.0.h,
+                  // height: 7.0.h,
                   decoration: BoxDecoration(
                     color: AppColor().colorEdit(),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: EdgeInsets.only(left: 0,right: 20),
+                  padding: EdgeInsets.only(left: 0, right: 20),
                   child: FutureBuilder(
                       future: getSocityUser(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot snapshot) {
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
                         GetSocityMOdel? getsocity = snapshot.data;
                         // selectedValue = "${getsocity!.data![0].name}";
                         if (snapshot.hasData) {
@@ -364,26 +373,31 @@ class _SignUpScreenState extends State<SignUpScreen>
                                   color: AppColor().colorTextFour(),
                                   fontSize: 12.sp,
                                 ),
-                                onChanged: (v){
+                                onChanged: (v) {
                                   searchResult.clear();
-                                  if(societycontroller.text.isNotEmpty || societycontroller.text != null ){
-                                    for(int i=0;i<getsocity!.data!.length;i++){
+                                  if (societycontroller.text.isNotEmpty ||
+                                      societycontroller.text != null) {
+                                    for (int i = 0;
+                                        i < getsocity!.data!.length;
+                                        i++) {
                                       String datas = getsocity.data![i].name!;
-                                      if(datas.toLowerCase().contains(v.toLowerCase())){
+                                      if (datas
+                                          .toLowerCase()
+                                          .contains(v.toLowerCase())) {
                                         searchResult.add(datas);
                                       }
                                     }
                                     setState(() {
-                                      openSocietySearch =  true;
+                                      openSocietySearch = true;
                                     });
                                   }
-                                  if(societycontroller.text.isEmpty || societycontroller.text == null){
+                                  if (societycontroller.text.isEmpty ||
+                                      societycontroller.text == null) {
                                     setState(() {
                                       openSocietySearch = false;
                                     });
                                   }
                                 },
-
                                 inputFormatters: [],
                                 decoration: InputDecoration(
                                   prefixIcon: Padding(
@@ -401,10 +415,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                                         color: AppColor().colorEdit(),
                                         width: 1.0,
                                         style: BorderStyle.solid),
-                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
                                   ),
                                   labelText: 'Search your society',
-
                                   labelStyle: TextStyle(
                                     color: AppColor().colorTextFour(),
                                     fontSize: 12.sp,
@@ -415,39 +429,49 @@ class _SignUpScreenState extends State<SignUpScreen>
                                   filled: true,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: AppColor().colorEdit(), width: 5.0),
-                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                        color: AppColor().colorEdit(),
+                                        width: 5.0),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
                                   ),
                                 ),
                               ),
-                              openSocietySearch == true  ?  Container(
-                                height:200,
-                                decoration: BoxDecoration(
-                                  color: AppColor().colorEdit(),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: ListView.builder(
-                                    itemCount:searchResult.length,
-                                    physics:NeverScrollableScrollPhysics(),
-                                    itemBuilder:(c,i){
-                                      return Padding(
-                                        padding:  EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                        child: InkWell(
-                                            onTap: (){
-                                              setState(() {
-                                                selectedSociety = searchResult[i];
-                                                openSocietySearch = false;
-
-                                              });
-                                              societycontroller.text = selectedSociety;
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text("${searchResult[i]}"),
-                                            )),
-                                      );
-                                    }),
-                              ) : SizedBox.shrink(),
+                              openSocietySearch == true
+                                  ? Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: AppColor().colorEdit(),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: ListView.builder(
+                                          itemCount: searchResult.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemBuilder: (c, i) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10, horizontal: 5),
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selectedSociety =
+                                                          searchResult[i];
+                                                      openSocietySearch = false;
+                                                    });
+                                                    societycontroller.text =
+                                                        selectedSociety;
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                        "${searchResult[i]}"),
+                                                  )),
+                                            );
+                                          }),
+                                    )
+                                  : SizedBox.shrink(),
                             ],
                           );
                           //   DropdownButton(
@@ -484,9 +508,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                           // );
                         } else if (snapshot.hasError) {
                           return Center(child: Text("No Internet Available!!"));
-                        }
-                        else {
-                         return Center(child: CircularProgressIndicator());
+                        } else {
+                          return Center(child: CircularProgressIndicator());
                         }
                       })),
               SizedBox(
@@ -540,8 +563,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                           )
                         : SizedBox(),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColor().colorEdit(), width: 5.0),
+                      borderSide:
+                          BorderSide(color: AppColor().colorEdit(), width: 5.0),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
@@ -591,14 +614,14 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                     suffixIcon: nameController.text.length > 2
                         ? Icon(
-                      Icons.check,
-                      color: AppColor().colorPrimary(),
-                      size: 10.sp,
-                    )
+                            Icons.check,
+                            color: AppColor().colorPrimary(),
+                            size: 10.sp,
+                          )
                         : SizedBox(),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColor().colorEdit(), width: 5.0),
+                      borderSide:
+                          BorderSide(color: AppColor().colorEdit(), width: 5.0),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
@@ -657,8 +680,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                           )
                         : SizedBox(),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColor().colorEdit(), width: 5.0),
+                      borderSide:
+                          BorderSide(color: AppColor().colorEdit(), width: 5.0),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
@@ -712,14 +735,14 @@ class _SignUpScreenState extends State<SignUpScreen>
                     helperText: "",
                     suffixIcon: phoneController.text.length == 10
                         ? Icon(
-                      Icons.check,
-                      color: AppColor().colorPrimary(),
-                      size: 10.sp,
-                    )
+                            Icons.check,
+                            color: AppColor().colorPrimary(),
+                            size: 10.sp,
+                          )
                         : SizedBox(),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColor().colorEdit(), width: 5.0),
+                      borderSide:
+                          BorderSide(color: AppColor().colorEdit(), width: 5.0),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
@@ -869,14 +892,14 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                     suffixIcon: referController.text.length > 10
                         ? Icon(
-                      Icons.check,
-                      color: AppColor().colorPrimary(),
-                      size: 10.sp,
-                    )
+                            Icons.check,
+                            color: AppColor().colorPrimary(),
+                            size: 10.sp,
+                          )
                         : SizedBox(),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColor().colorEdit(), width: 5.0),
+                      borderSide:
+                          BorderSide(color: AppColor().colorEdit(), width: 5.0),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
@@ -1007,7 +1030,6 @@ class _SignUpScreenState extends State<SignUpScreen>
           //   height: 2.96.h,
           // ),
 
-
           Center(
             child: InkWell(
               onTap: () async {
@@ -1032,14 +1054,14 @@ class _SignUpScreenState extends State<SignUpScreen>
                   return;
                 }
                 if (validateUserName(
-                    lastNameController.text,
-                    getTranslated(context, 'SECOND_REQUIRED'),
-                    getTranslated(context, 'USER_LENGTH')) !=
+                        lastNameController.text,
+                        getTranslated(context, 'SECOND_REQUIRED'),
+                        getTranslated(context, 'USER_LENGTH')) !=
                     null) {
                   setSnackbar(validateUserName(
-                      lastNameController.text,
-                      getTranslated(context, 'SECOND_REQUIRED'),
-                      getTranslated(context, 'USER_LENGTH'))
+                          lastNameController.text,
+                          getTranslated(context, 'SECOND_REQUIRED'),
+                          getTranslated(context, 'USER_LENGTH'))
                       .toString());
                   return;
                 }
@@ -1069,12 +1091,12 @@ class _SignUpScreenState extends State<SignUpScreen>
                 }
 
                 if (validateSocity(
-                    societycontroller.text,
+                        societycontroller.text,
                         getTranslated(context, 'SOCITY_REQUIRED'),
                         getTranslated(context, 'SOCITY_LENGTH')) !=
                     null) {
                   setSnackbar(validateSocity(
-                      societycontroller.text,
+                          societycontroller.text,
                           getTranslated(context, 'SOCITY_REQUIRED'),
                           getTranslated(context, 'SOCITY_LENGTH'))
                       .toString());
@@ -1114,12 +1136,13 @@ class _SignUpScreenState extends State<SignUpScreen>
               },
               child: !status
                   ? Padding(
-                    padding:  EdgeInsets.only(bottom: 0),
-                    child: Container(
+                      padding: EdgeInsets.only(bottom: 0),
+                      child: Container(
                         width: 69.99.w,
                         height: 6.46.h,
                         decoration: boxDecoration(
-                            radius: 15.0, bgColor: AppColor().colorPrimaryDark()),
+                            radius: 15.0,
+                            bgColor: AppColor().colorPrimaryDark()),
                         child: Center(
                           child: text(
                             "Next",
@@ -1129,7 +1152,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                           ),
                         ),
                       ),
-                  )
+                    )
                   : CircularProgressIndicator(),
             ),
           ),
@@ -1137,6 +1160,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       ),
     );
   }
+
   setRefer() {
     return Padding(
       padding: EdgeInsetsDirectional.only(
@@ -1178,18 +1202,18 @@ class _SignUpScreenState extends State<SignUpScreen>
           // ),
           enabledBorder: UnderlineInputBorder(
             borderSide:
-            BorderSide(color: Theme.of(context).colorScheme.fontColor),
+                BorderSide(color: Theme.of(context).colorScheme.fontColor),
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
       ),
     );
   }
+
   Future<void> checkNetwork() async {
     bool avail = await isNetworkAvailable();
     if (avail) {
-      if (referCode != null)
-        getRegisterUser();
+      if (referCode != null) getRegisterUser();
     } else {
       Future.delayed(Duration(seconds: 2)).then((_) async {
         if (mounted)
@@ -1200,7 +1224,6 @@ class _SignUpScreenState extends State<SignUpScreen>
       });
     }
   }
-
 
   Future<void> checkNetworkData() async {
     bool avail = await isNetworkAvailable();
@@ -1218,7 +1241,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   Future<GetSocityMOdel?> getSocityUser() async {
-
     var request = http.MultipartRequest('GET', getSocityApi);
 
     request.headers.addAll(headers);
@@ -1261,7 +1283,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         EMAIL: emailController.text,
         SOCITYID: socitynameController.text,
         PINCODE: pincodeController.text,
-        REFERCODE:referController.text,
+        REFERCODE: referController.text,
         // PASSWORD: passwordController.text,
         COUNTRY_CODE: "91",
       };

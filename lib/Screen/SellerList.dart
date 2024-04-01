@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
 import 'package:flutter/material.dart';
 
 import 'HomePage.dart';
@@ -60,8 +60,7 @@ class _SellerListState extends State<SellerList> {
                     imageErrorBuilder: (context, error, stackTrace) =>
                         erroWidget(50),
                     placeholder: placeHolder(50),
-                  )
-              ),
+                  )),
             ),
           ),
           Text(

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Cart.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Screen/Cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -35,15 +35,17 @@ class StripeService {
         androidPayMode: stripeMode));
   }
 
-  
   static Future<StripeTransactionResponse> payWithNewCard(
-      {String? amount, String? currency, String? from,BuildContext? context}) async {
+      {String? amount,
+      String? currency,
+      String? from,
+      BuildContext? context}) async {
     try {
       var paymentMethod = await StripePayment.paymentRequestWithCardForm(
           CardFormPaymentRequest());
 
-      var paymentIntent =
-          await (StripeService.createPaymentIntent(amount, currency, from,context));
+      var paymentIntent = await (StripeService.createPaymentIntent(
+          amount, currency, from, context));
 
       var response = await StripePayment.confirmPaymentIntent(PaymentIntent(
         clientSecret: paymentIntent!['client_secret'],
@@ -89,10 +91,10 @@ class StripeService {
         message: message, success: false, status: "cancelled");
   }
 
-  static Future<Map<String, dynamic>?> createPaymentIntent(
-      String? amount, String? currency, String? from,BuildContext? context) async {
-
-    SettingProvider settingsProvider = Provider.of<SettingProvider>(context!, listen: false);
+  static Future<Map<String, dynamic>?> createPaymentIntent(String? amount,
+      String? currency, String? from, BuildContext? context) async {
+    SettingProvider settingsProvider =
+        Provider.of<SettingProvider>(context!, listen: false);
 
     String orderId =
         "wallet-refill-user-${settingsProvider.userId}-${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(900) + 100}";
@@ -103,17 +105,13 @@ class StripeService {
         'currency': currency,
         'payment_method_types[]': 'card',
         'description': from,
-
       };
       if (from == 'wallet') body['metadata[order_id]'] = orderId;
-
 
       var response = await http.post(Uri.parse(StripeService.paymentApiUrl),
           body: body, headers: StripeService.headers);
       return jsonDecode(response.body);
-    } catch (err) {
-
-    }
+    } catch (err) {}
     return null;
   }
 }

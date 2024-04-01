@@ -1,7 +1,7 @@
-import 'package:eshop_multivendor/Helper/ApiBaseHelper.dart';
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Screen/ProductList.dart';
+import 'package:samadhaan_user/Helper/ApiBaseHelper.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/Session.dart';
+import 'package:samadhaan_user/Screen/ProductList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 

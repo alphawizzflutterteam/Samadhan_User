@@ -1,4 +1,4 @@
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -8,7 +8,7 @@ class UserProvider extends ChangeNotifier {
       _mob = '',
       _profilePic = '',
       _email = '';
-  String?  _userId = '';
+  String? _userId = '';
 
   String? _curPincode = '';
 

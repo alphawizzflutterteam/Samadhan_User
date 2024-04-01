@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:eshop_multivendor/Helper/Constant.dart';
+import 'package:samadhaan_user/Helper/Constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-
 import 'Session.dart';
 
-class RazorPayHelper{
+class RazorPayHelper {
   String amount;
   String? orderId;
   BuildContext context;
@@ -23,22 +22,24 @@ class RazorPayHelper{
   String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
-  init(){
+  init() {
     _razorpay = Razorpay();
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay!.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     getOrder();
   }
+
   void getOrder() async {
     String username = razorPayKey;
     String password = razorPaySecret;
-    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    double newmoney=double.parse(amount.toString())*100;
-    int nw=newmoney.toInt();
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    double newmoney = double.parse(amount.toString()) * 100;
+    int nw = newmoney.toInt();
     print(nw);
     Map data = {
-      "amount":nw.toString(),
+      "amount": nw.toString(),
       "currency": "INR",
       "receipt": "receipt_" + getRandomString(5)
     }; // as per my experience the receipt doesn't play any role in helping you generate a certain pattern in your Order ID!!
@@ -52,23 +53,20 @@ class RazorPayHelper{
       Map data2 = json.decode(res.body);
       orderId = data2['id'];
       openCheckout(amount);
-    }
-    else
-    {
-
+    } else {
       print(res.body);
       print(res.statusCode);
     }
   }
+
   void openCheckout(String amt) async {
     await App.init();
     var options = {
       'key': razorPayKey,
       'amount': amt,
       'name': 'Samadhan',
-      "order_id":orderId,
-
-      'description': "Order #"+getRandomString(5),
+      "order_id": orderId,
+      'description': "Order #" + getRandomString(5),
       'prefill': {
         'name': App.localStorage.getString("name"),
         'contact': App.localStorage.getString("phone"),
@@ -77,23 +75,18 @@ class RazorPayHelper{
       'external': {
         'wallets': ['paytm']
       },
-      "notify": {
-        "sms": true,
-        "email": true
-      },
+      "notify": {"sms": true, "email": true},
       "reminder_enable": true,
     };
 
     try {
       _razorpay!.open(options);
     } catch (e) {
-
       debugPrint('Error: e');
     }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-
     onResult(response);
     // Fluttertoast.showToast(
     //     msg: "SUCCESS: " + response.paymentId!, toastLength: Toast.LENGTH_SHORT);
@@ -107,5 +100,5 @@ class RazorPayHelper{
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     onResult(response);
-    }
+  }
 }

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Provider/CartProvider.dart';
+import 'package:samadhaan_user/Provider/SettingProvider.dart';
+import 'package:samadhaan_user/Provider/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
@@ -39,12 +39,11 @@ class StatePayPalWebview extends State<PaypalWebview> {
   late UserProvider userProvider;
   @override
   Widget build(BuildContext context) {
-
-    userProvider=Provider.of<UserProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
 
     return new Scaffold(
-      key: scaffoldKey,
-        appBar:  AppBar(
+        key: scaffoldKey,
+        appBar: AppBar(
           titleSpacing: 0,
           leading: Builder(builder: (BuildContext context) {
             return Container(
@@ -57,14 +56,16 @@ class StatePayPalWebview extends State<PaypalWebview> {
                   onTap: () {
                     DateTime now = DateTime.now();
                     if (currentBackPressTime == null ||
-                        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+                        now.difference(currentBackPressTime!) >
+                            Duration(seconds: 2)) {
                       currentBackPressTime = now;
-                      setSnackbar("Don't press back while doing payment!\n "+getTranslated(context, 'EXIT_WR')!);
+                      setSnackbar("Don't press back while doing payment!\n " +
+                          getTranslated(context, 'EXIT_WR')!);
 
                       //return Future.value(false);
                     }
-                    if (widget.from == "order" &&
-                        widget.orderId != null) deleteOrdesr();
+                    if (widget.from == "order" && widget.orderId != null)
+                      deleteOrdesr();
                     Navigator.pop(context);
                   },
                   child: Center(
@@ -86,140 +87,134 @@ class StatePayPalWebview extends State<PaypalWebview> {
         ),
         body: WillPopScope(
             onWillPop: onWillPop,
-            child:
-                Stack(
-                  children: <Widget>[
-                    WebView(
-                      initialUrl: widget.url,
-                      javascriptMode: JavascriptMode.unrestricted,
-                      onWebViewCreated: (WebViewController webViewController) {
-                        _controller.complete(webViewController);
-                      },
-                      javascriptChannels: <JavascriptChannel>[
-                        _toasterJavascriptChannel(context),
-                      ].toSet(),
-                      navigationDelegate: (NavigationRequest request) async {
-                        if (request.url.startsWith(PAYPAL_RESPONSE_URL) ||
-                            request.url.startsWith(FLUTTERWAVE_RES_URL)) {
-                          if (mounted)
-                            setState(() {
-                              isloading = true;
-                            });
-
-                          String responseurl = request.url;
-
-                          if (responseurl.contains("Failed") ||
-                              responseurl.contains("failed")) {
-                            if (mounted)
-                              setState(() {
-                                isloading = false;
-                                message = "Transaction Failed";
-                              });
-                            Timer(Duration(seconds: 1), () {
-                              Navigator.pop(context);
-                            });
-                          } else if (responseurl.contains("Completed") ||
-                              responseurl.contains("completed") ||
-                              responseurl.toLowerCase().contains("success")) {
-                            if (mounted)
-                              setState(() {
-                                if (mounted)
-                                  setState(() {
-                                    message = "Transaction Successfull";
-                                  });
-                              });
-                            List<String> testdata = responseurl.split("&");
-                            for (String data in testdata) {
-                              if (data.split("=")[0].toLowerCase() == "tx" ||
-                                  data.split("=")[0].toLowerCase() ==
-                                      "transaction_id") {
-                                // String txid = data.split("=")[1];
-
-
-
-                                userProvider.setCartCount("0");
-
-                               // CUR_CART_COUNT = "0";
-
-                                if (widget.from == "order") {
-                                  if (request.url.startsWith(PAYPAL_RESPONSE_URL))
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                OrderSuccess()),
-                                        ModalRoute.withName('/home'));
-                                  else {
-                                    String txid = data.split("=")[1];
-
-                                    placeOrder(txid);
-                                  }
-                                } else if (widget.from == "wallet") {
-                                  if (request.url.startsWith(FLUTTERWAVE_RES_URL)) {
-                                    String txid = data.split("=")[1];
-                                    sendRequest(txid, "flutterwave");
-                                  } else
-                                    Navigator.of(context).pop();
-                                }
-
-                                break;
-                              }
-                            }
-                          }
-
-                          if (request.url.startsWith(PAYPAL_RESPONSE_URL) &&
-                              widget.orderId != null &&
-                              (responseurl.contains('Canceled-Reversal') ||
-                                  responseurl.contains('Denied') ||
-                                  responseurl.contains('Failed'))) deleteOrdesr();
-                          return NavigationDecision.prevent;
-                        }
-
-
-                        return NavigationDecision.navigate;
-                      },
-                      onPageFinished: (String url) {
+            child: Stack(
+              children: <Widget>[
+                WebView(
+                  initialUrl: widget.url,
+                  javascriptMode: JavascriptMode.unrestricted,
+                  onWebViewCreated: (WebViewController webViewController) {
+                    _controller.complete(webViewController);
+                  },
+                  javascriptChannels: <JavascriptChannel>[
+                    _toasterJavascriptChannel(context),
+                  ].toSet(),
+                  navigationDelegate: (NavigationRequest request) async {
+                    if (request.url.startsWith(PAYPAL_RESPONSE_URL) ||
+                        request.url.startsWith(FLUTTERWAVE_RES_URL)) {
+                      if (mounted)
                         setState(() {
-                          isloading = false;
+                          isloading = true;
                         });
 
-                        // print('Page finished loading: $url');
-                      },
-                    ),
-                    isloading
-                        ? Center(
-                            child: new CircularProgressIndicator(),
-                          )
-                        : Container(),
-                    message.trim().isEmpty
-                        ? Container()
-                        : Center(
-                            child: Container(
-                                color: colors.primary,
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Text(
-                                  message,
-                                  style: TextStyle(color: Theme.of(context).colorScheme.white),
-                                )))
-                  ],
+                      String responseurl = request.url;
 
+                      if (responseurl.contains("Failed") ||
+                          responseurl.contains("failed")) {
+                        if (mounted)
+                          setState(() {
+                            isloading = false;
+                            message = "Transaction Failed";
+                          });
+                        Timer(Duration(seconds: 1), () {
+                          Navigator.pop(context);
+                        });
+                      } else if (responseurl.contains("Completed") ||
+                          responseurl.contains("completed") ||
+                          responseurl.toLowerCase().contains("success")) {
+                        if (mounted)
+                          setState(() {
+                            if (mounted)
+                              setState(() {
+                                message = "Transaction Successfull";
+                              });
+                          });
+                        List<String> testdata = responseurl.split("&");
+                        for (String data in testdata) {
+                          if (data.split("=")[0].toLowerCase() == "tx" ||
+                              data.split("=")[0].toLowerCase() ==
+                                  "transaction_id") {
+                            // String txid = data.split("=")[1];
+
+                            userProvider.setCartCount("0");
+
+                            // CUR_CART_COUNT = "0";
+
+                            if (widget.from == "order") {
+                              if (request.url.startsWith(PAYPAL_RESPONSE_URL))
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            OrderSuccess()),
+                                    ModalRoute.withName('/home'));
+                              else {
+                                String txid = data.split("=")[1];
+
+                                placeOrder(txid);
+                              }
+                            } else if (widget.from == "wallet") {
+                              if (request.url.startsWith(FLUTTERWAVE_RES_URL)) {
+                                String txid = data.split("=")[1];
+                                sendRequest(txid, "flutterwave");
+                              } else
+                                Navigator.of(context).pop();
+                            }
+
+                            break;
+                          }
+                        }
+                      }
+
+                      if (request.url.startsWith(PAYPAL_RESPONSE_URL) &&
+                          widget.orderId != null &&
+                          (responseurl.contains('Canceled-Reversal') ||
+                              responseurl.contains('Denied') ||
+                              responseurl.contains('Failed'))) deleteOrdesr();
+                      return NavigationDecision.prevent;
+                    }
+
+                    return NavigationDecision.navigate;
+                  },
+                  onPageFinished: (String url) {
+                    setState(() {
+                      isloading = false;
+                    });
+
+                    // print('Page finished loading: $url');
+                  },
+                ),
+                isloading
+                    ? Center(
+                        child: new CircularProgressIndicator(),
+                      )
+                    : Container(),
+                message.trim().isEmpty
+                    ? Container()
+                    : Center(
+                        child: Container(
+                            color: colors.primary,
+                            padding: EdgeInsets.all(5),
+                            margin: EdgeInsets.all(5),
+                            child: Text(
+                              message,
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.white),
+                            )))
+              ],
             )));
   }
-
-
 
   Future<bool> onWillPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      setSnackbar("Don't press back while doing payment!\n "+getTranslated(context, 'EXIT_WR')!);
+      setSnackbar("Don't press back while doing payment!\n " +
+          getTranslated(context, 'EXIT_WR')!);
 
       return Future.value(false);
     }
-    if (widget.from == "order" &&
-        widget.orderId != null) deleteOrdesr();
+    if (widget.from == "order" && widget.orderId != null) deleteOrdesr();
     return Future.value(true);
   }
 
@@ -248,15 +243,14 @@ class StatePayPalWebview extends State<PaypalWebview> {
       var getdata = json.decode(response.body);
 
       bool error = getdata["error"];
-     // String msg = getdata["message"];
+      // String msg = getdata["message"];
 
       if (!error) {
-       // CUR_BALANCE = double.parse(getdata["new_balance"]).toStringAsFixed(2);
+        // CUR_BALANCE = double.parse(getdata["new_balance"]).toStringAsFixed(2);
 
-        UserProvider userProvider=Provider.of<UserProvider>(context);
-        userProvider.setBalance(double.parse(getdata["new_balance"]).toStringAsFixed(2));
-
-
+        UserProvider userProvider = Provider.of<UserProvider>(context);
+        userProvider.setBalance(
+            double.parse(getdata["new_balance"]).toStringAsFixed(2));
       }
       if (mounted)
         setState(() {
@@ -283,8 +277,8 @@ class StatePayPalWebview extends State<PaypalWebview> {
           await post(deleteOrderApi, body: parameter, headers: headers)
               .timeout(Duration(seconds: timeOut));
 
-    //  var getdata = json.decode(response.body);
-    // bool error = getdata["error"];
+      //  var getdata = json.decode(response.body);
+      // bool error = getdata["error"];
       //  String msg = getdata["message"];
 
       if (mounted)
@@ -313,7 +307,7 @@ class StatePayPalWebview extends State<PaypalWebview> {
   }
 
   setSnackbar(String msg) {
-   ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
       content: new Text(
         msg,
         textAlign: TextAlign.center,
@@ -324,18 +318,16 @@ class StatePayPalWebview extends State<PaypalWebview> {
     ));
   }
 
-
-
   Future<void> placeOrder(String tranId) async {
     setState(() {
       isloading = true;
     });
     SettingProvider settingsProvider =
-    Provider.of<SettingProvider>(context, listen: false);
+        Provider.of<SettingProvider>(context, listen: false);
 
     String? mob = await settingsProvider.getPrefrence(MOBILE);
     String? varientId, quantity;
-    List<SectionModel>cartList=context.read<CartProvider>().cartList;
+    List<SectionModel> cartList = context.read<CartProvider>().cartList;
 
     for (SectionModel sec in cartList) {
       varientId =
@@ -354,7 +346,6 @@ class StatePayPalWebview extends State<PaypalWebview> {
         QUANTITY: quantity,
         TOTAL: oriPrice.toString(),
         DEL_CHARGE: delCharge.toString(),
-
         TAX_PER: taxPer.toString(),
         FINAL_TOTAL: totalPrice.toString(),
         PAYMENT_METHOD: payVia,

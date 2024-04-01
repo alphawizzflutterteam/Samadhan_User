@@ -1,5 +1,5 @@
-name: eshop_multivendor
-description: eShop Multivendor App
+name: samadhaan_user
+description: Samadhaan
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+19
+version: 1.0.0+23
 
 
 environment:
@@ -94,7 +94,7 @@ dev_dependencies:
   flutter_localizations:
     sdk: flutter
 dependency_overrides:
- modal_bottom_sheet: ^3.0.0-pre
+  modal_bottom_sheet: 3.0.0-pre
 
 
     # For information on the generic Dart part of this file, see the

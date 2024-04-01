@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Provider/CategoryProvider.dart';
-import 'package:eshop_multivendor/Provider/HomeProvider.dart';
-import 'package:eshop_multivendor/Screen/SubCategory.dart';
+import 'package:samadhaan_user/Helper/Color.dart';
+import 'package:samadhaan_user/Helper/String.dart';
+import 'package:samadhaan_user/Provider/CategoryProvider.dart';
+import 'package:samadhaan_user/Provider/HomeProvider.dart';
+import 'package:samadhaan_user/Screen/SubCategory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

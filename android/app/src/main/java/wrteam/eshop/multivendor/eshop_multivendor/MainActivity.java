@@ -1,4 +1,4 @@
-package com.samadhan.user;
+package com.samadhaan.user;
 
 import io.flutter.embedding.android.FlutterActivity;
 
