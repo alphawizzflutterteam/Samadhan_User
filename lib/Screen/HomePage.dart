@@ -2284,15 +2284,15 @@ class _HomePageState extends State<HomePage>
       ),
       onTap: () async {
         int curSlider = context.read<HomeProvider>().curSlider;
-        print("I AM HEREEEE");
-        print(curSlider.toString() + "SLIDER CLICK curser");
-        print(pos.toString() + "SLIDER CLICK curser check");
+        // print("I AM HEREEEE");
+        // print(curSlider.toString() + "SLIDER CLICK curser");
+        // print(pos.toString() + "SLIDER CLICK curser check");
 
-        print(slider.id.toString() + "SLIDER CLICK");
-        print(slider.type.toString() + "SLIDER CLICK");
+        // print(slider.id.toString() + "SLIDER CLICK");
+        // print(slider.type.toString() + "SLIDER CLICK");
 
-        print(homeSliderList[curSlider].id.toString() + "SLIDER CLICK");
-        print(homeSliderList[curSlider].type.toString() + "SLIDER CLICK Check");
+        // print(homeSliderList[curSlider].id.toString() + "SLIDER CLICK");
+        // print(homeSliderList[curSlider].type.toString() + "SLIDER CLICK Check");
 
         // if (pos == 0) {
         if (slider.type == "products") {

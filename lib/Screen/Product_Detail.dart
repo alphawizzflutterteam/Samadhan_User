@@ -211,15 +211,12 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
   Future<void> createDynamicLink() async {
     try {
       var documentDirectory;
-
       if (Platform.isIOS)
         documentDirectory = (await getApplicationDocumentsDirectory()).path;
       else
         documentDirectory = (await getExternalStorageDirectory())!.path;
-
       final response1 = await get(Uri.parse(widget.model!.image!));
       final bytes1 = response1.bodyBytes;
-
       final File imageFile =
           File('$documentDirectory/${widget.model!.name}.png');
       imageFile.writeAsBytesSync(bytes1);
@@ -950,53 +947,67 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                 removeTop: true,
                 context: context,
                 child: Card(
+                  color: Colors.grey.withOpacity(0.3),
                   elevation: 0,
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: att.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          color: Colors.grey.withOpacity(0.2),
-                          child: ListTile(
-                              dense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 0),
-                              trailing: Icon(Icons.keyboard_arrow_right),
-                              title: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        att[index].trim() + ":",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .fontColor),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                          start: 5.0),
-                                      child: Text(
-                                        val[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .fontColor,
-                                                fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                  ])),
-                        );
-                      }),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3),
+                        child: Text("Select Variation"),
+                      ),
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: att.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              color: Colors.grey.withOpacity(0.2),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                      dense: true,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 0),
+                                      trailing: Icon(Icons.keyboard_arrow_right),
+                                      title: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                att[index].trim() + ":",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle2!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .fontColor),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional.only(
+                                                  start: 5.0),
+                                              child: Text(
+                                                val[index],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle2!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .fontColor,
+                                                        fontWeight: FontWeight.bold),
+                                              ),
+                                            )
+                                          ])),
+                                ],
+                              ),
+                            );
+                          }),
+                    ],
+                  ),
                 ),
               ),
               onTap: _chooseVarient,
