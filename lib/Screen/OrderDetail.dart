@@ -1871,7 +1871,7 @@ class StateOrder extends State<OrderDetail>
           ),
           onTap: () async {
             try {
-              final status = await Permission.storage.request();
+              final status = await Permission.manageExternalStorage.request();
               if (status == PermissionStatus.granted) {
                 if (mounted) {
                   setState(() {
@@ -1903,6 +1903,7 @@ class StateOrder extends State<OrderDetail>
                       await FlutterHtmlToPdf.convertFromHtmlContent(
                           widget.model!.invoice!, targetPath, targetFileName);
                   filePath = generatedPdfFile.path;
+
                 }
 
                 if (mounted) {

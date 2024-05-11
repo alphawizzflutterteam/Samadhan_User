@@ -1562,12 +1562,14 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
             QTY: qty,
             'clear': clear
           };
+          print(parameter);
           print(
               "yes ${CUR_USERID} and ${model.prVarientList![model.selVarient!].id} and ${qty}");
           Response response =
               await post(manageCartApi, body: parameter, headers: headers)
                   .timeout(Duration(seconds: timeOut));
           var getdata = json.decode(response.body);
+
           print(
               "yes ${CUR_USERID} and ${model.prVarientList![model.selVarient!].id} and ${qty}");
           bool error = getdata["error"];
@@ -1594,35 +1596,37 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                 ),
               );
           } else {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(
-                  'Replace Cart item?',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                content: Text(
-                  "Your cart contains items from another store. Do you want to remove those items from cart and add items from this store?",
-                  style: TextStyle(fontWeight: FontWeight.normal),
-                ),
-                actions: [
-                  TextButton(
-                    child: Text('NO'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: colors.primary,
-                    ),
-                    child: Text('Yes'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      addToCart('1', intent, '1');
-                    },
-                  ),
-                ],
-              ),
-            );
+           if(getdata['type']=='same_seller'){
+             showDialog(
+               context: context,
+               builder: (context) => AlertDialog(
+                 title: Text(
+                   'Replace Cart item?',
+                   style: TextStyle(fontWeight: FontWeight.bold),
+                 ),
+                 content: Text(
+                   "Your cart contains items from another store. Do you want to remove those items from cart and add items from this store?",
+                   style: TextStyle(fontWeight: FontWeight.normal),
+                 ),
+                 actions: [
+                   TextButton(
+                     child: Text('NO'),
+                     onPressed: () => Navigator.pop(context),
+                   ),
+                   ElevatedButton(
+                     style: ElevatedButton.styleFrom(
+                       backgroundColor: colors.primary,
+                     ),
+                     child: Text('Yes'),
+                     onPressed: () {
+                       Navigator.pop(context);
+                       addToCart('1', intent, '1');
+                     },
+                   ),
+                 ],
+               ),
+             );
+           }
             setSnackbar(msg!, context);
           }
           if (mounted)

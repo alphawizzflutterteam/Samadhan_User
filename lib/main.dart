@@ -1,4 +1,5 @@
-import 'package:country_code_picker/country_localizations.dart';
+
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:samadhaan_user/Helper/Color.dart';
 import 'package:samadhaan_user/Helper/Constant.dart';
 import 'package:samadhaan_user/Provider/CartProvider.dart';
